@@ -492,7 +492,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
     <div class="secao">
       <div class="secao-titulo">Solicitar corrida</div>
-      <div class="secao-subtitulo">Busca com cidade travada, atalhos locais e embarque mais detalhado para o motorista encontrar o passageiro.</div>
+      <div class="secao-subtitulo">Fluxo organizado para celular: primeiro você simula a corrida, depois preenche os dados finais e confirma.</div>
 
       <div id="aviso-bloqueio" class="aviso-bloqueio"></div>
 
@@ -554,6 +554,21 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
           <div class="campo-ajuda">Clique em um atalho para preencher mais rápido o campo de partida ou de destino.</div>
         </div>
 
+        <div class="mapa-box">
+          <div class="mapa-topo">Mapa da corrida</div>
+          <div id="mapa-status-texto" class="mapa-status">Carregando mapa...</div>
+          <div id="mapa-real"></div>
+        </div>
+
+        <div class="mapa-saida-grid">
+          <div class="saida-mapa"><strong>Foco inicial do mapa</strong><span id="saida-foco-mapa">Carregando...</span></div>
+          <div class="saida-mapa"><strong>Tipo de cálculo</strong><span id="saida-status-integracao">Aguardando simulação</span></div>
+          <div class="saida-mapa"><strong>Distância estimada</strong><span id="saida-distancia">Aguardando simulação</span></div>
+          <div class="saida-mapa"><strong>Valor estimado</strong><span id="saida-valor">Aguardando simulação</span></div>
+        </div>
+
+        <button type="button" id="btn-calcular">SIMULAR ROTA E VALOR</button>
+
         <div class="bloco-corrida">
           <label class="campo-label">Endereço de embarque do passageiro</label>
           <div class="grid-endereco">
@@ -594,20 +609,6 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
           <textarea id="observacoes" placeholder="Ex: buscar 2 pessoas, bagagem, chamar no portão"></textarea>
         </div>
 
-        <div class="mapa-box">
-          <div class="mapa-topo">Mapa da corrida</div>
-          <div id="mapa-status-texto" class="mapa-status">Carregando mapa...</div>
-          <div id="mapa-real"></div>
-        </div>
-
-        <div class="mapa-saida-grid">
-          <div class="saida-mapa"><strong>Foco inicial do mapa</strong><span id="saida-foco-mapa">Carregando...</span></div>
-          <div class="saida-mapa"><strong>Tipo de cálculo</strong><span id="saida-status-integracao">Aguardando simulação</span></div>
-          <div class="saida-mapa"><strong>Distância estimada</strong><span id="saida-distancia">Aguardando simulação</span></div>
-          <div class="saida-mapa"><strong>Valor estimado</strong><span id="saida-valor">Aguardando simulação</span></div>
-        </div>
-
-        <button type="button" id="btn-calcular">SIMULAR ROTA E VALOR</button>
         <button type="submit" id="btn-solicitar" disabled>CONFIRMAR E SOLICITAR CORRIDA</button>
       </form>
 
