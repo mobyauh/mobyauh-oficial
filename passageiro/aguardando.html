@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOBYAUH - Cadastro Recebido</title>
+  <link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-mobyauh.png">
+  <link rel="apple-touch-icon" href="../assets/icon-mobyauh.png">
+  <meta name="theme-color" content="#FFCC00">
+  <link rel="stylesheet" href="./global.css">
+  <style>
+    .container {
+      max-width: 460px;
+      text-align: center;
+      padding-top: 30px;
+      padding-bottom: 28px;
+    }
+
+    .brand-area {
+      background: linear-gradient(180deg, rgba(255, 204, 0, 0.06), rgba(255, 204, 0, 0.02));
+      border: 1px solid rgba(255, 204, 0, 0.10);
+      border-radius: 22px;
+      padding: 24px 18px 20px;
+      margin-bottom: 24px;
+    }
+
+    .logo-ring {
+      width: 128px;
+      height: 128px;
+      margin: 0 auto 18px;
+      border-radius: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 204, 0, 0.08);
+      box-shadow: inset 0 0 0 1px rgba(255, 204, 0, 0.08);
+    }
+
+    .logo-box {
+      width: 96px;
+      height: 96px;
+      border-radius: 28px;
+      background: #FFCC00;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 14px 24px rgba(255, 204, 0, 0.18),
+        0 4px 10px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      margin: 0 auto;
+    }
+
+    .logo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .logo-name {
+      color: #FFCC00;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .brand-line {
+      width: 80px;
+      height: 4px;
+      border-radius: 999px;
+      background: #FFCC00;
+      margin: 0 auto 14px;
+    }
+
+    .subtitulo {
+      color: #d0d0d0;
+      margin-bottom: 0;
+      font-size: 0.96rem;
+      line-height: 1.6;
+      max-width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .titulo-pagina {
+      color: #FFCC00;
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .card-info {
+      background: #323232;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 18px;
+      padding: 20px 18px;
+      text-align: left;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+    }
+
+    .card-info p {
+      color: #e8e8e8;
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+
+    .card-info p:last-child {
+      margin-bottom: 0;
+    }
+
+    .card-info strong {
+      color: #FFCC00;
+    }
+
+    .link-voltar {
+      display: block;
+      text-align: center;
+      margin-top: 22px;
+      color: #FFCC00;
+      text-decoration: none;
+      font-size: 0.96rem;
+      font-weight: 600;
+    }
+
+    .link-voltar:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 24px 18px;
+      }
+
+      .logo-name {
+        font-size: 1.8rem;
+      }
+
+      .logo-ring {
+        width: 116px;
+        height: 116px;
+      }
+
+      .logo-box {
+        width: 88px;
+        height: 88px;
+      }
+
+      .titulo-pagina {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="brand-area">
+      <div class="logo-ring">
+        <div class="logo-box">
+          <img src="../assets/icon-mobyauh.png" alt="Ícone oficial MOBYAUH">
+        </div>
+      </div>
+
+      <div class="logo-name">MOBYAUH</div>
+      <div class="brand-line"></div>
+      <p class="subtitulo">Sua solicitação foi registrada com sucesso.</p>
+    </div>
+
+    <h2 class="titulo-pagina">Cadastro Recebido</h2>
+
+    <div class="card-info">
+      <p><strong>Próximos passos:</strong></p>
+      <p>1. Não é necessário refazer o cadastro.</p>
+      <p>2. A equipe poderá validar seus dados.</p>
+      <p>3. Você poderá receber confirmação por WhatsApp ou e-mail.</p>
+    </div>
+
+    <a href="../index.html" class="link-voltar">Voltar para a página inicial</a>
+  </div>
+</body>
+</html>

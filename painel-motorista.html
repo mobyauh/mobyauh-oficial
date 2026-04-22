@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOBYAUH - Área do Motorista</title>
+<link rel="icon" type="image/png" sizes="512x512" href="./assets/icon-mobyauh.png">
+<link rel="apple-touch-icon" href="./assets/icon-mobyauh.png">
+<meta name="theme-color" content="#FFCC00">
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(255, 204, 0, 0.08), transparent 30%),
+    linear-gradient(135deg, #111111, #1b1b1b 45%, #101010);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #ffffff;
+  padding: 20px;
+}
+.page {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.container {
+  width: 100%;
+  background: #232323;
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 26px;
+  padding: 28px 20px;
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.50),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+.painel-topo {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.logo-box {
+  width: 92px;
+  height: 92px;
+  border-radius: 24px;
+  background: #FFCC00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+  box-shadow:
+    0 14px 24px rgba(255, 204, 0, 0.18),
+    0 4px 10px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+.logo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.logo-name {
+  color: #FFCC00;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+.foto-area {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.foto-usuario {
+  width: 132px;
+  height: 132px;
+  border-radius: 22px;
+  object-fit: cover;
+  border: 3px solid #FFCC00;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+  background: #3a3a3a;
+}
+.sem-foto {
+  width: 132px;
+  height: 132px;
+  border-radius: 22px;
+  border: 2px dashed rgba(255, 204, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  color: #d0d0d0;
+  font-size: 0.9rem;
+  background: #3a3a3a;
+}
+.painel-titulo {
+  color: #FFCC00;
+  font-size: 1.7rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.painel-subtitulo {
+  color: #d8d8d8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.grid-dados {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 24px;
+}
+.linha-dado,
+.card-corrida,
+.aviso,
+.aviso-bloqueio {
+  background: #323232;
+  border-radius: 14px;
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+.linha-dado strong,
+.card-corrida strong,
+.aviso-bloqueio strong {
+  display: block;
+  color: #FFCC00;
+  font-size: 0.88rem;
+  margin-bottom: 6px;
+}
+.linha-dado span,
+.card-corrida span,
+.aviso-bloqueio span {
+  color: #ffffff;
+  word-break: break-word;
+  line-height: 1.45;
+}
+.aviso {
+  margin-top: 18px;
+  border-left: 4px solid #FFCC00;
+  color: #dcdcdc;
+  line-height: 1.6;
+  font-size: 0.94rem;
+}
+.aviso-bloqueio {
+  margin-top: 18px;
+  border-left: 4px solid #ff884d;
+  background: rgba(255, 136, 77, 0.12);
+  display: none;
+}
+.acoes-topo {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+.secao {
+  margin-top: 26px;
+}
+.secao-titulo {
+  color: #FFCC00;
+  font-size: 1.18rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 6px;
+}
+.secao-subtitulo {
+  color: #d8d8d8;
+  text-align: center;
+  line-height: 1.5;
+  font-size: 0.92rem;
+  margin-bottom: 14px;
+}
+.lista-corridas {
+  display: grid;
+  gap: 14px;
+}
+.card-corrida {
+  display: grid;
+  gap: 12px;
+}
+.card-topo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.mini-foto {
+  width: 62px;
+  height: 62px;
+  border-radius: 14px;
+  object-fit: cover;
+  border: 2px solid #FFCC00;
+  background: #252525;
+  flex-shrink: 0;
+}
+.mini-sem-foto {
+  width: 62px;
+  height: 62px;
+  border-radius: 14px;
+  border: 2px dashed rgba(255, 204, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.72rem;
+  color: #d0d0d0;
+  background: #252525;
+  padding: 6px;
+  flex-shrink: 0;
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.status-badge {
+  display: inline-block;
+  width: fit-content;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  margin-top: 4px;
+  background: rgba(255, 204, 0, 0.18);
+  color: #FFCC00;
+}
+.badge-verde {
+  background: rgba(0, 255, 136, 0.14);
+  color: #00FF88;
+}
+.badge-azul {
+  background: rgba(74, 158, 255, 0.18);
+  color: #74b8ff;
+}
+.badge-laranja {
+  background: rgba(255, 136, 77, 0.18);
+  color: #ffb088;
+}
+.badge-roxa {
+  background: rgba(180, 120, 255, 0.18);
+  color: #d6b3ff;
+}
+.badge-finalizada {
+  background: rgba(160, 160, 160, 0.18);
+  color: #d6d6d6;
+}
+.badge-cancelada {
+  background: rgba(217, 74, 74, 0.18);
+  color: #ff9b9b;
+}
+.lista-vazia {
+  background: #323232;
+  border: 1px dashed rgba(255, 204, 0, 0.25);
+  border-radius: 14px;
+  padding: 18px;
+  text-align: center;
+  color: #d8d8d8;
+  line-height: 1.5;
+}
+.mensagem {
+  text-align: center;
+  min-height: 24px;
+  margin-top: 14px;
+  font-weight: 700;
+}
+button {
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.15s ease, opacity 0.2s ease;
+}
+button:hover {
+  transform: translateY(-1px);
+  opacity: 0.97;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+.btn-amarelo {
+  background: #FFCC00;
+  color: #1a1a1a;
+  box-shadow: 0 10px 20px rgba(255, 204, 0, 0.15);
+}
+.btn-verde {
+  background: #00c56e;
+  color: #ffffff;
+}
+.btn-azul {
+  background: #2f7df6;
+  color: #ffffff;
+}
+.btn-laranja {
+  background: #ff884d;
+  color: #ffffff;
+}
+.btn-roxo {
+  background: #8c52ff;
+  color: #ffffff;
+}
+.btn-vermelho {
+  background: #d94a4a;
+  color: #ffffff;
+}
+.botao-secundario {
+  background: transparent;
+  border: 2px solid #FFCC00;
+  color: #FFCC00;
+}
+
+.status-som {
+  text-align: center;
+  color: #cfcfcf;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+.codigo-validacao-box {
+  display: grid;
+  gap: 10px;
+  background: #2b2b2b;
+  border: 1px solid rgba(255, 204, 0, 0.14);
+  border-radius: 12px;
+  padding: 12px;
+}
+.codigo-validacao-box input {
+  width: 100%;
+  background-color: #252525;
+  border: 1px solid #4a4a4a;
+  color: #fff;
+  padding: 13px 14px;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+}
+.codigo-validacao-box input:focus {
+  border-color: #FFCC00;
+  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.15);
+}
+@media (max-width: 720px) {
+  .grid-dados,
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+  .container {
+    padding: 22px 16px;
+  }
+  .painel-titulo {
+    font-size: 1.45rem;
+  }
+  .foto-usuario,
+  .sem-foto {
+    width: 118px;
+    height: 118px;
+  }
+  .card-topo {
+    align-items: flex-start;
+  }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="container">
+    <div class="painel-topo">
+      <div class="logo-box">
+        <img src="./assets/icon-mobyauh.png" alt="Ícone oficial MOBYAUH">
+      </div>
+      <div class="logo-name">MOBYAUH</div>
+      <div class="foto-area" id="foto-area"></div>
+      <div class="painel-titulo">Painel do Motorista</div>
+      <div class="painel-subtitulo">
+        Área interna liberada para motorista aprovado.
+      </div>
+    </div>
+
+    <div class="grid-dados">
+      <div class="linha-dado">
+        <strong>Nome</strong>
+        <span id="dado-nome">Carregando...</span>
+      </div>
+      <div class="linha-dado">
+        <strong>E-mail</strong>
+        <span id="dado-email">Carregando...</span>
+      </div>
+      <div class="linha-dado">
+        <strong>Cidade</strong>
+        <span id="dado-cidade">Carregando...</span>
+      </div>
+      <div class="linha-dado">
+        <strong>Telefone</strong>
+        <span id="dado-telefone">Carregando...</span>
+      </div>
+      <div class="linha-dado">
+        <strong>CNH</strong>
+        <span id="dado-cnh">Carregando...</span>
+      </div>
+      <div class="linha-dado">
+        <strong>Placa</strong>
+        <span id="dado-placa">Carregando...</span>
+      </div>
+      <div class="linha-dado">
+        <strong>Tipo</strong>
+        <span id="dado-tipo">Carregando...</span>
+      </div>
+      <div class="linha-dado">
+        <strong>Serviços habilitados</strong>
+        <span id="dado-servicos">Carregando...</span>
+      </div>
+      <div class="linha-dado">
+        <strong>Status</strong>
+        <span id="dado-status">Carregando...</span>
+      </div>
+    </div>
+
+    <div class="aviso">
+      Agora o motorista só inicia a corrida após validar o código de embarque informado pelo passageiro.
+    </div>
+
+    <div id="aviso-bloqueio-motorista" class="aviso-bloqueio"></div>
+
+    <div class="acoes-topo">
+      <button id="btn-toggle-som" type="button" class="botao-secundario">ATIVAR SOM DE NOVA CORRIDA</button>
+      <button id="btn-sair" type="button" class="botao-secundario">SAIR</button>
+    </div>
+
+    <div id="status-som" class="status-som">Som desligado. Ative para ouvir a musiquinha quando chegar nova corrida.</div>
+    <div id="mensagem" class="mensagem"></div>
+
+    <div class="secao">
+      <div class="secao-titulo">Corridas disponíveis</div>
+      <div class="secao-subtitulo">
+        Aqui aparecem as corridas novas aguardando um motorista.
+      </div>
+      <div id="lista-disponiveis" class="lista-corridas"></div>
+    </div>
+
+    <div class="secao">
+      <div class="secao-titulo">Minha corrida ativa</div>
+      <div class="secao-subtitulo">
+        Aqui aparece a corrida em atendimento.
+      </div>
+      <div id="lista-ativas" class="lista-corridas"></div>
+    </div>
+
+    <div class="secao">
+      <div class="secao-titulo">Histórico de corridas</div>
+      <div class="secao-subtitulo">
+        Aqui aparecem corridas finalizadas e canceladas.
+      </div>
+      <div id="lista-historico" class="lista-corridas"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDB1OvsClJ1enHm_tzYnje386fVvmnOq5M",
+  authDomain: "mobyauh-48f39.firebaseapp.com",
+  projectId: "mobyauh-48f39",
+  storageBucket: "mobyauh-48f39.firebasestorage.app",
+  messagingSenderId: "958782206989",
+  appId: "1:958782206989:web:af7d62c9117df8af151144"
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+const STATUS_ATIVOS_MOTORISTA = ['aceita', 'a caminho', 'cheguei ao local', 'iniciada'];
+const STATUS_HISTORICO = ['finalizada', 'cancelada'];
+const PONTOS_PENALIDADE_CANCELAMENTO = 1;
+const TIPO_SERVICO_PADRAO = 'carro';
+const CONFIG_SERVICOS = {
+  carro: { label: 'Carro' },
+  moto: { label: 'Moto' }
+};
+
+const fotoArea = document.getElementById('foto-area');
+const mensagem = document.getElementById('mensagem');
+const btnSair = document.getElementById('btn-sair');
+const btnToggleSom = document.getElementById('btn-toggle-som');
+const statusSom = document.getElementById('status-som');
+const listaDisponiveis = document.getElementById('lista-disponiveis');
+const listaAtivas = document.getElementById('lista-ativas');
+const listaHistorico = document.getElementById('lista-historico');
+const avisoBloqueioMotorista = document.getElementById('aviso-bloqueio-motorista');
+
+let usuarioAtual = null;
+let dadosUsuarioAtual = null;
+let unsubscribeDisponiveis = null;
+let unsubscribeMinhas = null;
+let motoristaTemCorridaAtiva = false;
+let corridasDisponiveisCache = [];
+let audioContextNotificacao = null;
+let somNotificacaoAtivado = false;
+let primeiraCargaCorridasDisponiveis = true;
+let idsCorridasDisponiveisAnteriores = new Set();
+
+function mostrarMensagem(texto, cor) {
+  mensagem.innerText = texto;
+  mensagem.style.color = cor;
+}
+
+function normalizarTipoServico(tipoServico) {
+  return String(tipoServico || '').toLowerCase() === 'moto' ? 'moto' : 'carro';
+}
+
+function obterLabelServico(tipoServico) {
+  const chave = normalizarTipoServico(tipoServico);
+  return (CONFIG_SERVICOS[chave] || CONFIG_SERVICOS[TIPO_SERVICO_PADRAO]).label;
+}
+
+function obterTipoServicoCorrida(corrida) {
+  return normalizarTipoServico((corrida && corrida.tipoServico) || TIPO_SERVICO_PADRAO);
+}
+
+function obterLabelServicoCorrida(corrida) {
+  return (corrida && corrida.tipoServicoLabel) || obterLabelServico(obterTipoServicoCorrida(corrida));
+}
+
+function obterServicosHabilitadosUsuario(dados) {
+  const listaOriginal = Array.isArray(dados && dados.servicosHabilitados) && dados.servicosHabilitados.length
+    ? dados.servicosHabilitados
+    : [TIPO_SERVICO_PADRAO];
+
+  const unicos = [];
+  listaOriginal.forEach(function(item) {
+    const normalizado = normalizarTipoServico(item);
+    if (!unicos.includes(normalizado)) {
+      unicos.push(normalizado);
+    }
+  });
+
+  return unicos.length ? unicos : [TIPO_SERVICO_PADRAO];
+}
+
+function formatarListaServicos(servicos) {
+  return obterServicosHabilitadosUsuario({ servicosHabilitados: servicos }).map(function(item) {
+    return obterLabelServico(item);
+  }).join(' / ');
+}
+
+function motoristaPodeAtenderCorrida(corrida, dadosMotorista) {
+  const servicos = obterServicosHabilitadosUsuario(dadosMotorista);
+  return servicos.includes(obterTipoServicoCorrida(corrida));
+}
+
+function atualizarStatusSom() {
+  if (somNotificacaoAtivado) {
+    btnToggleSom.textContent = 'DESATIVAR SOM DE NOVA CORRIDA';
+    statusSom.textContent = 'Som ativado. Quando chegar corrida nova, o painel toca a musiquinha.';
+    statusSom.style.color = '#00FF88';
+    return;
+  }
+
+  btnToggleSom.textContent = 'ATIVAR SOM DE NOVA CORRIDA';
+  statusSom.textContent = 'Som desligado. Ative para ouvir a musiquinha quando chegar nova corrida.';
+  statusSom.style.color = '#cfcfcf';
+}
+
+async function garantirAudioContexto() {
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+
+  if (!AudioCtx) {
+    throw new Error('Seu navegador não suporta áudio de notificação.');
+  }
+
+  if (!audioContextNotificacao) {
+    audioContextNotificacao = new AudioCtx();
+  }
+
+  if (audioContextNotificacao.state === 'suspended') {
+    await audioContextNotificacao.resume();
+  }
+
+  return audioContextNotificacao;
+}
+
+function tocarTom(contexto, frequencia, inicio, duracao, volume) {
+  const oscillator = contexto.createOscillator();
+  const gainNode = contexto.createGain();
+
+  oscillator.type = 'sine';
+  oscillator.frequency.setValueAtTime(frequencia, inicio);
+
+  gainNode.gain.setValueAtTime(0.0001, inicio);
+  gainNode.gain.linearRampToValueAtTime(volume, inicio + 0.02);
+  gainNode.gain.exponentialRampToValueAtTime(0.0001, inicio + duracao);
+
+  oscillator.connect(gainNode);
+  gainNode.connect(contexto.destination);
+
+  oscillator.start(inicio);
+  oscillator.stop(inicio + duracao + 0.03);
+}
+
+async function tocarMusiquinhaNovaCorrida() {
+  if (!somNotificacaoAtivado) return;
+
+  try {
+    const contexto = await garantirAudioContexto();
+    const inicio = contexto.currentTime + 0.02;
+
+    tocarTom(contexto, 784, inicio, 0.16, 0.08);
+    tocarTom(contexto, 988, inicio + 0.18, 0.16, 0.08);
+    tocarTom(contexto, 1175, inicio + 0.36, 0.22, 0.08);
+  } catch (error) {
+    somNotificacaoAtivado = false;
+    atualizarStatusSom();
+    mostrarMensagem('Não foi possível tocar o som neste navegador.', '#FF884D');
+  }
+}
+
+async function alternarSomNotificacao() {
+  if (somNotificacaoAtivado) {
+    somNotificacaoAtivado = false;
+    atualizarStatusSom();
+    mostrarMensagem('Som de nova corrida desativado.', '#FFCC00');
+    return;
+  }
+
+  try {
+    await garantirAudioContexto();
+    somNotificacaoAtivado = true;
+    atualizarStatusSom();
+    await tocarMusiquinhaNovaCorrida();
+    mostrarMensagem('Som de nova corrida ativado com sucesso.', '#00FF88');
+  } catch (error) {
+    somNotificacaoAtivado = false;
+    atualizarStatusSom();
+    mostrarMensagem('Não foi possível ativar o som: ' + error.message, '#FF5555');
+  }
+}
+
+function verificarNovasCorridasDisponiveis(corridas) {
+  const idsAtuais = new Set(
+    corridas.map(function(corrida) {
+      return corrida.id;
+    })
+  );
+
+  if (primeiraCargaCorridasDisponiveis) {
+    idsCorridasDisponiveisAnteriores = idsAtuais;
+    primeiraCargaCorridasDisponiveis = false;
+    return;
+  }
+
+  let existeNovaCorrida = false;
+
+  idsAtuais.forEach(function(id) {
+    if (!idsCorridasDisponiveisAnteriores.has(id)) {
+      existeNovaCorrida = true;
+    }
+  });
+
+  idsCorridasDisponiveisAnteriores = idsAtuais;
+
+  if (existeNovaCorrida) {
+    mostrarMensagem('Nova corrida disponível no painel!', '#00FF88');
+    tocarMusiquinhaNovaCorrida();
+  }
+}
+
+function preencherFoto(fotoURL) {
+  fotoArea.innerHTML = '';
+  if (fotoURL) {
+    const img = document.createElement('img');
+    img.src = fotoURL;
+    img.alt = 'Foto do motorista';
+    img.className = 'foto-usuario';
+    fotoArea.appendChild(img);
+  } else {
+    const semFoto = document.createElement('div');
+    semFoto.className = 'sem-foto';
+    semFoto.textContent = 'Sem foto cadastrada';
+    fotoArea.appendChild(semFoto);
+  }
+}
+
+function formatarData(dataIso) {
+  if (!dataIso) return '-';
+  const data = new Date(dataIso);
+  if (isNaN(data.getTime())) return dataIso;
+  return data.toLocaleString('pt-BR');
+}
+
+function formatarMoeda(valor) {
+  return Number(valor || 0).toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  });
+}
+
+function formatarDistancia(valor) {
+  const numero = Number(valor || 0);
+  if (!isFinite(numero) || numero <= 0) return '-';
+  return numero.toLocaleString('pt-BR', {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 2
+  }) + ' km';
+}
+
+function obterCidadeCorrida(corrida) {
+  return corrida.cidadeCorrida || corrida.passageiroCidade || '-';
+}
+
+function criarFotoMini(url) {
+  if (url) {
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = 'Foto do passageiro';
+    img.className = 'mini-foto';
+    return img;
+  }
+
+  const div = document.createElement('div');
+  div.className = 'mini-sem-foto';
+  div.textContent = 'Sem foto';
+  return div;
+}
+
+function criarBadgeStatus(status) {
+  const badge = document.createElement('div');
+  badge.className = 'status-badge';
+
+  if (status === 'aceita') badge.classList.add('badge-verde');
+  if (status === 'a caminho') badge.classList.add('badge-azul');
+  if (status === 'cheguei ao local') badge.classList.add('badge-laranja');
+  if (status === 'iniciada') badge.classList.add('badge-roxa');
+  if (status === 'finalizada') badge.classList.add('badge-finalizada');
+  if (status === 'cancelada') badge.classList.add('badge-cancelada');
+
+  badge.textContent = (status || 'sem status').toUpperCase();
+  return badge;
+}
+
+function criarTexto(rotulo, valor) {
+  const bloco = document.createElement('div');
+  bloco.innerHTML = '<strong>' + rotulo + '</strong><span>' + (valor || '-') + '</span>';
+  return bloco;
+}
+
+function atualizarBloqueioMotorista(corridasAtivas) {
+  const corridaAtiva = corridasAtivas[0];
+  motoristaTemCorridaAtiva = !!corridaAtiva;
+
+  if (corridaAtiva) {
+    avisoBloqueioMotorista.style.display = 'block';
+    avisoBloqueioMotorista.innerHTML =
+      '<strong>Nova corrida bloqueada</strong>' +
+      '<span>Você já possui uma corrida em atendimento com status <b>' +
+      (corridaAtiva.status || '-').toUpperCase() +
+      '</b>. Finalize ou cancele a atual antes de aceitar outra.</span>';
+  } else {
+    avisoBloqueioMotorista.style.display = 'none';
+    avisoBloqueioMotorista.innerHTML = '';
+  }
+
+  renderizarListaDisponiveis(corridasDisponiveisCache);
+}
+
+
+function calcularConsequenciasCancelamento(corrida) {
+  const status = String(corrida && corrida.status || '');
+  const temPenalidade = ['a caminho', 'cheguei ao local'].includes(status);
+  const geraDivida = status === 'cheguei ao local';
+  const pontos = temPenalidade ? PONTOS_PENALIDADE_CANCELAMENTO : 0;
+  const valorDivida = geraDivida ? Number(corrida && corrida.valorEstimado || 0) : 0;
+
+  let resumo = 'Cancelamento livre até o status ACEITA.';
+  if (status === 'a caminho') {
+    resumo = 'Cancelamento após ACEITA: perde 1 ponto.';
+  }
+  if (status === 'cheguei ao local') {
+    resumo = 'Cancelamento após chegada ao local: perde 1 ponto e gera dívida.';
+  }
+
+  return {
+    pontos: pontos,
+    valorDivida: valorDivida,
+    temPenalidade: temPenalidade,
+    geraDivida: geraDivida,
+    resumo: resumo
+  };
+}
+
+async function aplicarPenalidadeNoUsuario(uid, pontos, valorDivida) {
+  if (!uid) return;
+
+  const atualizacao = {
+    ultimaPenalidadeCancelamentoEm: new Date().toISOString()
+  };
+
+  if (pontos > 0) {
+    atualizacao.pontosPerdidosCancelamento = firebase.firestore.FieldValue.increment(pontos);
+    atualizacao.cancelamentosPenalizados = firebase.firestore.FieldValue.increment(1);
+  }
+
+  if (valorDivida > 0) {
+    atualizacao.valorDividaPendente = firebase.firestore.FieldValue.increment(valorDivida);
+    atualizacao.quantidadeDividasGeradas = firebase.firestore.FieldValue.increment(1);
+  }
+
+  await db.collection('usuarios').doc(uid).set(atualizacao, { merge: true });
+}
+
+function montarMensagemConfirmacaoCancelamento(corrida, consequencias) {
+  if (!consequencias.temPenalidade) {
+    return 'Deseja cancelar esta corrida?';
+  }
+
+  if (consequencias.geraDivida) {
+    return 'Deseja cancelar esta corrida?\n\nAtenção: como você já chegou ao local, perderá 1 ponto e ficará com uma dívida de ' + formatarMoeda(consequencias.valorDivida) + '.';
+  }
+
+  return 'Deseja cancelar esta corrida?\n\nAtenção: este cancelamento acontece depois do status ACEITA. Você perderá 1 ponto.';
+}
+
+async function cancelarCorridaMotorista(corrida) {
+  if (!corrida || !corrida.id) return;
+
+  const consequencias = calcularConsequenciasCancelamento(corrida);
+  const confirmar = confirm(montarMensagemConfirmacaoCancelamento(corrida, consequencias));
+  if (!confirmar) return;
+
+  try {
+    const agora = new Date();
+
+    await db.collection('corridas').doc(corrida.id).update({
+      status: 'cancelada',
+      canceladaPorTipo: 'motorista',
+      canceladaPorNome: dadosUsuarioAtual.nome || 'Motorista',
+      dataCancelamento: agora.toISOString(),
+      dataCancelamentoMs: agora.getTime(),
+      ultimaAtualizacao: agora.toISOString(),
+      ultimaAtualizacaoMs: agora.getTime(),
+      cancelamentoComPenalidade: consequencias.temPenalidade,
+      pontosPenalidade: consequencias.pontos,
+      valorDividaGerada: consequencias.valorDivida,
+      dividaGerada: consequencias.geraDivida,
+      dividaResponsavelTipo: consequencias.geraDivida ? 'motorista' : '',
+      dividaResponsavelNome: consequencias.geraDivida ? (dadosUsuarioAtual.nome || 'Motorista') : '',
+      dividaResponsavelUid: consequencias.geraDivida ? (usuarioAtual.uid || '') : '',
+      penalidadeResumo: consequencias.resumo
+    });
+
+    await aplicarPenalidadeNoUsuario(usuarioAtual.uid, consequencias.pontos, consequencias.valorDivida);
+
+    if (consequencias.geraDivida) {
+      mostrarMensagem('Corrida cancelada. Foi registrada perda de 1 ponto e dívida de ' + formatarMoeda(consequencias.valorDivida) + '.', '#FFB366');
+    } else if (consequencias.temPenalidade) {
+      mostrarMensagem('Corrida cancelada. Foi registrada perda de 1 ponto.', '#FFB366');
+    } else {
+      mostrarMensagem('Corrida cancelada com sucesso.', '#FFB366');
+    }
+  } catch (error) {
+    mostrarMensagem('Erro ao cancelar corrida: ' + error.message, '#FF5555');
+  }
+}
+
+
+async function validarCodigoEIniciar(corridaId, codigoCorreto, inputCodigo, btnValidar) {
+  const codigoDigitado = String((inputCodigo && inputCodigo.value) || '').replace(/\D/g, '');
+
+  if (!codigoDigitado) {
+    mostrarMensagem('Digite o código de embarque para iniciar a corrida.', '#FF5555');
+    if (inputCodigo) inputCodigo.focus();
+    return;
+  }
+
+  if (codigoDigitado !== String(codigoCorreto || '')) {
+    mostrarMensagem('Código de embarque incorreto.', '#FF5555');
+    if (inputCodigo) {
+      inputCodigo.focus();
+      inputCodigo.select();
+    }
+    return;
+  }
+
+  try {
+    if (btnValidar) {
+      btnValidar.disabled = true;
+      btnValidar.textContent = 'VALIDANDO...';
+    }
+
+    const agora = new Date();
+
+    await db.collection('corridas').doc(corridaId).update({
+      status: 'iniciada',
+      codigoValidado: true,
+      dataValidacaoCodigo: agora.toISOString(),
+      dataValidacaoCodigoMs: agora.getTime(),
+      dataIniciada: agora.toISOString(),
+      dataIniciadaMs: agora.getTime(),
+      ultimaAtualizacao: agora.toISOString(),
+      ultimaAtualizacaoMs: agora.getTime()
+    });
+
+    mostrarMensagem('Código validado e corrida iniciada com sucesso!', '#00FF88');
+  } catch (error) {
+    mostrarMensagem('Erro ao validar código: ' + error.message, '#FF5555');
+    if (btnValidar) {
+      btnValidar.disabled = false;
+      btnValidar.textContent = 'VALIDAR CÓDIGO E INICIAR';
+    }
+  }
+}
+
+function criarCardDisponivel(corrida) {
+  const card = document.createElement('div');
+  card.className = 'card-corrida';
+
+  const topo = document.createElement('div');
+  topo.className = 'card-topo';
+
+  const infoTopo = document.createElement('div');
+  infoTopo.style.flex = '1';
+  infoTopo.appendChild(criarTexto('Passageiro', corrida.passageiroNome || '-'));
+  infoTopo.appendChild(criarBadgeStatus(corrida.status));
+
+  topo.appendChild(criarFotoMini(corrida.passageiroFotoURL || ''));
+  topo.appendChild(infoTopo);
+
+  const grid = document.createElement('div');
+  grid.className = 'card-grid';
+  grid.appendChild(criarTexto('Cidade da corrida', obterCidadeCorrida(corrida)));
+  grid.appendChild(criarTexto('Serviço', obterLabelServicoCorrida(corrida)));
+  grid.appendChild(criarTexto('Localidade', corrida.localidade || '-'));
+  grid.appendChild(criarTexto('Origem', corrida.origem || '-'));
+  grid.appendChild(criarTexto('Destino', corrida.destino || '-'));
+  grid.appendChild(criarTexto('Referência', corrida.referencia || '-'));
+  grid.appendChild(criarTexto('Bairro', corrida.bairroEmbarque || '-'));
+  grid.appendChild(criarTexto('Endereço', corrida.logradouroEmbarque || '-'));
+  grid.appendChild(criarTexto('Número', corrida.numeroEmbarque || '-'));
+  grid.appendChild(criarTexto('Complemento', corrida.complementoEmbarque || '-'));
+  grid.appendChild(criarTexto('Tipo de cálculo', corrida.tipoCalculoTexto || '-'));
+  grid.appendChild(criarTexto('Pagamento', corrida.pagamento || '-'));
+  grid.appendChild(criarTexto('Distância estimada', formatarDistancia(corrida.distanciaKm)));
+  grid.appendChild(criarTexto('Valor estimado', formatarMoeda(corrida.valorEstimado || 0)));
+  grid.appendChild(criarTexto('Data da solicitação', formatarData(corrida.dataCriacao)));
+
+  const obs = criarTexto('Observações', corrida.observacoes || '-');
+
+  const btnAceitar = document.createElement('button');
+  btnAceitar.type = 'button';
+  btnAceitar.className = 'btn-amarelo';
+
+  if (motoristaTemCorridaAtiva) {
+    btnAceitar.textContent = 'FINALIZE OU CANCELE SUA CORRIDA ATUAL';
+    btnAceitar.disabled = true;
+  } else {
+    btnAceitar.textContent = 'ACEITAR CORRIDA';
+    btnAceitar.addEventListener('click', function() {
+      aceitarCorrida(corrida.id);
+    });
+  }
+
+  card.appendChild(topo);
+  card.appendChild(grid);
+  card.appendChild(obs);
+  card.appendChild(btnAceitar);
+
+  return card;
+}
+
+function criarCardAtiva(corrida) {
+  const card = document.createElement('div');
+  card.className = 'card-corrida';
+
+  const topo = document.createElement('div');
+  topo.className = 'card-topo';
+
+  const infoTopo = document.createElement('div');
+  infoTopo.style.flex = '1';
+  infoTopo.appendChild(criarTexto('Passageiro', corrida.passageiroNome || '-'));
+  infoTopo.appendChild(criarBadgeStatus(corrida.status));
+
+  topo.appendChild(criarFotoMini(corrida.passageiroFotoURL || ''));
+  topo.appendChild(infoTopo);
+
+  const grid = document.createElement('div');
+  grid.className = 'card-grid';
+  grid.appendChild(criarTexto('Cidade da corrida', obterCidadeCorrida(corrida)));
+  grid.appendChild(criarTexto('Serviço', obterLabelServicoCorrida(corrida)));
+  grid.appendChild(criarTexto('Localidade', corrida.localidade || '-'));
+  grid.appendChild(criarTexto('Origem', corrida.origem || '-'));
+  grid.appendChild(criarTexto('Destino', corrida.destino || '-'));
+  grid.appendChild(criarTexto('Referência', corrida.referencia || '-'));
+  grid.appendChild(criarTexto('Bairro', corrida.bairroEmbarque || '-'));
+  grid.appendChild(criarTexto('Endereço', corrida.logradouroEmbarque || '-'));
+  grid.appendChild(criarTexto('Número', corrida.numeroEmbarque || '-'));
+  grid.appendChild(criarTexto('Complemento', corrida.complementoEmbarque || '-'));
+  grid.appendChild(criarTexto('Tipo de cálculo', corrida.tipoCalculoTexto || '-'));
+  grid.appendChild(criarTexto('Pagamento', corrida.pagamento || '-'));
+  grid.appendChild(criarTexto('Distância estimada', formatarDistancia(corrida.distanciaKm)));
+  grid.appendChild(criarTexto('Valor estimado', formatarMoeda(corrida.valorEstimado || 0)));
+  grid.appendChild(criarTexto('Data da solicitação', formatarData(corrida.dataCriacao)));
+
+  const obs = criarTexto('Observações', corrida.observacoes || '-');
+
+  card.appendChild(topo);
+  card.appendChild(grid);
+  card.appendChild(obs);
+
+  if (corrida.status === 'aceita') {
+    const btnACaminho = document.createElement('button');
+    btnACaminho.type = 'button';
+    btnACaminho.className = 'btn-azul';
+    btnACaminho.textContent = 'IR PARA EMBARQUE';
+    btnACaminho.addEventListener('click', function() {
+      atualizarStatusCorrida(corrida.id, 'a caminho');
+    });
+    card.appendChild(btnACaminho);
+
+    const btnCancelar = document.createElement('button');
+    btnCancelar.type = 'button';
+    btnCancelar.className = 'btn-vermelho';
+    btnCancelar.textContent = 'CANCELAR CORRIDA';
+    btnCancelar.addEventListener('click', function() {
+      cancelarCorridaMotorista(corrida);
+    });
+    card.appendChild(btnCancelar);
+  }
+
+  if (corrida.status === 'a caminho') {
+    const btnCheguei = document.createElement('button');
+    btnCheguei.type = 'button';
+    btnCheguei.className = 'btn-laranja';
+    btnCheguei.textContent = 'CHEGUEI AO LOCAL';
+    btnCheguei.addEventListener('click', function() {
+      atualizarStatusCorrida(corrida.id, 'cheguei ao local');
+    });
+    card.appendChild(btnCheguei);
+
+    const btnCancelar = document.createElement('button');
+    btnCancelar.type = 'button';
+    btnCancelar.className = 'btn-vermelho';
+    btnCancelar.textContent = 'CANCELAR CORRIDA';
+    btnCancelar.addEventListener('click', function() {
+      cancelarCorridaMotorista(corrida);
+    });
+    card.appendChild(btnCancelar);
+  }
+
+  if (corrida.status === 'cheguei ao local') {
+    const orientacao = criarTexto(
+      'Orientação',
+      'Peça ao passageiro o código de embarque e digite abaixo para iniciar a corrida.'
+    );
+    card.appendChild(orientacao);
+
+    const caixaCodigo = document.createElement('div');
+    caixaCodigo.className = 'codigo-validacao-box';
+
+    const inputCodigo = document.createElement('input');
+    inputCodigo.type = 'text';
+    inputCodigo.inputMode = 'numeric';
+    inputCodigo.maxLength = 6;
+    inputCodigo.placeholder = 'Digite o código de embarque';
+    inputCodigo.addEventListener('input', function() {
+      inputCodigo.value = inputCodigo.value.replace(/\D/g, '');
+    });
+
+    const btnValidar = document.createElement('button');
+    btnValidar.type = 'button';
+    btnValidar.className = 'btn-roxo';
+    btnValidar.textContent = 'VALIDAR CÓDIGO E INICIAR';
+    btnValidar.addEventListener('click', function() {
+      validarCodigoEIniciar(corrida.id, corrida.codigoEmbarque, inputCodigo, btnValidar);
+    });
+
+    inputCodigo.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        validarCodigoEIniciar(corrida.id, corrida.codigoEmbarque, inputCodigo, btnValidar);
+      }
+    });
+
+    caixaCodigo.appendChild(inputCodigo);
+    caixaCodigo.appendChild(btnValidar);
+    card.appendChild(caixaCodigo);
+
+    const btnCancelar = document.createElement('button');
+    btnCancelar.type = 'button';
+    btnCancelar.className = 'btn-vermelho';
+    btnCancelar.textContent = 'CANCELAR CORRIDA';
+    btnCancelar.addEventListener('click', function() {
+      cancelarCorridaMotorista(corrida);
+    });
+    card.appendChild(btnCancelar);
+  }
+
+  if (corrida.status === 'iniciada') {
+    const btnFinalizar = document.createElement('button');
+    btnFinalizar.type = 'button';
+    btnFinalizar.className = 'btn-verde';
+    btnFinalizar.textContent = 'FINALIZAR CORRIDA';
+    btnFinalizar.addEventListener('click', function() {
+      atualizarStatusCorrida(corrida.id, 'finalizada');
+    });
+    card.appendChild(btnFinalizar);
+  }
+
+  return card;
+}
+
+function criarCardHistorico(corrida) {
+  const card = document.createElement('div');
+  card.className = 'card-corrida';
+
+  const topo = document.createElement('div');
+  topo.className = 'card-topo';
+
+  const infoTopo = document.createElement('div');
+  infoTopo.style.flex = '1';
+  infoTopo.appendChild(criarTexto('Passageiro', corrida.passageiroNome || '-'));
+  infoTopo.appendChild(criarBadgeStatus(corrida.status));
+
+  topo.appendChild(criarFotoMini(corrida.passageiroFotoURL || ''));
+  topo.appendChild(infoTopo);
+
+  const grid = document.createElement('div');
+  grid.className = 'card-grid';
+  grid.appendChild(criarTexto('Cidade da corrida', obterCidadeCorrida(corrida)));
+  grid.appendChild(criarTexto('Serviço', obterLabelServicoCorrida(corrida)));
+  grid.appendChild(criarTexto('Localidade', corrida.localidade || '-'));
+  grid.appendChild(criarTexto('Origem', corrida.origem || '-'));
+  grid.appendChild(criarTexto('Destino', corrida.destino || '-'));
+  grid.appendChild(criarTexto('Pagamento', corrida.pagamento || '-'));
+  grid.appendChild(criarTexto('Distância estimada', formatarDistancia(corrida.distanciaKm)));
+  grid.appendChild(criarTexto('Valor estimado', formatarMoeda(corrida.valorEstimado || 0)));
+
+  if (corrida.status === 'finalizada') {
+    grid.appendChild(criarTexto('Finalizada em', formatarData(corrida.dataFinalizacao)));
+  } else {
+    grid.appendChild(criarTexto('Cancelada em', formatarData(corrida.dataCancelamento)));
+  }
+
+  card.appendChild(topo);
+  card.appendChild(grid);
+
+  if (corrida.status === 'finalizada') {
+    const bloco = document.createElement('div');
+    bloco.className = 'lista-vazia';
+    bloco.textContent = 'Corrida finalizada com sucesso.';
+    card.appendChild(bloco);
+  } else {
+    card.appendChild(criarBlocoConsequenciasCancelamento(corrida));
+  }
+  return card;
+}
+
+
+function criarBlocoConsequenciasCancelamento(corrida) {
+  const bloco = document.createElement('div');
+  bloco.className = 'lista-vazia';
+
+  const partes = [];
+  partes.push('Corrida cancelada por ' + (corrida.canceladaPorNome || corrida.canceladaPorTipo || 'usuário') + '.');
+
+  if (Number(corrida.pontosPenalidade || 0) > 0) {
+    partes.push('Perda de pontos: ' + Number(corrida.pontosPenalidade) + '.');
+  }
+
+  if (Number(corrida.valorDividaGerada || 0) > 0) {
+    partes.push('Dívida gerada: ' + formatarMoeda(corrida.valorDividaGerada) + '.');
+  }
+
+  if (corrida.penalidadeResumo) {
+    partes.push(corrida.penalidadeResumo + '.');
+  }
+
+  bloco.textContent = partes.join(' ');
+  return bloco;
+}
+
+function renderizarListaDisponiveis(corridas) {
+  listaDisponiveis.innerHTML = '';
+
+  if (!corridas.length) {
+    const vazio = document.createElement('div');
+    vazio.className = 'lista-vazia';
+    vazio.textContent = 'Nenhuma corrida disponível neste momento.';
+    listaDisponiveis.appendChild(vazio);
+    return;
+  }
+
+  corridas.forEach(function(corrida) {
+    listaDisponiveis.appendChild(criarCardDisponivel(corrida));
+  });
+}
+
+function renderizarLista(listaElemento, corridas, mensagemVazia, tipo) {
+  listaElemento.innerHTML = '';
+
+  if (!corridas.length) {
+    const vazio = document.createElement('div');
+    vazio.className = 'lista-vazia';
+    vazio.textContent = mensagemVazia;
+    listaElemento.appendChild(vazio);
+    return;
+  }
+
+  corridas.forEach(function(corrida) {
+    if (tipo === 'ativa') {
+      listaElemento.appendChild(criarCardAtiva(corrida));
+    } else {
+      listaElemento.appendChild(criarCardHistorico(corrida));
+    }
+  });
+}
+
+async function aceitarCorrida(corridaId) {
+  if (!usuarioAtual || !dadosUsuarioAtual) {
+    mostrarMensagem('Motorista não carregado. Reabra o painel.', '#FF5555');
+    return;
+  }
+
+  if (motoristaTemCorridaAtiva) {
+    mostrarMensagem('Você já possui uma corrida em atendimento.', '#FF884D');
+    return;
+  }
+
+  const confirmar = confirm('Deseja aceitar esta corrida?');
+  if (!confirmar) return;
+
+  try {
+    const agora = new Date();
+
+    await db.collection('corridas').doc(corridaId).update({
+      status: 'aceita',
+      motoristaUid: usuarioAtual.uid,
+      motoristaNome: dadosUsuarioAtual.nome || '',
+      motoristaCidade: dadosUsuarioAtual.cidade || '',
+      motoristaFotoURL: dadosUsuarioAtual.fotoURL || '',
+      motoristaTelefone: dadosUsuarioAtual.telefone || '',
+      motoristaPlaca: dadosUsuarioAtual.placa || '',
+      dataAceite: agora.toISOString(),
+      dataAceiteMs: agora.getTime(),
+      ultimaAtualizacao: agora.toISOString(),
+      ultimaAtualizacaoMs: agora.getTime()
+    });
+
+    mostrarMensagem('Corrida aceita com sucesso!', '#00FF88');
+  } catch (error) {
+    mostrarMensagem('Erro ao aceitar corrida: ' + error.message, '#FF5555');
+  }
+}
+
+async function atualizarStatusCorrida(corridaId, novoStatus) {
+  const confirmar = confirm('Deseja alterar o status desta corrida para "' + novoStatus.toUpperCase() + '"?');
+  if (!confirmar) return;
+
+  try {
+    const agora = new Date();
+
+    const dadosAtualizacao = {
+      status: novoStatus,
+      ultimaAtualizacao: agora.toISOString(),
+      ultimaAtualizacaoMs: agora.getTime()
+    };
+
+    if (novoStatus === 'a caminho') {
+      dadosAtualizacao.dataACaminho = agora.toISOString();
+      dadosAtualizacao.dataACaminhoMs = agora.getTime();
+    }
+
+    if (novoStatus === 'cheguei ao local') {
+      dadosAtualizacao.dataChegueiLocal = agora.toISOString();
+      dadosAtualizacao.dataChegueiLocalMs = agora.getTime();
+    }
+
+    if (novoStatus === 'finalizada') {
+      dadosAtualizacao.dataFinalizacao = agora.toISOString();
+      dadosAtualizacao.dataFinalizacaoMs = agora.getTime();
+    }
+
+    await db.collection('corridas').doc(corridaId).update(dadosAtualizacao);
+
+    mostrarMensagem('Status atualizado para "' + novoStatus.toUpperCase() + '" com sucesso!', '#00FF88');
+  } catch (error) {
+    mostrarMensagem('Erro ao atualizar status: ' + error.message, '#FF5555');
+  }
+}
+
+function iniciarListenersCorridas() {
+  if (!usuarioAtual || !dadosUsuarioAtual) return;
+
+  if (unsubscribeDisponiveis) unsubscribeDisponiveis();
+  if (unsubscribeMinhas) unsubscribeMinhas();
+
+  unsubscribeDisponiveis = db.collection('corridas')
+    .where('status', '==', 'solicitada')
+    .onSnapshot(function(snapshot) {
+      const disponiveis = [];
+
+      snapshot.forEach(function(doc) {
+        const dados = { id: doc.id, ...doc.data() };
+        const cidadeDaCorrida = dados.cidadeCorrida || dados.passageiroCidade || '';
+
+        if (
+          (!dadosUsuarioAtual.cidade || cidadeDaCorrida === dadosUsuarioAtual.cidade) &&
+          motoristaPodeAtenderCorrida(dados, dadosUsuarioAtual)
+        ) {
+          disponiveis.push(dados);
+        }
+      });
+
+      disponiveis.sort(function(a, b) {
+        return (b.dataCriacaoMs || 0) - (a.dataCriacaoMs || 0);
+      });
+
+      verificarNovasCorridasDisponiveis(disponiveis);
+      corridasDisponiveisCache = disponiveis;
+      renderizarListaDisponiveis(disponiveis);
+    }, function(error) {
+      listaDisponiveis.innerHTML = '<div class="lista-vazia">Erro ao carregar corridas: ' + error.message + '</div>';
+    });
+
+  unsubscribeMinhas = db.collection('corridas')
+    .where('motoristaUid', '==', usuarioAtual.uid)
+    .onSnapshot(function(snapshot) {
+      const minhas = [];
+
+      snapshot.forEach(function(doc) {
+        minhas.push({
+          id: doc.id,
+          ...doc.data()
+        });
+      });
+
+      minhas.sort(function(a, b) {
+        const valorA = a.ultimaAtualizacaoMs || a.dataIniciadaMs || a.dataAceiteMs || a.dataCriacaoMs || 0;
+        const valorB = b.ultimaAtualizacaoMs || b.dataIniciadaMs || b.dataAceiteMs || b.dataCriacaoMs || 0;
+        return valorB - valorA;
+      });
+
+      const ativas = minhas.filter(function(corrida) {
+        return STATUS_ATIVOS_MOTORISTA.includes(corrida.status);
+      });
+
+      const historico = minhas.filter(function(corrida) {
+        return STATUS_HISTORICO.includes(corrida.status);
+      });
+
+      renderizarLista(listaAtivas, ativas, 'Nenhuma corrida ativa no momento.', 'ativa');
+      renderizarLista(listaHistorico, historico, 'Nenhuma corrida no histórico ainda.', 'historico');
+      atualizarBloqueioMotorista(ativas);
+    }, function(error) {
+      listaAtivas.innerHTML = '<div class="lista-vazia">Erro ao carregar corridas: ' + error.message + '</div>';
+      listaHistorico.innerHTML = '<div class="lista-vazia">Erro ao carregar corridas: ' + error.message + '</div>';
+    });
+}
+
+async function carregarPainel(user) {
+  try {
+    const doc = await db.collection('usuarios').doc(user.uid).get();
+
+    if (!doc.exists) {
+      await auth.signOut();
+      window.location.href = './login.html';
+      return;
+    }
+
+    const dados = doc.data();
+
+    if (dados.tipo !== 'motorista' || dados.status !== 'aprovado') {
+      await auth.signOut();
+      window.location.href = './login.html';
+      return;
+    }
+
+    usuarioAtual = user;
+
+    const servicosHabilitados = obterServicosHabilitadosUsuario(dados);
+    dados.servicosHabilitados = servicosHabilitados;
+    dados.tipoServicoPrincipal = normalizarTipoServico((dados && dados.tipoServicoPrincipal) || servicosHabilitados[0]);
+    dadosUsuarioAtual = dados;
+
+    if (!Array.isArray(doc.data().servicosHabilitados) || !doc.data().servicosHabilitados.length || !doc.data().tipoServicoPrincipal) {
+      await db.collection('usuarios').doc(user.uid).set({
+        servicosHabilitados: servicosHabilitados,
+        tipoServicoPrincipal: dados.tipoServicoPrincipal
+      }, { merge: true });
+    }
+
+    preencherFoto(dados.fotoURL || '');
+
+    document.getElementById('dado-nome').innerText = dados.nome || '-';
+    document.getElementById('dado-email').innerText = dados.email || '-';
+    document.getElementById('dado-cidade').innerText = dados.cidade || '-';
+    document.getElementById('dado-telefone').innerText = dados.telefone || '-';
+    document.getElementById('dado-cnh').innerText = dados.cnh || '-';
+    document.getElementById('dado-placa').innerText = dados.placa || '-';
+    document.getElementById('dado-tipo').innerText = dados.tipo || '-';
+    document.getElementById('dado-servicos').innerText = formatarListaServicos(servicosHabilitados);
+    document.getElementById('dado-status').innerText = dados.status || '-';
+
+    iniciarListenersCorridas();
+  } catch (error) {
+    mostrarMensagem('Erro ao carregar painel: ' + error.message, '#FF5555');
+  }
+}
+
+atualizarStatusSom();
+
+auth.onAuthStateChanged(async function(user) {
+  if (!user) {
+    if (unsubscribeDisponiveis) unsubscribeDisponiveis();
+    if (unsubscribeMinhas) unsubscribeMinhas();
+    window.location.href = './login.html';
+    return;
+  }
+
+  await carregarPainel(user);
+});
+
+btnToggleSom.addEventListener('click', async function() {
+  await alternarSomNotificacao();
+});
+
+btnSair.addEventListener('click', async function() {
+  if (unsubscribeDisponiveis) unsubscribeDisponiveis();
+  if (unsubscribeMinhas) unsubscribeMinhas();
+  await auth.signOut();
+  window.location.href = './login.html';
+});
+</script>
+</body>
+</html>

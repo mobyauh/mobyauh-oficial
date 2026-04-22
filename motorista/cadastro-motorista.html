@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOBYAUH - Cadastro de Motorista</title>
+  <link rel="icon" type="image/png" sizes="512x512" href="../assets/icon-mobyauh.png">
+  <link rel="apple-touch-icon" href="../assets/icon-mobyauh.png">
+  <meta name="theme-color" content="#FFCC00">
+  <link rel="stylesheet" href="../passageiro/global.css">
+
+  <style>
+    .container {
+      max-width: 430px;
+      text-align: center;
+      background: #232323;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 26px;
+      padding: 30px 28px 28px;
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.50),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+
+    .brand-area {
+      background: linear-gradient(180deg, rgba(255, 204, 0, 0.06), rgba(255, 204, 0, 0.02));
+      border: 1px solid rgba(255, 204, 0, 0.10);
+      border-radius: 22px;
+      padding: 24px 18px 20px;
+      margin-bottom: 24px;
+    }
+
+    .logo-ring {
+      width: 128px;
+      height: 128px;
+      margin: 0 auto 18px;
+      border-radius: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 204, 0, 0.08);
+      box-shadow: inset 0 0 0 1px rgba(255, 204, 0, 0.08);
+    }
+
+    .logo-box {
+      width: 96px;
+      height: 96px;
+      border-radius: 28px;
+      overflow: hidden;
+      background: #FFCC00;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 14px 24px rgba(255, 204, 0, 0.18),
+        0 4px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    .logo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .logo-name {
+      color: #FFCC00;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .brand-line {
+      width: 80px;
+      height: 4px;
+      border-radius: 999px;
+      background: #FFCC00;
+      margin: 0 auto 14px;
+    }
+
+    .subtitulo {
+      color: #d0d0d0;
+      margin-bottom: 0;
+      font-size: 0.96rem;
+      line-height: 1.6;
+      max-width: 290px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    h2 {
+      color: #ffffff;
+      margin-bottom: 8px;
+      font-size: 1.35rem;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 14px 15px;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      border: 1px solid #4a4a4a;
+      background: #3a3a3a;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.2s ease;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #FFCC00;
+      box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.15);
+    }
+
+    input::placeholder {
+      color: #aaa;
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    #m-btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      background: #FFCC00;
+      color: #1a1a1a;
+      box-shadow: 0 10px 20px rgba(255, 204, 0, 0.15);
+      transition: transform 0.15s ease, opacity 0.2s ease;
+    }
+
+    #m-btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.97;
+    }
+
+    #m-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    #m-status {
+      margin-top: 15px;
+      font-weight: bold;
+      min-height: 22px;
+      text-align: center;
+    }
+
+    .upload-box {
+      margin-bottom: 16px;
+      text-align: left;
+      background: #2d2d2d;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .upload-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #f2f2f2;
+    }
+
+    .upload-input {
+      width: 100%;
+      background-color: #3a3a3a;
+      border: 1px solid #4a4a4a;
+      color: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 0;
+    }
+
+    .preview-box {
+      margin-top: 12px;
+      display: none;
+      text-align: center;
+    }
+
+    .preview-box img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 3px solid #FFCC00;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+    }
+
+    .preview-text {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: #d7d7d7;
+    }
+
+    .info-foto {
+      margin-top: 6px;
+      font-size: 0.85rem;
+      color: #aaaaaa;
+      line-height: 1.5;
+    }
+
+    .servicos-box {
+      margin-bottom: 16px;
+      text-align: left;
+      background: #2d2d2d;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .servicos-label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #f2f2f2;
+    }
+
+    .opcao-servico {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      color: #ffffff;
+      font-size: 0.96rem;
+      cursor: pointer;
+    }
+
+    .opcao-servico:last-child {
+      margin-bottom: 0;
+    }
+
+    .opcao-servico input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      accent-color: #FFCC00;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .info-servico {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: #aaaaaa;
+      line-height: 1.5;
+    }
+
+    .link-voltar {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #FFCC00;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .link-voltar:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 24px 20px;
+      }
+
+      .logo-name {
+        font-size: 1.8rem;
+      }
+
+      .logo-ring {
+        width: 118px;
+        height: 118px;
+      }
+
+      .logo-box {
+        width: 88px;
+        height: 88px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="brand-area">
+      <div class="logo-ring">
+        <div class="logo-box">
+          <img src="../assets/icon-mobyauh.png" alt="Ícone oficial MOBYAUH">
+        </div>
+      </div>
+
+      <div class="logo-name">MOBYAUH</div>
+      <div class="brand-line"></div>
+      <h2>Cadastro de Motorista</h2>
+      <p class="subtitulo">Solicite seu credenciamento para atuar na plataforma.</p>
+    </div>
+
+    <form id="form-mot-oficial">
+      <input type="text" id="m-nome" placeholder="Nome completo" required>
+      <input type="email" id="m-email" placeholder="E-mail" required>
+      <input type="password" id="m-senha" placeholder="Senha" required>
+
+      <select id="m-cidade" required>
+        <option value="" disabled selected>Cidade de atuação</option>
+        <option value="Portel">Portel</option>
+        <option value="Breves">Breves</option>
+        <option value="Melgaço">Melgaço</option>
+        <option value="Bagre">Bagre</option>
+        <option value="Curralinho">Curralinho</option>
+      </select>
+
+      <div class="servicos-box">
+        <label class="servicos-label">Quais serviços você vai atender?</label>
+        <label class="opcao-servico">
+          <input type="checkbox" id="m-servico-carro" checked>
+          <span>Corridas de carro</span>
+        </label>
+        <label class="opcao-servico">
+          <input type="checkbox" id="m-servico-moto">
+          <span>Corridas de moto</span>
+        </label>
+        <div class="info-servico">Você pode marcar um serviço ou os dois. Quem atende carro e moto usa a mesma conta.</div>
+      </div>
+
+      <input type="text" id="m-cnh" placeholder="Número da CNH" required>
+      <input type="text" id="m-placa" placeholder="Placa do veículo (ex: ABC1D23)" required>
+      <input type="text" id="m-tel" placeholder="Telefone / WhatsApp" required>
+
+      <div class="upload-box">
+        <label for="m-foto" class="upload-label">Foto do motorista</label>
+        <input type="file" id="m-foto" class="upload-input" accept="image/*" capture="user" required>
+        <div class="info-foto">Envie uma foto nítida do rosto para identificação.</div>
+
+        <div class="preview-box" id="m-preview-box">
+          <img id="m-preview-img" alt="Prévia da foto">
+          <div class="preview-text">Prévia da foto selecionada</div>
+        </div>
+      </div>
+
+      <button type="submit" id="m-btn">SOLICITAR CREDENCIAMENTO</button>
+    </form>
+
+    <div id="m-status"></div>
+    <a href="../index.html" class="link-voltar">Voltar</a>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDB1OvsClJ1enHm_tzYnje386fVvmnOq5M",
+      authDomain: "mobyauh-48f39.firebaseapp.com",
+      projectId: "mobyauh-48f39",
+      storageBucket: "mobyauh-48f39.firebasestorage.app",
+      messagingSenderId: "958782206989",
+      appId: "1:958782206989:web:af7d62c9117df8af151144"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    const form = document.getElementById('form-mot-oficial');
+    const btn = document.getElementById('m-btn');
+    const status = document.getElementById('m-status');
+    const fotoInput = document.getElementById('m-foto');
+    const previewBox = document.getElementById('m-preview-box');
+    const previewImg = document.getElementById('m-preview-img');
+
+    fotoInput.addEventListener('change', function () {
+      const file = fotoInput.files[0];
+
+      if (!file) {
+        previewBox.style.display = 'none';
+        previewImg.src = '';
+        return;
+      }
+
+      const objectURL = URL.createObjectURL(file);
+      previewImg.src = objectURL;
+      previewBox.style.display = 'block';
+    });
+
+    async function enviarFotoParaStorage(file, uid) {
+      const extensaoOriginal = file.name.includes('.') ? file.name.split('.').pop().toLowerCase() : 'jpg';
+      const nomeArquivo = 'foto_' + Date.now() + '.' + extensaoOriginal;
+      const caminho = 'usuarios/motoristas/' + uid + '/' + nomeArquivo;
+      const storageRef = storage.ref(caminho);
+
+      await storageRef.put(file);
+      const url = await storageRef.getDownloadURL();
+      return url;
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      btn.innerText = 'ENVIANDO...';
+      btn.disabled = true;
+      status.innerHTML = '';
+
+      let userCriado = null;
+
+      try {
+        const nome = document.getElementById('m-nome').value.trim();
+        const email = document.getElementById('m-email').value.trim();
+        const senha = document.getElementById('m-senha').value;
+        const cidade = document.getElementById('m-cidade').value;
+        const servicosHabilitados = [];
+        if (document.getElementById('m-servico-carro').checked) servicosHabilitados.push('carro');
+        if (document.getElementById('m-servico-moto').checked) servicosHabilitados.push('moto');
+
+        const cnh = document.getElementById('m-cnh').value.trim();
+        const placa = document.getElementById('m-placa').value.trim().toUpperCase();
+        const telefone = document.getElementById('m-tel').value.trim();
+        const fotoFile = fotoInput.files[0];
+
+        if (!servicosHabilitados.length) {
+          throw new Error('Selecione pelo menos um serviço: carro ou moto.');
+        }
+
+        if (!fotoFile) {
+          throw new Error('Selecione uma foto do motorista.');
+        }
+
+        if (fotoFile.size > 3 * 1024 * 1024) {
+          throw new Error('A foto deve ter no máximo 3MB.');
+        }
+
+        userCriado = await auth.createUserWithEmailAndPassword(email, senha);
+        const uid = userCriado.user.uid;
+
+        status.innerHTML = "<span style='color:#FFCC00'>Enviando foto...</span>";
+
+        const fotoURL = await enviarFotoParaStorage(fotoFile, uid);
+
+        status.innerHTML = "<span style='color:#FFCC00'>Salvando cadastro...</span>";
+
+        await db.collection('usuarios').doc(uid).set({
+          uid: uid,
+          nome: nome,
+          email: email,
+          cidade: cidade,
+          cnh: cnh,
+          placa: placa,
+          telefone: telefone,
+          tipo: 'motorista',
+          servicosHabilitados: servicosHabilitados,
+          tipoServicoPrincipal: servicosHabilitados[0],
+          servicosHabilitadosLabel: servicosHabilitados.map(function(item) {
+            return item === 'moto' ? 'Moto' : 'Carro';
+          }),
+          status: 'pendente',
+          fotoURL: fotoURL,
+          data: new Date().toISOString()
+        });
+
+        await auth.signOut();
+
+        alert('Cadastro enviado com sucesso. Aguarde a validação manual da equipe MOBYAUH.');
+        window.location.href = '../passageiro/aguardando.html';
+
+      } catch (err) {
+        if (auth.currentUser) {
+          try {
+            await auth.currentUser.delete();
+          } catch (e) {
+          }
+        }
+
+        status.innerHTML = "<span style='color:#FF4444'>Erro: " + err.message + "</span>";
+        btn.disabled = false;
+        btn.innerText = 'SOLICITAR CREDENCIAMENTO';
+      }
+    });
+  </script>
+</body>
+</html>

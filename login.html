@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOBYAUH - Entrar</title>
+  <link rel="icon" type="image/png" sizes="512x512" href="./assets/icon-mobyauh.png">
+  <link rel="apple-touch-icon" href="./assets/icon-mobyauh.png">
+  <meta name="theme-color" content="#FFCC00">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, rgba(255, 204, 0, 0.08), transparent 30%),
+        linear-gradient(135deg, #111111, #1b1b1b 45%, #101010);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 430px;
+      background: #232323;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 26px;
+      padding: 30px 28px 28px;
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.50),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+      text-align: center;
+    }
+
+    .brand-area {
+      background: linear-gradient(180deg, rgba(255, 204, 0, 0.06), rgba(255, 204, 0, 0.02));
+      border: 1px solid rgba(255, 204, 0, 0.10);
+      border-radius: 22px;
+      padding: 24px 18px 20px;
+      margin-bottom: 24px;
+    }
+
+    .logo-ring {
+      width: 128px;
+      height: 128px;
+      margin: 0 auto 18px;
+      border-radius: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 204, 0, 0.08);
+      box-shadow: inset 0 0 0 1px rgba(255, 204, 0, 0.08);
+    }
+
+    .logo-box {
+      width: 96px;
+      height: 96px;
+      border-radius: 28px;
+      background: #FFCC00;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 14px 24px rgba(255, 204, 0, 0.18),
+        0 4px 10px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+    }
+
+    .logo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .brand-name {
+      color: #FFCC00;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .brand-line {
+      width: 80px;
+      height: 4px;
+      border-radius: 999px;
+      background: #FFCC00;
+      margin: 0 auto 14px;
+    }
+
+    .brand-subtitle {
+      color: #d0d0d0;
+      font-size: 0.96rem;
+      line-height: 1.6;
+      max-width: 290px;
+      margin: 0 auto;
+    }
+
+    .form-area {
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      font-size: 0.92rem;
+      margin-bottom: 8px;
+      color: #e5e5e5;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      background-color: #3a3a3a;
+      border: 1px solid #4a4a4a;
+      color: #fff;
+      padding: 14px 15px;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input::placeholder {
+      color: #aaaaaa;
+    }
+
+    input:focus {
+      border-color: #FFCC00;
+      box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.15);
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      text-align: center;
+      transition: transform 0.15s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.97;
+    }
+
+    .btn-principal {
+      background: #FFCC00;
+      color: #1a1a1a;
+      box-shadow: 0 10px 20px rgba(255, 204, 0, 0.15);
+      margin-top: 6px;
+    }
+
+    .mensagem {
+      min-height: 24px;
+      margin-top: 14px;
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .link-voltar {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #FFCC00;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .link-voltar:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 24px 20px;
+      }
+
+      .brand-name {
+        font-size: 1.8rem;
+      }
+
+      .logo-ring {
+        width: 118px;
+        height: 118px;
+      }
+
+      .logo-box {
+        width: 88px;
+        height: 88px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="brand-area">
+      <div class="logo-ring">
+        <div class="logo-box">
+          <img src="./assets/icon-mobyauh.png" alt="Ícone oficial MOBYAUH">
+        </div>
+      </div>
+
+      <div class="brand-name">MOBYAUH</div>
+      <div class="brand-line"></div>
+      <p class="brand-subtitle">
+        Faça login para acessar sua área. Apenas cadastros aprovados podem entrar.
+      </p>
+    </div>
+
+    <form id="form-login" class="form-area">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" placeholder="Digite seu e-mail" autocomplete="email" required>
+
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" placeholder="Digite sua senha" autocomplete="current-password" required>
+
+      <button type="submit" id="btn-login" class="btn btn-principal">ENTRAR</button>
+    </form>
+
+    <div id="mensagem" class="mensagem"></div>
+    <a href="./index.html" class="link-voltar">Voltar para a página inicial</a>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDB1OvsClJ1enHm_tzYnje386fVvmnOq5M",
+      authDomain: "mobyauh-48f39.firebaseapp.com",
+      projectId: "mobyauh-48f39",
+      storageBucket: "mobyauh-48f39.firebasestorage.app",
+      messagingSenderId: "958782206989",
+      appId: "1:958782206989:web:af7d62c9117df8af151144"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    const formLogin = document.getElementById("form-login");
+    const mensagem = document.getElementById("mensagem");
+    const btnLogin = document.getElementById("btn-login");
+
+    function mostrarMensagem(texto, cor) {
+      mensagem.style.color = cor;
+      mensagem.innerText = texto;
+    }
+
+    async function validarEEnviar(user) {
+      try {
+        const docRef = db.collection("usuarios").doc(user.uid);
+        const docSnap = await docRef.get();
+
+        if (!docSnap.exists) {
+          await auth.signOut();
+          mostrarMensagem("Cadastro não encontrado no banco de dados.", "#ff6666");
+          return;
+        }
+
+        const dados = docSnap.data();
+
+        if (dados.status !== "aprovado") {
+          await auth.signOut();
+          mostrarMensagem("Seu cadastro ainda está pendente de aprovação.", "#ff6666");
+          return;
+        }
+
+        if (dados.tipo === "motorista") {
+          window.location.href = "./painel-motorista.html";
+          return;
+        }
+
+        if (dados.tipo === "passageiro") {
+          window.location.href = "./painel-passageiro.html";
+          return;
+        }
+
+        await auth.signOut();
+        mostrarMensagem("Tipo de usuário inválido.", "#ff6666");
+      } catch (error) {
+        await auth.signOut();
+        mostrarMensagem("Erro ao validar acesso: " + error.message, "#ff6666");
+      }
+    }
+
+    formLogin.addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const senha = document.getElementById("senha").value;
+
+      btnLogin.disabled = true;
+      btnLogin.innerText = "VALIDANDO...";
+      mostrarMensagem("", "#ffffff");
+
+      try {
+        const cred = await auth.signInWithEmailAndPassword(email, senha);
+        await validarEEnviar(cred.user);
+      } catch (error) {
+        mostrarMensagem("Erro no login: " + error.message, "#ff6666");
+      } finally {
+        btnLogin.disabled = false;
+        btnLogin.innerText = "ENTRAR";
+      }
+    });
+
+    auth.onAuthStateChanged(async function(user) {
+      if (user) {
+        await validarEEnviar(user);
+      }
+    });
+  </script>
+</body>
+</html>

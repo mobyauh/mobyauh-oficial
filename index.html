@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOBYAUH - Início</title>
+  <link rel="icon" type="image/png" sizes="512x512" href="./assets/icon-mobyauh.png">
+  <link rel="apple-touch-icon" href="./assets/icon-mobyauh.png">
+  <meta name="theme-color" content="#FFCC00">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(255, 204, 0, 0.08), transparent 30%),
+        linear-gradient(90deg, #0e0e0e 0%, #131313 18%, #0e0e0e 36%, #151515 50%, #0e0e0e 64%, #131313 82%, #0e0e0e 100%);
+      color: #ffffff;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 430px;
+      background: rgba(32, 32, 32, 0.96);
+      border-radius: 28px;
+      padding: 30px 28px;
+      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow:
+        0 20px 45px rgba(0,0,0,0.45),
+        0 0 0 1px rgba(255, 204, 0, 0.06) inset;
+      text-align: center;
+    }
+
+    .brand-area {
+      border: 1px solid rgba(255, 204, 0, 0.12);
+      background: linear-gradient(180deg, rgba(255, 204, 0, 0.05), rgba(255, 204, 0, 0.02));
+      border-radius: 24px;
+      padding: 24px 18px 20px;
+      margin-bottom: 22px;
+    }
+
+    .logo-ring {
+      width: 124px;
+      height: 124px;
+      margin: 0 auto 16px;
+      border-radius: 28px;
+      background: rgba(255, 204, 0, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 0 0 1px rgba(255, 204, 0, 0.10) inset,
+        0 8px 25px rgba(255, 204, 0, 0.12);
+    }
+
+    .logo-box {
+      width: 94px;
+      height: 94px;
+      border-radius: 24px;
+      background: #FFCC00;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 12px 28px rgba(255, 204, 0, 0.22),
+        0 5px 12px rgba(0,0,0,0.28);
+      overflow: hidden;
+    }
+
+    .logo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .brand-name {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #FFCC00;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .brand-line {
+      width: 82px;
+      height: 4px;
+      border-radius: 99px;
+      background: #FFCC00;
+      margin: 0 auto 18px;
+    }
+
+    .brand-subtitle {
+      color: #f2f2f2;
+      line-height: 1.6;
+      font-size: 0.98rem;
+      max-width: 290px;
+      margin: 0 auto;
+    }
+
+    .btn {
+      width: 100%;
+      display: block;
+      text-decoration: none;
+      border-radius: 16px;
+      padding: 18px 16px;
+      font-size: 1rem;
+      font-weight: 900;
+      margin-bottom: 14px;
+      transition: transform 0.15s ease, opacity 0.2s ease, background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.98;
+    }
+
+    .btn-motorista {
+      background: #FFCC00;
+      color: #111111;
+      box-shadow: 0 10px 20px rgba(255, 204, 0, 0.18);
+    }
+
+    .btn-passageiro {
+      background: transparent;
+      color: #FFCC00;
+      border: 2px solid #FFCC00;
+    }
+
+    .btn-login {
+      background: #4a4a4a;
+      color: #ffffff;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .admin-link {
+      display: inline-block;
+      margin-top: 6px;
+      color: #cfcfcf;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    .admin-link:hover {
+      color: #ffffff;
+    }
+
+    .rodape {
+      margin-top: 20px;
+      color: #bdbdbd;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 520px) {
+      .container { padding: 22px 18px; }
+      .brand-name { font-size: 1.8rem; }
+      .logo-ring { width: 112px; height: 112px; }
+      .logo-box { width: 84px; height: 84px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="brand-area">
+      <div class="logo-ring">
+        <div class="logo-box">
+          <img src="./assets/icon-mobyauh.png" alt="Ícone oficial MOBYAUH">
+        </div>
+      </div>
+
+      <div class="brand-name">MOBYAUH</div>
+      <div class="brand-line"></div>
+      <p class="brand-subtitle">
+        Plataforma de mobilidade urbana com acesso controlado para motoristas e passageiros.
+      </p>
+    </div>
+
+    <a id="link-motorista" href="./motorista/cadastro-motorista.html" class="btn btn-motorista">SOU MOTORISTA</a>
+    <a id="link-passageiro" href="./passageiro/cadastro-passageiro.html" class="btn btn-passageiro">SOU PASSAGEIRO</a>
+    <a id="link-login" href="./login.html" class="btn btn-login">JÁ TENHO CONTA</a>
+    <a id="link-admin" href="./admin.html" class="admin-link">Acesso administrativo</a>
+
+    <div class="rodape">Portel • Breves • Melgaço • Bagre • Curralinho</div>
+  </div>
+
+  <script>
+    function detectarBaseApp() {
+      if (window.location.protocol === 'file:') {
+        return './';
+      }
+
+      const host = window.location.hostname;
+      const partes = window.location.pathname.split('/').filter(Boolean);
+
+      if (host.endsWith('github.io')) {
+        if (partes.length > 0) {
+          return '/' + partes[0] + '/';
+        }
+        return '/';
+      }
+
+      return './';
+    }
+
+    function montarLink(relativo) {
+      const base = detectarBaseApp();
+      if (base === './') {
+        return './' + relativo;
+      }
+      return base + relativo;
+    }
+
+    document.getElementById('link-motorista').href = montarLink('motorista/cadastro-motorista.html');
+    document.getElementById('link-passageiro').href = montarLink('passageiro/cadastro-passageiro.html');
+    document.getElementById('link-login').href = montarLink('login.html');
+    document.getElementById('link-admin').href = montarLink('admin.html');
+  </script>
+</body>
+</html>

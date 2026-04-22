@@ -1,0 +1,171 @@
+/* =========================
+   MOBYAUH - ESTILO GLOBAL
+   ========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #1a1a1a, #222222);
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  background-color: #2c2c2c;
+  width: 100%;
+  max-width: 430px;
+  padding: 32px 24px;
+  border-radius: 18px;
+  border-top: 5px solid #FFCC00;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+}
+
+h2 {
+  color: #FFCC00;
+  text-align: center;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 1.4rem;
+}
+
+p {
+  color: #cfcfcf;
+  line-height: 1.5;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input,
+select {
+  width: 100%;
+  background-color: #3a3a3a;
+  border: 1px solid #4a4a4a;
+  color: #fff;
+  padding: 13px 15px;
+  margin-bottom: 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input::placeholder {
+  color: #aaaaaa;
+}
+
+input:focus,
+select:focus {
+  border-color: #FFCC00;
+  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.15);
+}
+
+button {
+  width: 100%;
+  background-color: #FFCC00;
+  color: #212121;
+  border: none;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: transform 0.1s ease, opacity 0.2s ease;
+}
+
+button:hover {
+  opacity: 0.95;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:disabled {
+  background-color: #777;
+  cursor: not-allowed;
+}
+
+.link-voltar {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: #FFCC00;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.link-voltar:hover {
+  text-decoration: underline;
+}
+
+.mensagem-status {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 0.95rem;
+  min-height: 22px;
+  font-weight: 600;
+}
+
+.logo-box {
+  background: #FFCC00;
+  width: 90px;
+  height: 90px;
+  border-radius: 22px;
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+}
+
+.logo-box svg {
+  width: 55px;
+  height: 55px;
+  fill: #212121;
+}
+
+.logo-name {
+  color: #FFCC00;
+  font-weight: bold;
+  font-size: 1.15rem;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.subtitulo {
+  text-align: center;
+  color: #d6d6d6;
+  margin-bottom: 22px;
+  font-size: 0.95rem;
+}
+
+.card-info {
+  background-color: #3a3a3a;
+  border-left: 4px solid #FFCC00;
+  padding: 16px;
+  border-radius: 10px;
+  margin-top: 22px;
+}
+
+.card-info p {
+  margin-bottom: 10px;
+}
+
+.card-info p:last-child {
+  margin-bottom: 0;
+}
