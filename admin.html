@@ -233,6 +233,7 @@
       margin-bottom: 18px;
       color: #d9d9d9;
       font-size: 0.98rem;
+      line-height: 1.5;
     }
 
     .lista {
@@ -250,11 +251,54 @@
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
     }
 
+    .card.card-passageiro {
+      border-left-color: #74b8ff;
+    }
+
     .card h3 {
       color: #FFCC00;
       font-size: 1.12rem;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       text-align: center;
+    }
+
+    .card.card-passageiro h3 {
+      color: #74b8ff;
+    }
+
+    .badges-card {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .badge-card {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+
+    .badge-tipo {
+      background: rgba(255, 204, 0, 0.15);
+      color: #FFCC00;
+    }
+
+    .badge-passageiro {
+      background: rgba(116, 184, 255, 0.16);
+      color: #74b8ff;
+    }
+
+    .badge-servico {
+      background: rgba(255, 204, 0, 0.12);
+      color: #FFCC00;
+      border: 1px solid rgba(255, 204, 0, 0.18);
     }
 
     .foto-area {
@@ -306,6 +350,10 @@
       color: #ffffff;
       word-break: break-word;
       line-height: 1.4;
+    }
+
+    .card.card-passageiro .linha strong {
+      color: #74b8ff;
     }
 
     .card-acoes {
@@ -435,6 +483,7 @@
     };
 
     const ADMIN_EMAIL = "ibftap@gmail.com";
+    const TIPOS_SERVICO_VALIDOS = ["carro", "moto"];
 
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
@@ -485,6 +534,42 @@
       return data.toLocaleString("pt-BR");
     }
 
+    function normalizarTipoServico(tipoServico) {
+      const valor = String(tipoServico || "").trim().toLowerCase();
+      return TIPOS_SERVICO_VALIDOS.includes(valor) ? valor : "carro";
+    }
+
+    function obterLabelServico(tipoServico) {
+      return normalizarTipoServico(tipoServico) === "moto" ? "Moto" : "Carro";
+    }
+
+    function obterServicosHabilitadosUsuario(usuario) {
+      const lista = Array.isArray(usuario && usuario.servicosHabilitados)
+        ? usuario.servicosHabilitados.map(normalizarTipoServico)
+        : [];
+
+      const unicos = [];
+      lista.forEach(function(item) {
+        if (!unicos.includes(item)) {
+          unicos.push(item);
+        }
+      });
+
+      if (!unicos.length) {
+        return ["carro"];
+      }
+
+      return unicos;
+    }
+
+    function formatarListaServicos(servicos) {
+      return obterServicosHabilitadosUsuario({ servicosHabilitados: servicos })
+        .map(function(item) {
+          return obterLabelServico(item);
+        })
+        .join(" / ");
+    }
+
     function criarLinha(rotulo, valor) {
       const linha = document.createElement("div");
       linha.className = "linha";
@@ -522,6 +607,25 @@
       return fotoArea;
     }
 
+    function criarBadgesUsuario(usuario) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "badges-card";
+
+      const badgeTipo = document.createElement("div");
+      badgeTipo.className = "badge-card " + (usuario.tipo === "passageiro" ? "badge-passageiro" : "badge-tipo");
+      badgeTipo.textContent = usuario.tipo === "passageiro" ? "PASSAGEIRO" : "MOTORISTA";
+      wrapper.appendChild(badgeTipo);
+
+      if (usuario.tipo === "motorista") {
+        const badgeServico = document.createElement("div");
+        badgeServico.className = "badge-card badge-servico";
+        badgeServico.textContent = "SERVIÇOS: " + formatarListaServicos(usuario.servicosHabilitados).toUpperCase();
+        wrapper.appendChild(badgeServico);
+      }
+
+      return wrapper;
+    }
+
     function mostrarVazio(texto) {
       listaPendentes.innerHTML = "";
       const vazio = document.createElement("div");
@@ -536,12 +640,25 @@
 
       try {
         const user = auth.currentUser;
+        const docRef = db.collection("usuarios").doc(id);
+        const docSnap = await docRef.get();
 
-        await db.collection("usuarios").doc(id).update({
+        if (!docSnap.exists) {
+          throw new Error("Cadastro não encontrado.");
+        }
+
+        const dadosUsuario = docSnap.data() || {};
+        const atualizacao = {
           status: "aprovado",
           aprovadoEm: new Date().toISOString(),
           aprovadoPor: user ? user.email : "admin"
-        });
+        };
+
+        if (dadosUsuario.tipo === "motorista") {
+          atualizacao.servicosHabilitados = obterServicosHabilitadosUsuario(dadosUsuario);
+        }
+
+        await docRef.update(atualizacao);
 
         alert("Cadastro aprovado com sucesso.");
         await carregarPendentes();
@@ -589,10 +706,28 @@
         });
 
         usuarios.sort(function(a, b) {
+          const ordemTipoA = a.tipo === "motorista" ? 0 : 1;
+          const ordemTipoB = b.tipo === "motorista" ? 0 : 1;
+
+          if (ordemTipoA !== ordemTipoB) {
+            return ordemTipoA - ordemTipoB;
+          }
+
           return new Date(b.data || 0) - new Date(a.data || 0);
         });
 
-        contador.innerText = "Cadastros pendentes encontrados: " + usuarios.length;
+        const totalMotoristas = usuarios.filter(function(usuario) {
+          return usuario.tipo === "motorista";
+        }).length;
+
+        const totalPassageiros = usuarios.filter(function(usuario) {
+          return usuario.tipo === "passageiro";
+        }).length;
+
+        contador.innerText =
+          "Cadastros pendentes encontrados: " + usuarios.length +
+          " • Motoristas: " + totalMotoristas +
+          " • Passageiros: " + totalPassageiros;
 
         if (usuarios.length === 0) {
           mostrarVazio("Nenhum cadastro pendente no momento.");
@@ -601,12 +736,13 @@
 
         usuarios.forEach(function(usuario) {
           const card = document.createElement("div");
-          card.className = "card";
+          card.className = "card" + (usuario.tipo === "passageiro" ? " card-passageiro" : "");
 
           const titulo = document.createElement("h3");
-          titulo.textContent = (usuario.tipo || "usuário").toUpperCase();
+          titulo.textContent = usuario.tipo === "motorista" ? "Cadastro de Motorista" : "Cadastro de Passageiro";
           card.appendChild(titulo);
 
+          card.appendChild(criarBadgesUsuario(usuario));
           card.appendChild(criarFotoArea(usuario.fotoURL));
           card.appendChild(criarLinha("Nome", usuario.nome));
           card.appendChild(criarLinha("E-mail", usuario.email));
@@ -616,6 +752,7 @@
           card.appendChild(criarLinha("Data do cadastro", formatarData(usuario.data)));
 
           if (usuario.tipo === "motorista") {
+            card.appendChild(criarLinha("Serviços habilitados", formatarListaServicos(usuario.servicosHabilitados)));
             card.appendChild(criarLinha("CNH", usuario.cnh));
             card.appendChild(criarLinha("Placa", usuario.placa));
           }
