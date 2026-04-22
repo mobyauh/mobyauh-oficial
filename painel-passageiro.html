@@ -427,6 +427,29 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
   font-size: 0.84rem;
   line-height: 1.5;
 }
+.servico-opcoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 8px;
+}
+.botao-servico {
+  background: transparent;
+  border: 2px solid #FFCC00;
+  color: #FFCC00;
+  box-shadow: none;
+}
+.botao-servico.ativo {
+  background: #FFCC00;
+  color: #1a1a1a;
+  box-shadow: 0 10px 20px rgba(255, 204, 0, 0.12);
+}
+.resumo-servico {
+  margin-top: 10px;
+  color: #d5d5d5;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
 @media (max-width: 720px) {
   #mapa-real { height: 280px; }
   .grid-dados,
@@ -485,6 +508,15 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
             <div class="tag-cidade">Bagre</div>
             <div class="tag-cidade">Curralinho</div>
           </div>
+        </div>
+
+        <div class="bloco-corrida">
+          <label class="campo-label">Tipo de corrida</label>
+          <div class="servico-opcoes">
+            <button type="button" id="btn-servico-carro" class="botao-servico ativo">QUERO CARRO</button>
+            <button type="button" id="btn-servico-moto" class="botao-servico">QUERO MOTO</button>
+          </div>
+          <div id="resumo-servico" class="resumo-servico">Carro selecionado. Até 1 km = R$ 16,00. Acima disso = R$ 0,50 por km excedente.</div>
         </div>
 
         <div class="bloco-corrida">
@@ -622,6 +654,19 @@ const db = firebase.firestore();
 
 const TARIFA_MINIMA_ATE_1KM = 16.00;
 const TARIFA_KM_ADICIONAL = 0.50;
+const TIPO_SERVICO_PADRAO = 'carro';
+const CONFIG_SERVICOS = {
+  carro: {
+    label: 'Carro',
+    tarifaMinimaAte1Km: 16.00,
+    tarifaKmAdicional: 0.50
+  },
+  moto: {
+    label: 'Moto',
+    tarifaMinimaAte1Km: 5.00,
+    tarifaKmAdicional: 1.50
+  }
+};
 const STATUS_ATIVOS_PASSAGEIRO = ['solicitada', 'aceita', 'a caminho', 'cheguei ao local', 'iniciada'];
 const STATUS_HISTORICO = ['finalizada', 'cancelada'];
 const MAPA_FALLBACK = { lat: -1.90, lng: -50.50, zoom: 8 };
@@ -800,6 +845,9 @@ const avisoBloqueio = document.getElementById('aviso-bloqueio');
 
 const cidadeCorridaTexto = document.getElementById('cidade-corrida-texto');
 const indicadorTravaCidade = document.getElementById('indicador-trava-cidade');
+const btnServicoCarro = document.getElementById('btn-servico-carro');
+const btnServicoMoto = document.getElementById('btn-servico-moto');
+const resumoServico = document.getElementById('resumo-servico');
 
 const origemInput = document.getElementById('origem');
 const destinoInput = document.getElementById('destino');
@@ -846,6 +894,7 @@ let ultimasSugestoesOrigem = [];
 let ultimasSugestoesDestino = [];
 let campoBuscaAtivo = 'origem';
 let tentativaAutomaticaLocalizacao = false;
+let tipoServicoSelecionadoAtual = TIPO_SERVICO_PADRAO;
 
 function mostrarMensagem(texto, cor) {
   mensagem.innerText = texto;
@@ -906,11 +955,64 @@ function formatarDistancia(valorKm) {
   }) + ' km';
 }
 
-function calcularValorEstimado(distanciaKm) {
+function normalizarTipoServico(tipoServico) {
+  return String(tipoServico || '').toLowerCase() === 'moto' ? 'moto' : 'carro';
+}
+
+function obterConfigServico(tipoServico) {
+  return CONFIG_SERVICOS[normalizarTipoServico(tipoServico)] || CONFIG_SERVICOS[TIPO_SERVICO_PADRAO];
+}
+
+function obterLabelServico(tipoServico) {
+  return obterConfigServico(tipoServico).label;
+}
+
+function obterResumoTarifaServico(tipoServico) {
+  const config = obterConfigServico(tipoServico);
+  return (
+    obterLabelServico(tipoServico) +
+    ' selecionado. Até 1 km = ' +
+    formatarMoeda(config.tarifaMinimaAte1Km) +
+    '. Acima disso = ' +
+    formatarMoeda(config.tarifaKmAdicional) +
+    ' por km excedente.'
+  );
+}
+
+function atualizarSeletorServicoUI() {
+  const tipo = String(tipoServicoSelecionadoAtual || TIPO_SERVICO_PADRAO);
+  btnServicoCarro.classList.toggle('ativo', tipo === 'carro');
+  btnServicoMoto.classList.toggle('ativo', tipo === 'moto');
+  resumoServico.innerText = obterResumoTarifaServico(tipo);
+
+  if (!simulacaoAtual) {
+    saidaStatusIntegracao.innerText = 'Aguardando simulação • ' + obterLabelServico(tipo);
+  }
+}
+
+function selecionarTipoServico(tipoServico) {
+  const novoTipo = normalizarTipoServico(tipoServico);
+
+  if (tipoServicoSelecionadoAtual === novoTipo) {
+    atualizarSeletorServicoUI();
+    return;
+  }
+
+  tipoServicoSelecionadoAtual = novoTipo;
+  atualizarSeletorServicoUI();
+
+  if (simulacaoAtual) {
+    invalidarSimulacao();
+    mostrarMensagem('Tipo de corrida alterado. Simule novamente a rota e o valor.', '#FFCC00');
+  }
+}
+
+function calcularValorEstimado(distanciaKm, tipoServico) {
   const km = Number(distanciaKm);
+  const config = obterConfigServico(tipoServico);
   if (!isFinite(km) || km <= 0) return 0;
-  if (km <= 1) return TARIFA_MINIMA_ATE_1KM;
-  return Math.round((TARIFA_MINIMA_ATE_1KM + ((km - 1) * TARIFA_KM_ADICIONAL)) * 100) / 100;
+  if (km <= 1) return config.tarifaMinimaAte1Km;
+  return Math.round((config.tarifaMinimaAte1Km + ((km - 1) * config.tarifaKmAdicional)) * 100) / 100;
 }
 
 function criarBadgeStatus(status) {
@@ -1015,7 +1117,7 @@ function limparCamadasMapa() {
 
 function invalidarSimulacao() {
   simulacaoAtual = null;
-  saidaStatusIntegracao.innerText = 'Aguardando simulação';
+  saidaStatusIntegracao.innerText = 'Aguardando simulação • ' + obterLabelServico(tipoServicoSelecionadoAtual);
   saidaDistancia.innerText = 'Aguardando simulação';
   saidaValor.innerText = 'Aguardando simulação';
   atualizarEstadoBotoes();
@@ -1777,8 +1879,8 @@ async function obterRotaOSRM(origem, destino) {
   return dados.routes[0];
 }
 
-function atualizarSaidaSimulacao(distanciaKm, valor, tipoTexto) {
-  saidaStatusIntegracao.innerText = tipoTexto;
+function atualizarSaidaSimulacao(distanciaKm, valor, tipoTexto, tipoServico) {
+  saidaStatusIntegracao.innerText = tipoTexto + ' • ' + obterLabelServico(tipoServico);
   saidaDistancia.innerText = formatarDistancia(distanciaKm);
   saidaValor.innerText = formatarMoeda(valor);
 }
@@ -1812,6 +1914,8 @@ async function simularRotaEValor() {
   }
 
   const cidade = (dadosUsuarioAtual.cidade || '').trim();
+  const tipoServicoSelecionado = normalizarTipoServico(tipoServicoSelecionadoAtual);
+  const configServico = obterConfigServico(tipoServicoSelecionado);
   const origemTexto = origemInput.value.trim();
   const destinoTexto = destinoInput.value.trim();
 
@@ -1902,11 +2006,13 @@ async function simularRotaEValor() {
       throw new Error('Não foi possível calcular a distância.');
     }
 
-    const valorEstimado = calcularValorEstimado(distanciaKm);
+    const valorEstimado = calcularValorEstimado(distanciaKm, tipoServicoSelecionado);
     const linksRota = criarLinksRota(origemResolvida, destinoResolvido);
 
     simulacaoAtual = {
       cidadeCorrida: cidade,
+      tipoServico: normalizarTipoServico(tipoServicoSelecionado),
+      tipoServicoLabel: obterLabelServico(tipoServicoSelecionado),
       origemNome: origemResolvida.label,
       destinoNome: destinoResolvido.label,
       origemLat: origemResolvida.lat,
@@ -1918,20 +2024,22 @@ async function simularRotaEValor() {
       distanciaKm: distanciaKm,
       distanciaMetros: distanciaMetros,
       valorEstimado: valorEstimado,
+      tarifaMinimaAte1Km: configServico.tarifaMinimaAte1Km,
+      tarifaKmAdicional: configServico.tarifaKmAdicional,
       tipoCalculoDistancia: tipoCalculo,
       tipoCalculoTexto: tipoCalculoTexto,
       rotaGoogleMaps: linksRota.googleMaps,
       rotaOpenStreetMap: linksRota.openStreetMap
     };
 
-    atualizarSaidaSimulacao(distanciaKm, valorEstimado, tipoCalculoTexto);
+    atualizarSaidaSimulacao(distanciaKm, valorEstimado, tipoCalculoTexto, tipoServicoSelecionado);
 
     if (tipoCalculo === 'rota_osrm') {
       mapaStatusTexto.innerText = 'Rota calculada com sucesso em ' + cidade + '.';
-      mostrarMensagem('Simulação concluída. Agora preencha bairro, endereço, número e pagamento para confirmar.', '#00FF88');
+      mostrarMensagem('Simulação da corrida de ' + obterLabelServico(tipoServicoSelecionado).toLowerCase() + ' concluída. Agora preencha bairro, endereço, número e pagamento para confirmar.', '#00FF88');
     } else {
       mapaStatusTexto.innerText = 'Rota viária exata não disponível. Foi gerada uma estimativa aproximada.';
-      mostrarMensagem('Simulação aproximada concluída. Agora preencha bairro, endereço, número e pagamento para confirmar.', '#FFCC00');
+      mostrarMensagem('Simulação aproximada da corrida de ' + obterLabelServico(tipoServicoSelecionado).toLowerCase() + ' concluída. Agora preencha bairro, endereço, número e pagamento para confirmar.', '#FFCC00');
     }
 
     atualizarEstadoBotoes();
@@ -2075,6 +2183,7 @@ function criarCardCorrida(corrida, ativa) {
   const grid = document.createElement('div');
   grid.className = 'corrida-grid';
   grid.appendChild(criarBloco('Cidade', corrida.cidadeCorrida || corrida.passageiroCidade || '-'));
+  grid.appendChild(criarBloco('Serviço', corrida.tipoServicoLabel || obterLabelServico(corrida.tipoServico)));
   grid.appendChild(criarBloco('Onde estou', corrida.origem || '-'));
   grid.appendChild(criarBloco('Pra onde vou', corrida.destino || '-'));
   grid.appendChild(criarBloco('Bairro', corrida.bairroEmbarque || '-'));
@@ -2395,6 +2504,14 @@ document.querySelectorAll('.atalho-tag').forEach(function(botao) {
   });
 });
 
+btnServicoCarro.addEventListener('click', function() {
+  selecionarTipoServico('carro');
+});
+
+btnServicoMoto.addEventListener('click', function() {
+  selecionarTipoServico('moto');
+});
+
 btnLocalizacaoAtual.addEventListener('click', async function() {
   await preencherOrigemComLocalizacaoAtual({ silencioso: false });
 });
@@ -2466,6 +2583,8 @@ formCorrida.addEventListener('submit', async function(e) {
       passageiroFotoURL: dadosUsuarioAtual.fotoURL || '',
 
       cidadeCorrida: simulacaoAtual.cidadeCorrida,
+      tipoServico: simulacaoAtual.tipoServico,
+      tipoServicoLabel: simulacaoAtual.tipoServicoLabel,
       origem: simulacaoAtual.origemNome,
       destino: simulacaoAtual.destinoNome,
 
@@ -2495,8 +2614,8 @@ formCorrida.addEventListener('submit', async function(e) {
       rotaGoogleMaps: simulacaoAtual.rotaGoogleMaps,
       rotaOpenStreetMap: simulacaoAtual.rotaOpenStreetMap,
 
-      tarifaMinimaAte1Km: TARIFA_MINIMA_ATE_1KM,
-      tarifaKmAdicional: TARIFA_KM_ADICIONAL,
+      tarifaMinimaAte1Km: simulacaoAtual.tarifaMinimaAte1Km,
+      tarifaKmAdicional: simulacaoAtual.tarifaKmAdicional,
 
       codigoEmbarque: codigoEmbarque,
       codigoValidado: false,
@@ -2552,7 +2671,7 @@ formCorrida.addEventListener('submit', async function(e) {
     ultimasSugestoesDestino = [];
     campoBuscaAtivo = 'origem';
     simulacaoAtual = null;
-    saidaStatusIntegracao.innerText = 'Aguardando simulação';
+    saidaStatusIntegracao.innerText = 'Aguardando simulação • ' + obterLabelServico(tipoServicoSelecionadoAtual);
     saidaDistancia.innerText = 'Aguardando simulação';
     saidaValor.innerText = 'Aguardando simulação';
 
@@ -2561,7 +2680,7 @@ formCorrida.addEventListener('submit', async function(e) {
     tentativaAutomaticaLocalizacao = false;
 
     await focarMapaNaCidade(dadosUsuarioAtual.cidade || '');
-    mostrarMensagem('Corrida solicitada com sucesso! Seu código de embarque foi gerado.', '#00FF88');
+    mostrarMensagem('Corrida de ' + obterLabelServico(tipoServicoSelecionadoAtual).toLowerCase() + ' solicitada com sucesso! Seu código de embarque foi gerado.', '#00FF88');
     atualizarEstadoBotoes();
   } catch (error) {
     mostrarMensagem('Erro ao solicitar corrida: ' + error.message, '#FF5555');
@@ -2570,6 +2689,8 @@ formCorrida.addEventListener('submit', async function(e) {
     atualizarEstadoBotoes();
   }
 });
+
+atualizarSeletorServicoUI();
 
 auth.onAuthStateChanged(async function(user) {
   if (!user) {
