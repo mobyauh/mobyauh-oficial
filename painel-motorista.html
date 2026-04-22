@@ -252,6 +252,23 @@ body {
   background: rgba(217, 74, 74, 0.18);
   color: #ff9b9b;
 }
+.badge-servico {
+  display: inline-block;
+  width: fit-content;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  margin-top: 6px;
+  border: 1px solid rgba(255, 204, 0, 0.22);
+  background: rgba(255, 204, 0, 0.10);
+  color: #FFCC00;
+}
+.badge-servico-moto {
+  background: rgba(74, 158, 255, 0.16);
+  border-color: rgba(74, 158, 255, 0.28);
+  color: #74b8ff;
+}
 .lista-vazia {
   background: #323232;
   border: 1px dashed rgba(255, 204, 0, 0.25);
@@ -435,6 +452,7 @@ button:disabled {
     </div>
 
     <div id="status-som" class="status-som">Som desligado. Ative para ouvir a musiquinha quando chegar nova corrida.</div>
+    <div id="resumo-servicos-motorista" class="status-som">Carregando seus serviços habilitados...</div>
     <div id="mensagem" class="mensagem"></div>
 
     <div class="secao">
@@ -497,6 +515,7 @@ const mensagem = document.getElementById('mensagem');
 const btnSair = document.getElementById('btn-sair');
 const btnToggleSom = document.getElementById('btn-toggle-som');
 const statusSom = document.getElementById('status-som');
+const resumoServicosMotorista = document.getElementById('resumo-servicos-motorista');
 const listaDisponiveis = document.getElementById('lista-disponiveis');
 const listaAtivas = document.getElementById('lista-ativas');
 const listaHistorico = document.getElementById('lista-historico');
@@ -555,6 +574,26 @@ function formatarListaServicos(servicos) {
   return obterServicosHabilitadosUsuario({ servicosHabilitados: servicos }).map(function(item) {
     return obterLabelServico(item);
   }).join(' / ');
+}
+
+function criarBadgeServico(tipoServico) {
+  const badge = document.createElement('div');
+  const tipo = normalizarTipoServico(tipoServico);
+  badge.className = 'badge-servico' + (tipo === 'moto' ? ' badge-servico-moto' : '');
+  badge.textContent = 'SERVIÇO: ' + obterLabelServico(tipo).toUpperCase();
+  return badge;
+}
+
+function atualizarResumoServicosMotorista() {
+  if (!dadosUsuarioAtual) {
+    resumoServicosMotorista.textContent = 'Carregando seus serviços habilitados...';
+    resumoServicosMotorista.style.color = '#cfcfcf';
+    return;
+  }
+
+  const servicos = obterServicosHabilitadosUsuario(dadosUsuarioAtual);
+  resumoServicosMotorista.textContent = 'Você recebe corridas de: ' + formatarListaServicos(servicos) + '.';
+  resumoServicosMotorista.style.color = '#d7d7d7';
 }
 
 function motoristaPodeAtenderCorrida(corrida, dadosMotorista) {
@@ -934,6 +973,7 @@ function criarCardDisponivel(corrida) {
   infoTopo.style.flex = '1';
   infoTopo.appendChild(criarTexto('Passageiro', corrida.passageiroNome || '-'));
   infoTopo.appendChild(criarBadgeStatus(corrida.status));
+  infoTopo.appendChild(criarBadgeServico(obterTipoServicoCorrida(corrida)));
 
   topo.appendChild(criarFotoMini(corrida.passageiroFotoURL || ''));
   topo.appendChild(infoTopo);
@@ -991,6 +1031,7 @@ function criarCardAtiva(corrida) {
   infoTopo.style.flex = '1';
   infoTopo.appendChild(criarTexto('Passageiro', corrida.passageiroNome || '-'));
   infoTopo.appendChild(criarBadgeStatus(corrida.status));
+  infoTopo.appendChild(criarBadgeServico(obterTipoServicoCorrida(corrida)));
 
   topo.appendChild(criarFotoMini(corrida.passageiroFotoURL || ''));
   topo.appendChild(infoTopo);
@@ -1132,6 +1173,7 @@ function criarCardHistorico(corrida) {
   infoTopo.style.flex = '1';
   infoTopo.appendChild(criarTexto('Passageiro', corrida.passageiroNome || '-'));
   infoTopo.appendChild(criarBadgeStatus(corrida.status));
+  infoTopo.appendChild(criarBadgeServico(obterTipoServicoCorrida(corrida)));
 
   topo.appendChild(criarFotoMini(corrida.passageiroFotoURL || ''));
   topo.appendChild(infoTopo);
@@ -1197,7 +1239,10 @@ function renderizarListaDisponiveis(corridas) {
   if (!corridas.length) {
     const vazio = document.createElement('div');
     vazio.className = 'lista-vazia';
-    vazio.textContent = 'Nenhuma corrida disponível neste momento.';
+    const textoBase = dadosUsuarioAtual
+      ? ('Nenhuma corrida disponível para os serviços ' + formatarListaServicos(obterServicosHabilitadosUsuario(dadosUsuarioAtual)) + ' neste momento.')
+      : 'Nenhuma corrida disponível neste momento.';
+    vazio.textContent = textoBase;
     listaDisponiveis.appendChild(vazio);
     return;
   }
@@ -1238,10 +1283,24 @@ async function aceitarCorrida(corridaId) {
     return;
   }
 
-  const confirmar = confirm('Deseja aceitar esta corrida?');
-  if (!confirmar) return;
-
   try {
+    const corridaDoc = await db.collection('corridas').doc(corridaId).get();
+
+    if (!corridaDoc.exists) {
+      mostrarMensagem('A corrida não foi encontrada ou já saiu da lista.', '#FF5555');
+      return;
+    }
+
+    const corridaDados = { id: corridaDoc.id, ...corridaDoc.data() };
+
+    if (!motoristaPodeAtenderCorrida(corridaDados, dadosUsuarioAtual)) {
+      mostrarMensagem('Esta corrida não é compatível com os serviços habilitados no seu cadastro.', '#FF5555');
+      return;
+    }
+
+    const confirmar = confirm('Deseja aceitar esta corrida de ' + obterLabelServicoCorrida(corridaDados).toLowerCase() + '?');
+    if (!confirmar) return;
+
     const agora = new Date();
 
     await db.collection('corridas').doc(corridaId).update({
