@@ -5,85 +5,512 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MOBYAUH - Painel do Passageiro</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY&libraries=places"></script>
   <style>
-    /* Estilos já definidos anteriormente */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, rgba(255, 204, 0, 0.08), transparent 30%),
+        linear-gradient(135deg, #111111, #1b1b1b 45%, #101010);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #ffffff;
+      padding: 20px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .container {
+      width: 100%;
+      background: #232323;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 26px;
+      padding: 28px 22px;
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.50),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+
+    .painel-topo { text-align: center; margin-bottom: 24px; }
+
+    .logo-box {
+      width: 92px;
+      height: 92px;
+      border-radius: 24px;
+      background: #FFCC00;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+      box-shadow:
+        0 14px 24px rgba(255, 204, 0, 0.18),
+        0 4px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    .logo-box svg {
+      width: 54px;
+      height: 54px;
+      fill: #1b1b1b;
+    }
+
+    .logo-name {
+      color: #FFCC00;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .foto-area {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .foto-usuario {
+      width: 132px;
+      height: 132px;
+      border-radius: 22px;
+      object-fit: cover;
+      border: 3px solid #FFCC00;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+      background: #3a3a3a;
+    }
+
+    .sem-foto {
+      width: 132px;
+      height: 132px;
+      border-radius: 22px;
+      border: 2px dashed rgba(255, 204, 0, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px;
+      color: #d0d0d0;
+      font-size: 0.9rem;
+      background: #3a3a3a;
+    }
+
+    .painel-titulo {
+      color: #FFCC00;
+      font-size: 1.7rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .painel-subtitulo {
+      color: #d8d8d8;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .grid-dados {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .linha-dado,
+    .bloco-corrida,
+    .card-corrida,
+    .aviso,
+    .bloco-motorista,
+    .aviso-bloqueio,
+    .mapa-box,
+    .saida-mapa {
+      background: #323232;
+      border-radius: 14px;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .linha-dado strong,
+    .campo-label,
+    .card-corrida strong,
+    .bloco-motorista strong,
+    .aviso-bloqueio strong,
+    .saida-mapa strong {
+      display: block;
+      color: #FFCC00;
+      font-size: 0.88rem;
+      margin-bottom: 6px;
+    }
+
+    .linha-dado span,
+    .card-corrida span,
+    .bloco-motorista span,
+    .aviso-bloqueio span,
+    .saida-mapa span {
+      color: #ffffff;
+      word-break: break-word;
+      line-height: 1.45;
+    }
+
+    .aviso {
+      margin-top: 18px;
+      border-left: 4px solid #FFCC00;
+      color: #dcdcdc;
+      line-height: 1.6;
+      font-size: 0.94rem;
+    }
+
+    .aviso-bloqueio {
+      margin-bottom: 14px;
+      border-left: 4px solid #ff884d;
+      background: rgba(255, 136, 77, 0.12);
+      display: none;
+    }
+
+    .secao { margin-top: 26px; }
+
+    .secao-titulo {
+      color: #FFCC00;
+      font-size: 1.18rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .secao-subtitulo {
+      color: #d8d8d8;
+      text-align: center;
+      line-height: 1.5;
+      font-size: 0.92rem;
+      margin-bottom: 14px;
+    }
+
+    .form-corrida {
+      display: grid;
+      gap: 14px;
+    }
+
+    .form-bloqueado {
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background-color: #252525;
+      border: 1px solid #4a4a4a;
+      color: #fff;
+      padding: 13px 14px;
+      border-radius: 10px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #FFCC00;
+      box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.15);
+    }
+
+    .campo-ajuda {
+      margin-top: 8px;
+      color: #b8b8b8;
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    .cidade-fixa {
+      font-size: 1rem;
+      color: #ffffff;
+      line-height: 1.4;
+    }
+
+    .indicador-trava {
+      margin-top: 8px;
+      color: #cfcfcf;
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    .grid-endereco,
+    .motorista-grid,
+    .corrida-grid,
+    .mapa-saida-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .campo-busca-box {
+      position: relative;
+    }
+
+    .sugestoes-box {
+      display: none;
+      position: absolute;
+      z-index: 5000;
+      left: 0;
+      right: 0;
+      top: calc(100% + 6px);
+      background: #1f1f1f;
+      border: 1px solid rgba(255, 204, 0, 0.18);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 18px 32px rgba(0,0,0,0.35);
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .sugestao-item {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      color: #ffffff;
+      padding: 14px 16px;
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-radius: 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .sugestao-item:last-child {
+      border-bottom: none;
+    }
+
+    .sugestao-item:hover,
+    .sugestao-item.ativa {
+      background: rgba(255, 204, 0, 0.10);
+    }
+
+    .sugestao-secundaria {
+      display: block;
+      margin-top: 4px;
+      color: #cfcfcf;
+      font-size: 0.82rem;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.15s ease, opacity 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      opacity: 0.97;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    #btn-usar-localizacao {
+      background: transparent;
+      border: 2px solid #FFCC00;
+      color: #FFCC00;
+    }
+
+    #btn-calcular {
+      background: transparent;
+      border: 2px solid #FFCC00;
+      color: #FFCC00;
+    }
+
+    #btn-solicitar {
+      background: #FFCC00;
+      color: #1a1a1a;
+      box-shadow: 0 10px 20px rgba(255, 204, 0, 0.15);
+    }
+
+    .btn-vermelho {
+      background: #d94a4a;
+      color: #ffffff;
+    }
+
+    .botao-secundario {
+      background: transparent;
+      border: 2px solid #FFCC00;
+      color: #FFCC00;
+      margin-top: 18px;
+    }
+
+    .mensagem {
+      text-align: center;
+      min-height: 24px;
+      margin-top: 14px;
+      font-weight: 700;
+    }
+
+    .lista-corridas {
+      display: grid;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .card-corrida {
+      display: grid;
+      gap: 12px;
+    }
+
+    .status-badge {
+      display: inline-block;
+      width: fit-content;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      margin-top: 4px;
+      background: rgba(255, 204, 0, 0.18);
+      color: #FFCC00;
+    }
+
+    .badge-aceita { background: rgba(0, 255, 136, 0.14); color: #00FF88; }
+    .badge-azul { background: rgba(74, 158, 255, 0.18); color: #74b8ff; }
+    .badge-laranja { background: rgba(255, 136, 77, 0.18); color: #ffb088; }
+    .badge-roxa { background: rgba(180, 120, 255, 0.18); color: #d6b3ff; }
+    .badge-finalizada { background: rgba(160, 160, 160, 0.18); color: #d6d6d6; }
+    .badge-cancelada { background: rgba(217, 74, 74, 0.18); color: #ff9b9b; }
+
+    .lista-vazia {
+      background: #323232;
+      border: 1px dashed rgba(255, 204, 0, 0.25);
+      border-radius: 14px;
+      padding: 18px;
+      text-align: center;
+      color: #d8d8d8;
+      line-height: 1.5;
+    }
+
+    .motorista-topo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .motorista-foto {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      object-fit: cover;
+      border: 2px solid #FFCC00;
+      background: #252525;
+      flex-shrink: 0;
+    }
+
+    .motorista-sem-foto {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      border: 2px dashed rgba(255, 204, 0, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.72rem;
+      color: #d0d0d0;
+      background: #252525;
+      padding: 6px;
+      flex-shrink: 0;
+    }
+
+    .mapa-box {
+      background: linear-gradient(180deg, rgba(255, 204, 0, 0.04), rgba(255, 204, 0, 0.02));
+      border: 1px solid rgba(255, 204, 0, 0.14);
+    }
+
+    .mapa-topo {
+      color: #FFCC00;
+      font-size: 1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .mapa-status {
+      color: #d8d8d8;
+      line-height: 1.55;
+      font-size: 0.92rem;
+      margin-bottom: 12px;
+    }
+
+    #mapa-real {
+      width: 100%;
+      height: 320px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 204, 0, 0.18);
+    }
+
+    .leaflet-container {
+      background: #1f1f1f;
+    }
+
+    .linha-alerta {
+      color: #00FF88;
+      margin-top: 10px;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 720px) {
+      .grid-dados,
+      .grid-endereco,
+      .motorista-grid,
+      .corrida-grid,
+      .mapa-saida-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        padding: 22px 16px;
+      }
+
+      .painel-titulo {
+        font-size: 1.45rem;
+      }
+
+      #mapa-real {
+        height: 280px;
+      }
+
+      .foto-usuario,
+      .sem-foto {
+        width: 118px;
+        height: 118px;
+      }
+
+      .motorista-topo {
+        align-items: flex-start;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="page">
-    <div class="container">
-      <form id="form-corrida" class="form-corrida">
-        <div class="bloco-corrida">
-          <label for="origem" class="campo-label">Local de origem</label>
-          <input type="text" id="origem" placeholder="Digite a origem (ex: Rua A, Bairro B)">
-          <div id="sugestoes-origem"></div>
-        </div>
-
-        <div class="bloco-corrida">
-          <label for="destino" class="campo-label">Destino</label>
-          <input type="text" id="destino" placeholder="Digite o destino (ex: Praça C, Bairro D)">
-          <div id="sugestoes-destino"></div>
-        </div>
-
-        <div class="bloco-corrida">
-          <button type="button" id="btn-calcular">SIMULAR ROTA E VALOR</button>
-        </div>
-      </form>
-
-      <div id="mensagem"></div>
-    </div>
-  </div>
-
-  <script>
-    let autocompleteOrigem, autocompleteDestino;
-
-    function initAutocomplete() {
-      const options = {
-        types: ['geocode'], // Excluir alguns tipos de busca, como restaurantes e locais específicos
-        componentRestrictions: { country: 'br' } // Limitar a pesquisa para o Brasil
-      };
-
-      autocompleteOrigem = new google.maps.places.Autocomplete(document.getElementById('origem'), options);
-      autocompleteDestino = new google.maps.places.Autocomplete(document.getElementById('destino'), options);
-
-      // Evitar que o campo "origem" ou "destino" seja preenchido com valores indesejados.
-      autocompleteOrigem.addListener('place_changed', function() {
-        const place = autocompleteOrigem.getPlace();
-        if (!place.geometry) {
-          alert("Local não encontrado. Tente novamente.");
-          return;
-        }
-        console.log("Origem selecionada:", place.formatted_address);
-      });
-
-      autocompleteDestino.addListener('place_changed', function() {
-        const place = autocompleteDestino.getPlace();
-        if (!place.geometry) {
-          alert("Destino não encontrado. Tente novamente.");
-          return;
-        }
-        console.log("Destino selecionado:", place.formatted_address);
-      });
-    }
-
-    // Executar a inicialização do Google Places API
-    google.maps.event.addDomListener(window, 'load', initAutocomplete);
-
-    // Lógica de cálculo de rota e valor
-    document.getElementById('btn-calcular').addEventListener('click', function() {
-      const origem = document.getElementById('origem').value.trim();
-      const destino = document.getElementById('destino').value.trim();
-
-      if (!origem || !destino) {
-        alert("Por favor, preencha os campos de origem e destino.");
-        return;
-      }
-
-      // Aqui podemos adicionar a lógica de cálculo de distância e valor conforme a origem e o destino selecionado
-      console.log("Simulação em andamento...");
-      // Simulação de rota (substituir com lógica de cálculo real)
-    });
-  </script>
-</body>
-</html>
+<div class="page">
+  <div class="container">
+    <div class="painel-topo">
+      <div class="logo-box">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18.92 12.01C18.72 11.42 18.16 11 17.5 11h-11c-.66 0-1.21.42-1.42 1.01L3 18v9c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-9l-2.08-5.99zM6.5 24c-.83 0-1.5-.67-1.5-1.5S5.67 21 6.5 21s1.5.67 1.5 1.5S7.33 24 6.5 24zm11 0c-.83 0-1.5-.67-1.5-1.5
