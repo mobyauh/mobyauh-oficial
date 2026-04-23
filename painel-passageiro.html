@@ -493,7 +493,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
             <input type="text" id="origem" placeholder="Ex: prefe, prima, hospital, porto" autocomplete="off">
             <div id="sugestoes-origem" class="sugestoes-box"></div>
           </div>
-          <div class="campo-ajuda">Digite sua partida do jeito mais simples. Exemplo: rua, travessa, bairro, ponto conhecido. A busca agora fica livre pelo mapa.</div>
+          <div class="campo-ajuda">Digite sua partida do jeito mais simples. Exemplo: rua, travessa, avenida, bairro ou ponto conhecido. A busca agora fica livre pelo mapa.</div>
           <div class="acao-localizacao-box">
             <button type="button" id="btn-localizacao-atual" class="botao-localizacao">USAR MINHA LOCALIZAÇÃO ATUAL</button>
             <div id="status-localizacao-atual" class="status-localizacao">Você pode digitar sua partida normalmente. A localização atual é opcional.</div>
@@ -506,7 +506,60 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
             <input type="text" id="destino" placeholder="Ex: tuca, matriz, farmapinho, prefeitura" autocomplete="off">
             <div id="sugestoes-destino" class="sugestoes-box"></div>
           </div>
-          <div class="campo-ajuda">Digite o destino do jeito mais simples. Exemplo: rua, travessa, bairro, ponto conhecido. A busca agora fica livre pelo mapa.</div>
+          <div class="campo-ajuda">Digite o destino do jeito mais simples. Exemplo: rua, travessa, avenida, bairro ou ponto conhecido. A busca agora fica livre pelo mapa.</div>
+        </div>
+
+        <div class="bloco-corrida">
+          <label class="campo-label">Atalhos locais de Portel</label>
+          <div class="atalhos-busca">
+            <button type="button" class="atalho-tag" data-atalho="prefe">prefe → Prefeitura</button>
+            <button type="button" class="atalho-tag" data-atalho="prima">prima → Primavera</button>
+            <button type="button" class="atalho-tag" data-atalho="tuca">tuca → Praia da Tucano</button>
+            <button type="button" class="atalho-tag" data-atalho="porto">porto → Porto de Portel</button>
+            <button type="button" class="atalho-tag" data-atalho="matriz">matriz → Praça da Matriz</button>
+            <button type="button" class="atalho-tag" data-atalho="pinho">pinho → Farmapinho</button>
+          </div>
+          <div class="campo-ajuda">Clique em um atalho para preencher mais rápido o campo de partida ou de destino.</div>
+        </div>
+
+        <div class="bloco-corrida">
+          <label class="campo-label">Endereço de embarque do passageiro</label>
+          <div class="grid-endereco">
+            <div>
+              <input type="text" id="bairro" placeholder="Bairro">
+            </div>
+            <div>
+              <input type="text" id="logradouro" placeholder="Rua / Travessa / Passagem">
+            </div>
+            <div>
+              <input type="text" id="numero" placeholder="Número da casa">
+            </div>
+            <div>
+              <input type="text" id="complemento" placeholder="Complemento">
+            </div>
+          </div>
+          <div class="campo-ajuda">Esses dados vão para o motorista localizar melhor o embarque.</div>
+        </div>
+
+        <div class="bloco-corrida">
+          <label for="referencia" class="campo-label">Referência adicional <span class="rotulo-opcional">opcional</span></label>
+          <input type="text" id="referencia" placeholder="Ex: portão azul, perto da escola, ao lado da farmácia">
+          <div class="campo-ajuda">A referência não interfere mais na busca do mapa.</div>
+        </div>
+
+        <div class="bloco-corrida">
+          <label for="pagamento" class="campo-label">Forma de pagamento</label>
+          <select id="pagamento">
+            <option value="" selected disabled>Selecione</option>
+            <option value="dinheiro">Dinheiro</option>
+            <option value="pix">PIX</option>
+            <option value="cartao">Cartão</option>
+          </select>
+        </div>
+
+        <div class="bloco-corrida">
+          <label for="observacoes" class="campo-label">Observações</label>
+          <textarea id="observacoes" placeholder="Ex: buscar 2 pessoas, bagagem, chamar no portão"></textarea>
         </div>
 
         <div class="mapa-box">
@@ -1297,11 +1350,10 @@ async function buscarNominatimTravado(texto, cidadeCtx) {
         .filter(Boolean);
 
       const secundaria = partes.length >= 2 ? partes[1] : (cidadeReferencia || '');
-
-      let score = 0;
       const rotulo = partes[0] || texto.trim();
       const rotuloNorm = normalizarTexto(rotulo);
       const textoNorm = normalizarTexto(texto);
+      let score = 0;
 
       if (rotuloNorm === textoNorm) score += 800;
       else if (rotuloNorm.startsWith(textoNorm)) score += 600;
