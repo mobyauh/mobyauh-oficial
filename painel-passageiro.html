@@ -427,29 +427,6 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
   font-size: 0.84rem;
   line-height: 1.5;
 }
-.servico-opcoes {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 8px;
-}
-.botao-servico {
-  background: transparent;
-  border: 2px solid #FFCC00;
-  color: #FFCC00;
-  box-shadow: none;
-}
-.botao-servico.ativo {
-  background: #FFCC00;
-  color: #1a1a1a;
-  box-shadow: 0 10px 20px rgba(255, 204, 0, 0.12);
-}
-.resumo-servico {
-  margin-top: 10px;
-  color: #d5d5d5;
-  font-size: 0.9rem;
-  line-height: 1.55;
-}
 @media (max-width: 720px) {
   #mapa-real { height: 280px; }
   .grid-dados,
@@ -492,7 +469,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
     <div class="secao">
       <div class="secao-titulo">Solicitar corrida</div>
-      <div class="secao-subtitulo">Fluxo organizado para celular: primeiro você simula a corrida, depois preenche os dados finais e confirma. A busca do mapa agora fica mais livre, usando os pontos locais só como apoio.</div>
+      <div class="secao-subtitulo">Busca com cidade travada, atalhos locais e embarque mais detalhado para o motorista encontrar o passageiro.</div>
 
       <div id="aviso-bloqueio" class="aviso-bloqueio"></div>
 
@@ -500,7 +477,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         <div class="bloco-corrida">
           <label class="campo-label">Cidade da corrida</label>
           <div id="cidade-corrida-texto" class="cidade-fixa">Carregando...</div>
-          <div class="indicador-trava" id="indicador-trava-cidade">Carregando trava de cidade...</div>
+          <div class="indicador-trava" id="indicador-trava-cidade">Busca livre pelo mapa...</div>
           <div class="cidades-mobyauh">
             <div class="tag-cidade">Portel</div>
             <div class="tag-cidade">Breves</div>
@@ -511,21 +488,12 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         </div>
 
         <div class="bloco-corrida">
-          <label class="campo-label">Tipo de corrida</label>
-          <div class="servico-opcoes">
-            <button type="button" id="btn-servico-carro" class="botao-servico ativo">QUERO CARRO</button>
-            <button type="button" id="btn-servico-moto" class="botao-servico">QUERO MOTO</button>
-          </div>
-          <div id="resumo-servico" class="resumo-servico">Carro selecionado. Até 1 km = R$ 16,00. Acima disso = R$ 0,50 por km excedente.</div>
-        </div>
-
-        <div class="bloco-corrida">
           <label for="origem" class="campo-label">Digite sua partida</label>
           <div class="campo-busca-box">
             <input type="text" id="origem" placeholder="Ex: prefe, prima, hospital, porto" autocomplete="off">
             <div id="sugestoes-origem" class="sugestoes-box"></div>
           </div>
-          <div class="campo-ajuda">Digite sua partida do jeito mais simples. Exemplo: prefe, prima, porto. A busca agora prioriza Portel e a região próxima, sem travar de forma dura.</div>
+          <div class="campo-ajuda">Digite sua partida do jeito mais simples. Exemplo: rua, travessa, bairro, ponto conhecido. A busca agora fica livre pelo mapa.</div>
           <div class="acao-localizacao-box">
             <button type="button" id="btn-localizacao-atual" class="botao-localizacao">USAR MINHA LOCALIZAÇÃO ATUAL</button>
             <div id="status-localizacao-atual" class="status-localizacao">Você pode digitar sua partida normalmente. A localização atual é opcional.</div>
@@ -538,20 +506,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
             <input type="text" id="destino" placeholder="Ex: tuca, matriz, farmapinho, prefeitura" autocomplete="off">
             <div id="sugestoes-destino" class="sugestoes-box"></div>
           </div>
-          <div class="campo-ajuda">Digite o destino do jeito mais simples. Exemplo: tuca, matriz, farmapinho. O sistema agora prioriza Portel e a região próxima, sem travar de forma dura.</div>
-        </div>
-
-        <div class="bloco-corrida">
-          <label class="campo-label">Atalhos locais de Portel</label>
-          <div class="atalhos-busca">
-            <button type="button" class="atalho-tag" data-atalho="prefe">prefe → Prefeitura</button>
-            <button type="button" class="atalho-tag" data-atalho="prima">prima → Primavera</button>
-            <button type="button" class="atalho-tag" data-atalho="tuca">tuca → Praia da Tucano</button>
-            <button type="button" class="atalho-tag" data-atalho="porto">porto → Porto de Portel</button>
-            <button type="button" class="atalho-tag" data-atalho="matriz">matriz → Praça da Matriz</button>
-            <button type="button" class="atalho-tag" data-atalho="pinho">pinho → Farmapinho</button>
-          </div>
-          <div class="campo-ajuda">Clique em um atalho para preencher mais rápido o campo de partida ou de destino.</div>
+          <div class="campo-ajuda">Digite o destino do jeito mais simples. Exemplo: rua, travessa, bairro, ponto conhecido. A busca agora fica livre pelo mapa.</div>
         </div>
 
         <div class="mapa-box">
@@ -568,47 +523,6 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         </div>
 
         <button type="button" id="btn-calcular">SIMULAR ROTA E VALOR</button>
-
-        <div class="bloco-corrida">
-          <label class="campo-label">Endereço de embarque do passageiro</label>
-          <div class="grid-endereco">
-            <div>
-              <input type="text" id="bairro" placeholder="Bairro">
-            </div>
-            <div>
-              <input type="text" id="logradouro" placeholder="Rua / Travessa / Passagem">
-            </div>
-            <div>
-              <input type="text" id="numero" placeholder="Número da casa">
-            </div>
-            <div>
-              <input type="text" id="complemento" placeholder="Complemento">
-            </div>
-          </div>
-          <div class="campo-ajuda">Esses dados vão para o motorista localizar melhor o embarque.</div>
-        </div>
-
-        <div class="bloco-corrida">
-          <label for="referencia" class="campo-label">Referência adicional <span class="rotulo-opcional">opcional</span></label>
-          <input type="text" id="referencia" placeholder="Ex: portão azul, perto da escola, ao lado da farmácia">
-          <div class="campo-ajuda">A referência não interfere mais na busca do mapa.</div>
-        </div>
-
-        <div class="bloco-corrida">
-          <label for="pagamento" class="campo-label">Forma de pagamento</label>
-          <select id="pagamento">
-            <option value="" selected disabled>Selecione</option>
-            <option value="dinheiro">Dinheiro</option>
-            <option value="pix">PIX</option>
-            <option value="cartao">Cartão</option>
-          </select>
-        </div>
-
-        <div class="bloco-corrida">
-          <label for="observacoes" class="campo-label">Observações</label>
-          <textarea id="observacoes" placeholder="Ex: buscar 2 pessoas, bagagem, chamar no portão"></textarea>
-        </div>
-
         <button type="submit" id="btn-solicitar" disabled>CONFIRMAR E SOLICITAR CORRIDA</button>
       </form>
 
@@ -655,184 +569,15 @@ const db = firebase.firestore();
 
 const TARIFA_MINIMA_ATE_1KM = 16.00;
 const TARIFA_KM_ADICIONAL = 0.50;
-const TIPO_SERVICO_PADRAO = 'carro';
-const CONFIG_SERVICOS = {
-  carro: {
-    label: 'Carro',
-    tarifaMinimaAte1Km: 16.00,
-    tarifaKmAdicional: 0.50
-  },
-  moto: {
-    label: 'Moto',
-    tarifaMinimaAte1Km: 5.00,
-    tarifaKmAdicional: 1.50
-  }
-};
 const STATUS_ATIVOS_PASSAGEIRO = ['solicitada', 'aceita', 'a caminho', 'cheguei ao local', 'iniciada'];
 const STATUS_HISTORICO = ['finalizada', 'cancelada'];
 const MAPA_FALLBACK = { lat: -1.90, lng: -50.50, zoom: 8 };
 const RAIO_MAXIMO_CIDADE_KM = 35;
 const PONTOS_PENALIDADE_CANCELAMENTO = 1;
 
-const FAVORITOS_LOCAIS = {
-  Portel: [
-    { alvo: 'Prefeitura Municipal de Portel', aliases: ['prefe', 'prefeitura'] },
-    { alvo: 'Passagem Primavera', aliases: ['prima', 'primavera'] },
-    { alvo: 'Praia da Tucano', aliases: ['tuca', 'tucano'] },
-    { alvo: 'Porto de Portel', aliases: ['porto', 'trapiche'] },
-    { alvo: 'Praça da Matriz', aliases: ['matriz'] },
-    { alvo: 'Farmapinho', aliases: ['pinho', 'farmapinho'] }
-  ]
-};
+const FAVORITOS_LOCAIS = {};
 
-const PONTOS_LOCAIS = {
-  Portel: [
-    { nome: "Prefeitura Municipal de Portel", queries: ["Prefeitura Municipal de Portel", "Prefeitura de Portel"], aliases: ["prefeitura", "prefeitura municipal", "prefe", "duque de caxias 803", "pm portel"], priority: 1 },
-    { nome: "Hospital Municipal de Portel", queries: ["Hospital Municipal de Portel", "Hospital municipal de Portel"], aliases: ["hospital", "hospital municipal", "hospital de portel"], priority: 1 },
-    { nome: "Porto de Portel", queries: ["Porto de Portel", "Porto Municipal de Portel"], aliases: ["porto", "porto municipal", "trapiche", "embarque", "cais"], priority: 1 },
-    { nome: "Praça da Saúde", queries: ["Praça da Saúde"], aliases: ["praca da saude", "praça da saúde"], priority: 1 },
-    { nome: "Praça da Matriz", queries: ["Praça da Matriz"], aliases: ["praca da matriz", "praça da matriz", "matriz"], priority: 1 },
-    { nome: "Passagem Primavera", queries: ["Passagem Primavera"], aliases: ["primavera", "prima", "passagem primavera"], priority: 1 },
-    { nome: "Farmapinho", queries: ["Farmapinho"], aliases: ["farmapinho", "farma pinho"], priority: 1 },
-    { nome: "ViaFarma", queries: ["ViaFarma", "Drogaria ViaFarma"], aliases: ["viafarma", "drogaria viafarma", "via farma"], priority: 1 },
-    { nome: "Praia da Tucano", queries: ["Praia da Tucano", "Praia do Tucano"], aliases: ["tucano", "tuca", "praia da tucano", "praia do tucano"], priority: 1 },
-    { nome: "Portelinha", queries: ["Portelinha"], aliases: ["portelinha"], priority: 1 },
-    { nome: "Arena Prime Portel", queries: ["Arena Prime Portel"], aliases: ["arena prime", "arena prime portel"], priority: 1 },
-    { nome: "Orla de Portel", queries: ["Orla de Portel"], aliases: ["orla", "orla de portel"], priority: 1 },
-    { nome: "Caixa Econômica Federal", queries: ["Caixa Econômica Federal Portel", "Caixa Econômica Federal"], aliases: ["caixa", "cef", "caixa economica", "caixa econômica"], priority: 2 },
-    { nome: "Banco do Brasil - Portel", queries: ["Banco do Brasil Portel", "Banco do Brasil - Portel"], aliases: ["banco do brasil", "bb", "bb portel"], priority: 2 },
-    { nome: "Banco Bradesco - Agência 5746", queries: ["Banco Bradesco Portel", "Banco Bradesco - Agência 5746"], aliases: ["bradesco", "agencia 5746", "agência 5746"], priority: 2 },
-    { nome: "Lotérica Trevo da Sorte", queries: ["Lotérica Trevo da Sorte", "Lotérica Portel"], aliases: ["loterica", "lotérica", "trevo da sorte"], priority: 2 },
-    { nome: "Secretaria Municipal de Saúde", queries: ["Secretaria Municipal de Saúde Portel"], aliases: ["secretaria municipal de saude", "secretaria de saude", "saude"], priority: 2 },
-    { nome: "SETRAS - Secretaria de Trabalho", queries: ["SETRAS Portel", "SETRAS - Secretaria de Trabalho"], aliases: ["setras", "secretaria de trabalho"], priority: 2 },
-    { nome: "SECELT - Secretaria Municipal de Cultura", queries: ["SECELT Portel", "Secretaria Municipal de Cultura Portel"], aliases: ["secelt", "secretaria de cultura"], priority: 2 },
-    { nome: "SEMA-PORTEL", queries: ["SEMA-PORTEL", "SEMA Portel"], aliases: ["sema", "sema portel"], priority: 2 },
-    { nome: "SEMAP - Secretaria Municipal de Aquicultura", queries: ["SEMAP Portel", "Secretaria Municipal de Aquicultura Portel"], aliases: ["semap", "secretaria de aquicultura"], priority: 2 },
-    { nome: "SEMED/PORTEL", queries: ["SEMED Portel", "SEMED/PORTEL"], aliases: ["semed", "semed portel", "secretaria de educacao", "secretaria de educação"], priority: 2 },
-    { nome: "AC Portel Correios", queries: ["AC Portel Correios", "Correios Portel"], aliases: ["correios", "ac portel correios"], priority: 2 },
-    { nome: "Cartório Único Ofício de Portel-PA", queries: ["Cartório Único Ofício de Portel-PA", "Cartório Portel"], aliases: ["cartorio", "cartório", "cartório único ofício"], priority: 2 },
-    { nome: "Cartório da 44ª Zona Eleitoral", queries: ["Cartório da 44ª Zona Eleitoral Portel"], aliases: ["zona eleitoral", "cartorio eleitoral", "cartório eleitoral"], priority: 2 },
-    { nome: "Fórum de Portel", queries: ["Fórum de Portel", "Poder Judiciário Fórum de Portel"], aliases: ["forum", "fórum", "poder judiciario", "poder judiciário"], priority: 2 },
-    { nome: "Mercadão Cidade Portel & Melgaço PA", queries: ["Mercadão Cidade Portel & Melgaço PA", "Mercadão Portel"], aliases: ["mercadao", "mercadão", "mercadão cidade"], priority: 2 },
-    { nome: "SUPERMERCADO PIETRO", queries: ["SUPERMERCADO PIETRO"], aliases: ["pietro", "supermercado pietro"], priority: 2 },
-    { nome: "Supermercado Friaves", queries: ["Supermercado Friaves"], aliases: ["friaves", "supermercado friaves"], priority: 2 },
-    { nome: "Supermercado Erick", queries: ["Supermercado Erick"], aliases: ["erick", "supermercado erick"], priority: 2 },
-    { nome: "Varejão Bom de Preço", queries: ["Varejão Bom de Preço", "Varejao Bom de Preco"], aliases: ["varejao bom de preco", "varejão bom de preço", "bom de preco", "bom de preço"], priority: 2 },
-    { nome: "Mercado Saymon", queries: ["Mercado Saymon"], aliases: ["saymon", "mercado saymon"], priority: 2 },
-    { nome: "Mercantil Jayana", queries: ["Mercantil Jayana"], aliases: ["jayana", "mercantil jayana"], priority: 2 },
-    { nome: "Mercantil Maria Das Graças", queries: ["Mercantil Maria Das Graças"], aliases: ["maria das gracas", "maria das graças"], priority: 2 },
-    { nome: "Mercantil T & A", queries: ["Mercantil T & A"], aliases: ["mercantil t e a", "t&a", "t e a"], priority: 2 },
-    { nome: "Comercial Othon Andrio", queries: ["Comercial Othon Andrio"], aliases: ["othon andrio", "comercial othon"], priority: 2 },
-    { nome: "SUPERMERCADO DDY", queries: ["SUPERMERCADO DDY"], aliases: ["ddy", "supermercado ddy"], priority: 2 },
-    { nome: "Mini Preço Fernandinha", queries: ["Mini Preço Fernandinha"], aliases: ["fernandinha", "mini preco fernandinha", "mini preço fernandinha"], priority: 2 },
-    { nome: "Fruteira Brasil", queries: ["Fruteira Brasil"], aliases: ["fruteira brasil"], priority: 2 },
-    { nome: "MERCANTIL DA 2", queries: ["MERCANTIL DA 2"], aliases: ["mercantil da 2", "da 2"], priority: 2 },
-    { nome: "Mercantil Gleice", queries: ["Mercantil Gleice"], aliases: ["gleice", "mercantil gleice"], priority: 2 },
-    { nome: "Distribuidora Bom Preço", queries: ["Distribuidora Bom Preço"], aliases: ["distribuidora bom preco", "distribuidora bom preço"], priority: 2 },
-    { nome: "Mercantil Liberdade", queries: ["Mercantil Liberdade"], aliases: ["liberdade", "mercantil liberdade"], priority: 2 },
-    { nome: "Mercantil Preço Baixo", queries: ["Mercantil Preço Baixo"], aliases: ["preco baixo", "preço baixo", "mercantil preço baixo"], priority: 2 },
-    { nome: "Rumont Eletro", queries: ["Rumont Eletro"], aliases: ["rumont", "rumont eletro"], priority: 2 },
-    { nome: "Porto Rei Salomão", queries: ["Porto Rei Salomão"], aliases: ["rei salomao", "rei salomão"], priority: 2 },
-    { nome: "Porto Company", queries: ["Porto Company"], aliases: ["porto company"], priority: 2 },
-    { nome: "Porto São Domingos", queries: ["Porto São Domingos Portel Pará", "Porto São Domingos"], aliases: ["sao domingos", "são domingos", "porto sao domingos"], priority: 2 },
-    { nome: "Porto Oliveira Nobre", queries: ["Porto Oliveira Nobre"], aliases: ["oliveira nobre", "porto oliveira nobre"], priority: 2 },
-    { nome: "Porto Municipal Domingos Baileiro", queries: ["PORTO MUNICIPAL DOMINGOS BAILEIRO", "Porto Municipal Domingos Baileiro"], aliases: ["domingos baileiro", "porto municipal domingos baileiro"], priority: 2 },
-    { nome: "Porto Pró Ribeirinho", queries: ["Porto Pró Ribeirinho", "Porto Pro Ribeirinho"], aliases: ["pro ribeirinho", "pró ribeirinho"], priority: 2 },
-    { nome: "Porto Camarapi - Pescados da Amazônia", queries: ["Porto Camarapi - Pescados da Amazônia", "Porto Camarapi"], aliases: ["camarapi", "porto camarapi"], priority: 2 },
-    { nome: "EMEFTI José Câmara Soares Filho", queries: ["EMEFTI José Câmara Soares Filho"], aliases: ["jose camara", "josé câmara", "emefti jose camara"], priority: 2 },
-    { nome: "Escola Marcionilio Vieira", queries: ["Escola Marcionilio Vieira"], aliases: ["marcionilio vieira"], priority: 2 },
-    { nome: "Escola Municipal de Ensino Fundamental R", queries: ["Escola Municipal de Ensino Fundamental R"], aliases: ["ensino fundamental r"], priority: 2 },
-    { nome: "Colégio Estadual Nicias Ribeiro", queries: ["Colégio Estadual Nicias Ribeiro"], aliases: ["nicias ribeiro", "nícias ribeiro"], priority: 2 },
-    { nome: "Escola Dr Abel Nunes de Figueiredo", queries: ["Escola Dr Abel Nunes de Figueiredo"], aliases: ["abel nunes", "dr abel nunes"], priority: 2 },
-    { nome: "Odiléia da Silva Brito", queries: ["Odiléia da Silva Brito"], aliases: ["odileia", "odiléia"], priority: 2 },
-    { nome: "Escola Paulino de Brito", queries: ["Escola Paulino de Brito"], aliases: ["paulino de brito"], priority: 2 },
-    { nome: "E.M.E.F Lourdes Brasil", queries: ["E.M.E.F Lourdes Brasil", "EMEF Lourdes Brasil"], aliases: ["lourdes brasil"], priority: 2 },
-    { nome: "EMEF Dilma dos Santos Carvalho", queries: ["EMEF DILMA DOS SANTOS CARVALHO"], aliases: ["dilma dos santos carvalho", "emef dilma"], priority: 2 },
-    { nome: "Escola Municipal Paulo Afonso De Azevedo", queries: ["Escola Municipal Paulo Afonso De Azevedo"], aliases: ["paulo afonso de azevedo"], priority: 2 },
-    { nome: "Instituto Marques", queries: ["Instituto Marques"], aliases: ["instituto marques"], priority: 2 },
-    { nome: "EMEF Vicente Monteiro", queries: ["EMEF Vicente Monteiro"], aliases: ["vicente monteiro"], priority: 2 },
-    { nome: "Escolinha de Reforço Algodão Doce", queries: ["Escolinha de Reforço Algodão Doce", "Escolinha de Reforço Algodao Doce"], aliases: ["algodao doce", "algodão doce"], priority: 2 },
-    { nome: "EMEF Professora Júlia Barbalho", queries: ["EMEF PROFESSORA JÚLIA BARBALHO"], aliases: ["julia barbalho", "júlia barbalho"], priority: 2 },
-    { nome: "Escola Alcides Monteiro", queries: ["Escola Alcides Monteiro"], aliases: ["alcides monteiro"], priority: 2 },
-    { nome: "FEDERAL EDUC", queries: ["FEDERAL EDUC"], aliases: ["federal educ"], priority: 2 },
-    { nome: "Nova Esperança - Ponta Fina", queries: ["Nova Esperança - Ponta Fina"], aliases: ["nova esperanca", "nova esperança", "ponta fina"], priority: 2 },
-    { nome: "EducaTech Treinamento e Informática", queries: ["EducaTech Treinamento e Informática"], aliases: ["educatech", "treinamento e informatica"], priority: 2 },
-    { nome: "Isaac Newton/UNAMA", queries: ["Isaac Newton/UNAMA"], aliases: ["isaac newton", "unama"], priority: 2 },
-    { nome: "Hospital Municipal de Portel Dr. Wilson da Mota Silveira", queries: ["Hospital municipal de Portel", "Hospital Municipal de Portel Dr. Wilson da Mota Silveira"], aliases: ["hospital municipal de portel", "dr wilson da mota silveira"], priority: 2 },
-    { nome: "Unidade Básica de Saúde do Centro", queries: ["Unidade Básica de Saúde do centro"], aliases: ["ubs centro", "unidade basica de saude do centro", "posto centro"], priority: 2 },
-    { nome: "Unidade Básica de Saúde do Pinho", queries: ["Unidade Basica de Saude Do Pinho"], aliases: ["ubs pinho", "posto do pinho"], priority: 2 },
-    { nome: "Unidade Básica de Saúde do Muruci", queries: ["Unidade Básica de Saúde do Muruci"], aliases: ["ubs muruci", "posto do muruci"], priority: 2 },
-    { nome: "UBS Zona Rural", queries: ["UBS ZONA RURAL"], aliases: ["ubs zona rural", "zona rural"], priority: 2 },
-    { nome: "Posto de Saúde", queries: ["Posto De Saude", "Posto de Saúde"], aliases: ["posto de saude", "posto de saúde"], priority: 2 },
-    { nome: "UBS Messias Vieira (Tijuca)", queries: ["UBS Messias Vieira (TIJUCA)", "UBS Messias Vieira"], aliases: ["messias vieira", "tijuca", "ubs tijuca"], priority: 2 },
-    { nome: "Unidade Básica de Saúde da Família Castanheira", queries: ["Unidade Básica de Saúde da Família Castanheira"], aliases: ["ubs castanheira", "castanheira saude"], priority: 2 },
-    { nome: "Sindicato dos Produtores Rurais de Portel", queries: ["Sindicato dos Produtores Rurais de Portel"], aliases: ["produtores rurais", "sindicato rural"], priority: 3 },
-    { nome: "SINTEPP Subsede Portel", queries: ["SINTEPP SUBSEDE PORTEL"], aliases: ["sintepp", "subsede portel"], priority: 3 },
-    { nome: "Associação Pró Ribeirinho - APR", queries: ["Associação Pró Ribeirinho - APR", "Associação Pró-Ribeirinho"], aliases: ["apr", "pro ribeirinho", "pró ribeirinho"], priority: 3 },
-    { nome: "Associação dos Madeireiros do Município", queries: ["Associação dos Madeireiros Do Município"], aliases: ["madeireiros"], priority: 3 },
-    { nome: "Associação de Pescadores e Profissionais", queries: ["ASSOCIACAO DE PESCADORES E PROFIS"], aliases: ["associacao de pescadores", "associação de pescadores"], priority: 3 },
-    { nome: "ADESEP", queries: ["adesep", "ADESEP"], aliases: ["adesep"], priority: 3 },
-    { nome: "Restaurante Direto Da Panela", queries: ["Restaurante Direto Da Panela"], aliases: ["direto da panela"], priority: 3 },
-    { nome: "Marajó Lounge", queries: ["Marajó Lounge", "Marajo Lounge"], aliases: ["marajo lounge", "marajó lounge"], priority: 3 },
-    { nome: "Restaurante Da Dora", queries: ["Restaurante Da Dora"], aliases: ["dora", "restaurante da dora"], priority: 3 },
-    { nome: "Churrascaria Marinho", queries: ["Churrascaria Marinho"], aliases: ["marinho", "churrascaria marinho"], priority: 3 },
-    { nome: "Restaurante da Jôjô", queries: ["Restaurante da Jôjô", "Restaurante da Jojo"], aliases: ["jojo", "jôjô", "restaurante da jojo"], priority: 3 },
-    { nome: "Restaurante Tempero Portelense", queries: ["Restaurante tempero Portelense"], aliases: ["tempero portelense"], priority: 3 },
-    { nome: "Point Frango e Peixe Assado", queries: ["Point Frango e peixe assado"], aliases: ["point frango", "frango e peixe assado"], priority: 3 },
-    { nome: "Deck Burger Shop", queries: ["Deck Burger Shop"], aliases: ["deck burger"], priority: 3 },
-    { nome: "Bar e Restaurante do Junior", queries: ["Bar e restaurante do Junior"], aliases: ["junior", "bar do junior"], priority: 3 },
-    { nome: "Restaurante Promessa de Deus", queries: ["Restaurante Promessa de Deus"], aliases: ["promessa de deus"], priority: 3 },
-    { nome: "Bar e Restaurante da Preta", queries: ["Bar e Restaurante da Preta"], aliases: ["preta", "bar da preta"], priority: 3 },
-    { nome: "Restaurante Dona Léo", queries: ["Restaurante DONA LÉO", "Restaurante Dona Leo"], aliases: ["dona leo", "dona léo"], priority: 3 },
-    { nome: "Sítio Gastronômico Jackson & Lourdes", queries: ["Sítio gastronômico Jackson Lourdes"], aliases: ["jackson lourdes", "sitio gastronomico jackson"], priority: 3 },
-    { nome: "Cantinho Do Pará", queries: ["Cantinho Do Pará", "Cantinho do Para"], aliases: ["cantinho do para", "cantinho do pará"], priority: 3 },
-    { nome: "Bar Malibu", queries: ["Bar Malibu"], aliases: ["malibu", "bar malibu"], priority: 3 },
-    { nome: "Parada do Espeto", queries: ["Parada do espeto"], aliases: ["espeto", "parada do espeto"], priority: 3 },
-    { nome: "Churrascaria WLR", queries: ["Churrascaria WLR"], aliases: ["wlr", "churrascaria wlr"], priority: 3 },
-    { nome: "Balneário da Vany", queries: ["Balneário da vany", "Balneário da Vany"], aliases: ["balneario da vany", "balneário da vany", "vany"], priority: 3 },
-    { nome: "Balneário Lazer Kauã & Kaiky", queries: ["Balneário Lazer Kauã & Kaiky", "Balneário Lazer Kauá & Kaiky"], aliases: ["kaua", "kauã", "kaiky", "balneario kaua"], priority: 3 },
-    { nome: "Balneário da Joaninha", queries: ["Balneário da Joaninha"], aliases: ["joaninha", "balneario da joaninha"], priority: 3 },
-    { nome: "Balneário Educadores de Portel", queries: ["Balneário Educadores de Portel"], aliases: ["educadores de portel"], priority: 3 },
-    { nome: "Balneário Pub Conveniência e Eventos", queries: ["BALNEARIO, PUB CONVENIENCIA E EVEN", "Balneário Pub Conveniência e Eventos"], aliases: ["pub conveniencia", "pub conveniência"], priority: 3 },
-    { nome: "Bar e Balneário 3 Irmãos", queries: ["Bar e Balneário 3 irmãos", "Bar e Balneario 3 Irmaos"], aliases: ["3 irmaos", "3 irmãos"], priority: 3 },
-    { nome: "Chácara Cantinho da Família - Sítio JC", queries: ["Chácara Cantinho da Família - Sítio JC", "Chacara Cantinho da Familia - Sitio JC"], aliases: ["sitio jc", "sítio jc", "cantinho da familia"], priority: 3 },
-    { nome: "Pousada Center", queries: ["Pousada Center"], aliases: ["pousada center"], priority: 3 },
-    { nome: "Balneário Castanheira Vip", queries: ["Balneário Castanheira Vip"], aliases: ["castanheira vip"], priority: 3 },
-    { nome: "Mercantil e Hotel Piu-Piu", queries: ["Mercantil e Hotel Piu-Piu"], aliases: ["piu piu", "hotel piu piu"], priority: 3 },
-    { nome: "Balneário Paraíso do Caruáca", queries: ["Balneário Paraíso do Caruáca", "Balneario Paraiso do Caruaca"], aliases: ["caruaca", "caruáca"], priority: 3 },
-    { nome: "Balneário Teté", queries: ["Balneário teté", "Balneario tete"], aliases: ["tete", "teté"], priority: 3 },
-    { nome: "Sítio Obrigado Deus (Toninho)", queries: ["Sítio Obrigado Deus Toninho", "Sitio Obrigado Deus Toninho"], aliases: ["obrigado deus", "toninho"], priority: 3 },
-    { nome: "Portel, O Paraíso das Ilhas", queries: ["Portel, O Paraíso das Ilhas"], aliases: ["paraiso das ilhas", "paraíso das ilhas"], priority: 4 }
-  ],
-  "Breves": [
-    { nome: "Hospital Regional", aliases: ["hospital regional", "hospital"], priority: 1 },
-    { nome: "Prefeitura Municipal", aliases: ["prefeitura"], priority: 1 },
-    { nome: "Mercado Municipal", aliases: ["mercado", "mercado municipal"], priority: 1 },
-    { nome: "Porto / Trapiche", aliases: ["porto", "trapiche"], priority: 1 },
-    { nome: "Centro", aliases: ["centro"], priority: 2 }
-  ],
-  "Melgaço": [
-    { nome: "Hospital Municipal", aliases: ["hospital"], priority: 1 },
-    { nome: "Prefeitura Municipal", aliases: ["prefeitura"], priority: 1 },
-    { nome: "Mercado Municipal", aliases: ["mercado"], priority: 1 },
-    { nome: "Porto / Trapiche", aliases: ["porto", "trapiche"], priority: 1 },
-    { nome: "Centro", aliases: ["centro"], priority: 2 }
-  ],
-  "Bagre": [
-    { nome: "Hospital Municipal", aliases: ["hospital"], priority: 1 },
-    { nome: "Prefeitura Municipal", aliases: ["prefeitura"], priority: 1 },
-    { nome: "Mercado Municipal", aliases: ["mercado"], priority: 1 },
-    { nome: "Porto / Trapiche", aliases: ["porto", "trapiche"], priority: 1 },
-    { nome: "Centro", aliases: ["centro"], priority: 2 }
-  ],
-  "Curralinho": [
-    { nome: "Hospital Municipal", aliases: ["hospital"], priority: 1 },
-    { nome: "Prefeitura Municipal", aliases: ["prefeitura"], priority: 1 },
-    { nome: "Mercado Municipal", aliases: ["mercado"], priority: 1 },
-    { nome: "Porto / Trapiche", aliases: ["porto", "trapiche"], priority: 1 },
-    { nome: "Centro", aliases: ["centro"], priority: 2 }
-  ]
-};
+const PONTOS_LOCAIS = {};
 
 const fotoArea = document.getElementById('foto-area');
 const mensagem = document.getElementById('mensagem');
@@ -846,9 +591,6 @@ const avisoBloqueio = document.getElementById('aviso-bloqueio');
 
 const cidadeCorridaTexto = document.getElementById('cidade-corrida-texto');
 const indicadorTravaCidade = document.getElementById('indicador-trava-cidade');
-const btnServicoCarro = document.getElementById('btn-servico-carro');
-const btnServicoMoto = document.getElementById('btn-servico-moto');
-const resumoServico = document.getElementById('resumo-servico');
 
 const origemInput = document.getElementById('origem');
 const destinoInput = document.getElementById('destino');
@@ -895,7 +637,6 @@ let ultimasSugestoesOrigem = [];
 let ultimasSugestoesDestino = [];
 let campoBuscaAtivo = 'origem';
 let tentativaAutomaticaLocalizacao = false;
-let tipoServicoSelecionadoAtual = TIPO_SERVICO_PADRAO;
 
 function mostrarMensagem(texto, cor) {
   mensagem.innerText = texto;
@@ -956,64 +697,11 @@ function formatarDistancia(valorKm) {
   }) + ' km';
 }
 
-function normalizarTipoServico(tipoServico) {
-  return String(tipoServico || '').toLowerCase() === 'moto' ? 'moto' : 'carro';
-}
-
-function obterConfigServico(tipoServico) {
-  return CONFIG_SERVICOS[normalizarTipoServico(tipoServico)] || CONFIG_SERVICOS[TIPO_SERVICO_PADRAO];
-}
-
-function obterLabelServico(tipoServico) {
-  return obterConfigServico(tipoServico).label;
-}
-
-function obterResumoTarifaServico(tipoServico) {
-  const config = obterConfigServico(tipoServico);
-  return (
-    obterLabelServico(tipoServico) +
-    ' selecionado. Até 1 km = ' +
-    formatarMoeda(config.tarifaMinimaAte1Km) +
-    '. Acima disso = ' +
-    formatarMoeda(config.tarifaKmAdicional) +
-    ' por km excedente.'
-  );
-}
-
-function atualizarSeletorServicoUI() {
-  const tipo = String(tipoServicoSelecionadoAtual || TIPO_SERVICO_PADRAO);
-  btnServicoCarro.classList.toggle('ativo', tipo === 'carro');
-  btnServicoMoto.classList.toggle('ativo', tipo === 'moto');
-  resumoServico.innerText = obterResumoTarifaServico(tipo);
-
-  if (!simulacaoAtual) {
-    saidaStatusIntegracao.innerText = 'Aguardando simulação • ' + obterLabelServico(tipo);
-  }
-}
-
-function selecionarTipoServico(tipoServico) {
-  const novoTipo = normalizarTipoServico(tipoServico);
-
-  if (tipoServicoSelecionadoAtual === novoTipo) {
-    atualizarSeletorServicoUI();
-    return;
-  }
-
-  tipoServicoSelecionadoAtual = novoTipo;
-  atualizarSeletorServicoUI();
-
-  if (simulacaoAtual) {
-    invalidarSimulacao();
-    mostrarMensagem('Tipo de corrida alterado. Simule novamente a rota e o valor.', '#FFCC00');
-  }
-}
-
-function calcularValorEstimado(distanciaKm, tipoServico) {
+function calcularValorEstimado(distanciaKm) {
   const km = Number(distanciaKm);
-  const config = obterConfigServico(tipoServico);
   if (!isFinite(km) || km <= 0) return 0;
-  if (km <= 1) return config.tarifaMinimaAte1Km;
-  return Math.round((config.tarifaMinimaAte1Km + ((km - 1) * config.tarifaKmAdicional)) * 100) / 100;
+  if (km <= 1) return TARIFA_MINIMA_ATE_1KM;
+  return Math.round((TARIFA_MINIMA_ATE_1KM + ((km - 1) * TARIFA_KM_ADICIONAL)) * 100) / 100;
 }
 
 function criarBadgeStatus(status) {
@@ -1118,7 +806,7 @@ function limparCamadasMapa() {
 
 function invalidarSimulacao() {
   simulacaoAtual = null;
-  saidaStatusIntegracao.innerText = 'Aguardando simulação • ' + obterLabelServico(tipoServicoSelecionadoAtual);
+  saidaStatusIntegracao.innerText = 'Aguardando simulação';
   saidaDistancia.innerText = 'Aguardando simulação';
   saidaValor.innerText = 'Aguardando simulação';
   atualizarEstadoBotoes();
@@ -1287,44 +975,20 @@ async function preencherOrigemComLocalizacaoAtual(opcoes) {
       dadosReverse = null;
     }
 
-    const localizacaoDentroDaCidade = localizacaoPareceDaCidade(latitude, longitude, dadosReverse);
-    let origemResolvida = null;
+    const label = montarRotuloLocalizacaoAtual(dadosReverse);
+    const displayName =
+      (dadosReverse && dadosReverse.display_name) ||
+      ('Minha localização atual (' + latitude.toFixed(6) + ', ' + longitude.toFixed(6) + ')');
 
-    if (localizacaoDentroDaCidade) {
-      const label = montarRotuloLocalizacaoAtual(dadosReverse);
-      const displayName =
-        (dadosReverse && dadosReverse.display_name) ||
-        ('Minha localização atual (' + latitude.toFixed(6) + ', ' + longitude.toFixed(6) + ')');
+    origemSelecionada = {
+      tipo: 'remoto',
+      label: label,
+      displayName: displayName,
+      lat: latitude,
+      lon: longitude
+    };
 
-      origemResolvida = {
-        tipo: 'remoto',
-        label: label,
-        displayName: displayName,
-        lat: latitude,
-        lon: longitude
-      };
-    } else {
-      const pontoProximo = await encontrarPontoDaBaseMaisProximo(latitude, longitude);
-
-      if (!pontoProximo) {
-        throw new Error('Não consegui associar sua localização atual a um ponto seguro da cidade.');
-      }
-
-      origemResolvida = {
-        tipo: 'local',
-        label: pontoProximo.label,
-        displayName: pontoProximo.displayName,
-        ponto: { nome: pontoProximo.label },
-        lat: pontoProximo.lat,
-        lon: pontoProximo.lon
-      };
-
-      statusLocalizacaoAtual.style.color = '#FFCC00';
-      statusLocalizacaoAtual.innerText = 'Sua localização foi aproximada para um ponto da região de ' + cidadeContexto.cidade + '. Confira a partida antes de simular.';
-    }
-
-    origemSelecionada = origemResolvida;
-    origemInput.value = origemResolvida.label;
+    origemInput.value = label;
     campoBuscaAtivo = 'origem';
     ultimasSugestoesOrigem = [];
     esconderSugestoes(sugestoesOrigem);
@@ -1332,28 +996,18 @@ async function preencherOrigemComLocalizacaoAtual(opcoes) {
     if (simulacaoAtual) {
       invalidarSimulacao();
       if (!silencioso) {
-        if (localizacaoDentroDaCidade) {
-          mostrarMensagem('Sua partida foi atualizada pela localização atual. Simule novamente a rota e o valor.', '#FFCC00');
-        } else {
-          mostrarMensagem('Sua partida foi ajustada para o ponto urbano mais próximo em ' + cidadeContexto.cidade + '. Simule novamente a rota e o valor.', '#FFCC00');
-        }
+        mostrarMensagem('Sua partida foi atualizada pela localização atual. Simule novamente a rota e o valor.', '#FFCC00');
       }
     } else if (!silencioso) {
-      if (localizacaoDentroDaCidade) {
-        mostrarMensagem('Sua partida foi preenchida automaticamente. Agora escolha pra onde vai.', '#00FF88');
-      } else {
-        mostrarMensagem('Sua localização foi aproximada para um ponto da região de ' + cidadeContexto.cidade + '. Confira a partida e depois escolha pra onde vai.', '#FFCC00');
-      }
+      mostrarMensagem('Sua partida foi preenchida pela localização atual. Agora escolha pra onde vai.', '#00FF88');
     }
 
     if (mapa) {
-      mapa.setView([origemResolvida.lat, origemResolvida.lon], 16);
+      mapa.setView([latitude, longitude], 16);
     }
 
-    if (localizacaoDentroDaCidade) {
-      statusLocalizacaoAtual.style.color = '#00FF88';
-      statusLocalizacaoAtual.innerText = 'Partida preenchida automaticamente pela sua localização atual.';
-    }
+    statusLocalizacaoAtual.style.color = '#00FF88';
+    statusLocalizacaoAtual.innerText = 'Partida preenchida automaticamente pela sua localização atual.';
   } catch (error) {
     let textoErro = 'Não foi possível detectar sua localização agora.';
 
@@ -1415,23 +1069,6 @@ function obterFavoritosDaCidade(cidade) {
 }
 
 function encontrarFavorito(texto, cidade) {
-  const consulta = normalizarTexto(texto);
-  if (!consulta) return null;
-
-  const favoritos = obterFavoritosDaCidade(cidade);
-  for (let i = 0; i < favoritos.length; i += 1) {
-    const favorito = favoritos[i];
-    const achou = (favorito.aliases || []).some(function(alias) {
-      const norm = normalizarTexto(alias);
-      return consulta === norm || consulta.startsWith(norm) || norm.startsWith(consulta);
-    });
-    if (achou) {
-      return obterPontosDaCidade(cidade).find(function(ponto) {
-        return normalizarTexto(ponto.nome) === normalizarTexto(favorito.alvo);
-      }) || null;
-    }
-  }
-
   return null;
 }
 
@@ -1510,8 +1147,8 @@ async function focarMapaNaCidade(cidade) {
     if (cidadeContexto && mapa) {
       mapa.setView([cidadeContexto.lat, cidadeContexto.lon], 13);
       saidaFocoMapa.innerText = cidadeContexto.cidade;
-      indicadorTravaCidade.innerText = 'Busca priorizada em ' + cidadeContexto.cidade + '. O mapa pode trazer pontos da região próxima sem bloqueio duro.';
-      mapaStatusTexto.innerText = 'Mapa focado em ' + cidadeContexto.cidade + '. Digite origem e destino para buscar com prioridade local, mas sem travar de forma dura.';
+      indicadorTravaCidade.innerText = 'Busca livre pelo mapa. ' + cidadeContexto.cidade + ' continua apenas como referência inicial.';
+      mapaStatusTexto.innerText = 'Mapa focado inicialmente em ' + cidadeContexto.cidade + '. Digite origem e destino para buscar livremente.';
       return;
     }
   } catch (error) {
@@ -1549,75 +1186,6 @@ function resultadoDentroDoRaio(item, cidadeCtx) {
   if (!cidadeCtx) return true;
   const km = haversineKm(cidadeCtx.lat, cidadeCtx.lon, Number(item.lat), Number(item.lon));
   return km <= RAIO_MAXIMO_CIDADE_KM;
-}
-
-function extrairCidadeResultado(item) {
-  const address = item.address || {};
-  return (
-    address.city ||
-    address.town ||
-    address.municipality ||
-    address.village ||
-    address.county ||
-    ''
-  );
-}
-
-function extrairRotuloResultado(item) {
-  const partes = String(item.display_name || '')
-    .split(',')
-    .map(function(parte) { return parte.trim(); })
-    .filter(Boolean);
-
-  return partes[0] || '';
-}
-
-function montarSecundariaResultado(item, cidadeCtx) {
-  const cidadeExtraida = extrairCidadeResultado(item);
-  if (cidadeExtraida) return cidadeExtraida;
-
-  const partes = String(item.display_name || '')
-    .split(',')
-    .map(function(parte) { return parte.trim(); })
-    .filter(Boolean);
-
-  if (partes.length >= 2) return partes[1];
-  return cidadeCtx ? cidadeCtx.cidade : '';
-}
-
-function pontuarResultadoMapa(item, texto, cidadeCtx, consultaComCidade) {
-  const textoNorm = normalizarTexto(texto);
-  const rotuloNorm = normalizarTexto(extrairRotuloResultado(item));
-  const displayNorm = normalizarTexto(item.display_name || '');
-  let score = 0;
-
-  if (rotuloNorm === textoNorm) score += 700;
-  else if (rotuloNorm.startsWith(textoNorm)) score += 520;
-  else if (rotuloNorm.includes(textoNorm)) score += 360;
-
-  if (resultadoPareceDaCidade(item, cidadeCtx ? cidadeCtx.cidade : '')) {
-    score += 420;
-  }
-
-  if (cidadeCtx) {
-    const cidadeNorm = normalizarTexto(cidadeCtx.cidade);
-    if (displayNorm.includes(cidadeNorm)) {
-      score += 120;
-    }
-
-    const km = haversineKm(cidadeCtx.lat, cidadeCtx.lon, Number(item.lat), Number(item.lon));
-    if (isFinite(km)) {
-      if (km <= 3) score += 240;
-      else if (km <= 10) score += 180;
-      else if (km <= 25) score += 130;
-      else if (km <= 50) score += 80;
-      else if (km <= 100) score += 25;
-      else score -= Math.min(180, Math.round(km));
-    }
-  }
-
-  if (consultaComCidade) score += 40;
-  return score;
 }
 
 function obterTermosDoPonto(ponto) {
@@ -1675,73 +1243,94 @@ function pontuarPontoLocal(texto, ponto) {
 }
 
 function buscarLocaisDaBase(texto, cidade) {
-  const consulta = normalizarTexto(texto);
-  if (consulta.length < 2) return [];
-
-  const favorito = encontrarFavorito(consulta, cidade);
-  const listaBase = obterPontosDaCidade(cidade)
-    .map(function(ponto) {
-      return { ponto: ponto, score: pontuarPontoLocal(consulta, ponto) };
-    })
-    .filter(function(item) { return item.score > 0; })
-    .sort(function(a, b) { return b.score - a.score; })
-    .map(function(item) { return item.ponto; });
-
-  if (!favorito) {
-    return listaBase;
-  }
-
-  return [favorito].concat(listaBase.filter(function(ponto) {
-    return normalizarTexto(ponto.nome) !== normalizarTexto(favorito.nome);
-  }));
+  return [];
 }
 
 async function buscarNominatimTravado(texto, cidadeCtx) {
-  if (!cidadeCtx || !texto.trim()) return [];
+  if (!texto.trim()) return [];
 
-  const chave = gerarChaveBusca(cidadeCtx.cidade, texto.trim());
+  const cidadeReferencia = cidadeCtx && cidadeCtx.cidade ? cidadeCtx.cidade : '';
+  const chave = gerarChaveBusca(cidadeReferencia, texto.trim());
   if (cacheBusca.has(chave)) {
     return cacheBusca.get(chave);
   }
 
-  const consultas = [
-    texto.trim() + ', ' + cidadeCtx.cidade + ', Pará, Brasil',
-    texto.trim() + ', Pará, Brasil'
-  ];
+  const consultas = [];
+  if (cidadeReferencia) {
+    consultas.push(texto.trim() + ', ' + cidadeReferencia + ', Pará, Brasil');
+  }
+  consultas.push(texto.trim() + ', Pará, Brasil');
+  consultas.push(texto.trim());
 
-  const resultadosBrutos = [];
+  const brutos = [];
   const vistos = new Set();
 
   for (let i = 0; i < consultas.length; i += 1) {
     const dados = await geocodificarTexto(consultas[i]);
 
     (dados || []).forEach(function(item) {
-      const chaveItem = normalizarTexto(item.display_name || '') + '|' + String(item.lat || '') + '|' + String(item.lon || '');
+      const chaveItem =
+        normalizarTexto(item.display_name || '') + '|' +
+        String(item.lat || '') + '|' +
+        String(item.lon || '');
+
       if (!vistos.has(chaveItem)) {
         vistos.add(chaveItem);
-        resultadosBrutos.push({
+        brutos.push({
           item: item,
-          consultaComCidade: i === 0
+          consultaIndex: i
         });
       }
     });
 
-    if (resultadosBrutos.length >= 8) {
+    if (brutos.length >= 8) {
       break;
     }
   }
 
-  const resultados = resultadosBrutos
+  const resultados = brutos
     .map(function(registro) {
       const item = registro.item;
+      const partes = String(item.display_name || '')
+        .split(',')
+        .map(function(parte) { return parte.trim(); })
+        .filter(Boolean);
+
+      const secundaria = partes.length >= 2 ? partes[1] : (cidadeReferencia || '');
+
+      let score = 0;
+      const rotulo = partes[0] || texto.trim();
+      const rotuloNorm = normalizarTexto(rotulo);
+      const textoNorm = normalizarTexto(texto);
+
+      if (rotuloNorm === textoNorm) score += 800;
+      else if (rotuloNorm.startsWith(textoNorm)) score += 600;
+      else if (rotuloNorm.includes(textoNorm)) score += 400;
+
+      if (cidadeReferencia && normalizarTexto(item.display_name || '').includes(normalizarTexto(cidadeReferencia))) {
+        score += 220;
+      }
+
+      if (cidadeCtx && isFinite(Number(item.lat)) && isFinite(Number(item.lon))) {
+        const km = haversineKm(cidadeCtx.lat, cidadeCtx.lon, Number(item.lat), Number(item.lon));
+        if (isFinite(km)) {
+          if (km <= 5) score += 220;
+          else if (km <= 20) score += 160;
+          else if (km <= 60) score += 90;
+          else if (km <= 120) score += 30;
+        }
+      }
+
+      score += Math.max(0, 30 - (registro.consultaIndex * 10));
+
       return {
         tipo: 'remoto',
-        label: extrairRotuloResultado(item) || texto.trim(),
-        secundaria: montarSecundariaResultado(item, cidadeCtx),
+        label: rotulo,
+        secundaria: secundaria,
         lat: Number(item.lat),
         lon: Number(item.lon),
         displayName: item.display_name || texto.trim(),
-        score: pontuarResultadoMapa(item, texto, cidadeCtx, registro.consultaComCidade)
+        score: score
       };
     })
     .sort(function(a, b) {
@@ -1750,7 +1339,7 @@ async function buscarNominatimTravado(texto, cidadeCtx) {
     .slice(0, 8)
     .map(function(item) {
       return {
-        tipo: item.tipo,
+        tipo: 'remoto',
         label: item.label,
         secundaria: item.secundaria,
         lat: item.lat,
@@ -1791,32 +1380,7 @@ async function resolverPontoLocal(ponto, cidadeCtx) {
 }
 
 async function buscarSugestoesTravadas(texto, cidadeCtx) {
-  if (!cidadeCtx || !texto.trim()) return [];
-
-  const locais = buscarLocaisDaBase(texto, cidadeCtx.cidade)
-    .slice(0, 6)
-    .map(function(ponto) {
-      return {
-        tipo: 'local',
-        label: ponto.nome,
-        secundaria: cidadeCtx.cidade,
-        ponto: ponto
-      };
-    });
-
-  const remotos = await buscarNominatimTravado(texto, cidadeCtx);
-  const combinados = [];
-  const usados = new Set();
-
-  remotos.concat(locais).forEach(function(item) {
-    const chave = normalizarTexto(item.label + '|' + (item.secundaria || ''));
-    if (!usados.has(chave)) {
-      usados.add(chave);
-      combinados.push(item);
-    }
-  });
-
-  return combinados.slice(0, 8);
+  return await buscarNominatimTravado(texto, cidadeCtx);
 }
 
 function renderizarSugestoes(container, sugestoes, tipoCampo) {
@@ -1891,14 +1455,9 @@ async function resolverTextoLivre(texto, tipoCampo) {
 
   if (!primeira) {
     if (tipoCampo === 'origem') {
-      throw new Error('Não encontrei sua partida em ' + cidadeContexto.cidade + ' ou na região próxima. Tente outro nome.');
+      throw new Error('Não encontrei sua partida pelo mapa. Tente outro nome mais completo.');
     }
-    throw new Error('Não encontrei o destino em ' + cidadeContexto.cidade + ' ou na região próxima. Tente outro nome.');
-  }
-
-  if (primeira.tipo === 'local') {
-    const ponto = await resolverPontoLocal(primeira.ponto, cidadeContexto);
-    if (ponto) return ponto;
+    throw new Error('Não encontrei o destino pelo mapa. Tente outro nome mais completo.');
   }
 
   return {
@@ -1964,8 +1523,8 @@ async function obterRotaOSRM(origem, destino) {
   return dados.routes[0];
 }
 
-function atualizarSaidaSimulacao(distanciaKm, valor, tipoTexto, tipoServico) {
-  saidaStatusIntegracao.innerText = tipoTexto + ' • ' + obterLabelServico(tipoServico);
+function atualizarSaidaSimulacao(distanciaKm, valor, tipoTexto) {
+  saidaStatusIntegracao.innerText = tipoTexto;
   saidaDistancia.innerText = formatarDistancia(distanciaKm);
   saidaValor.innerText = formatarMoeda(valor);
 }
@@ -1999,8 +1558,6 @@ async function simularRotaEValor() {
   }
 
   const cidade = (dadosUsuarioAtual.cidade || '').trim();
-  const tipoServicoSelecionado = normalizarTipoServico(tipoServicoSelecionadoAtual);
-  const configServico = obterConfigServico(tipoServicoSelecionado);
   const origemTexto = origemInput.value.trim();
   const destinoTexto = destinoInput.value.trim();
 
@@ -2091,13 +1648,11 @@ async function simularRotaEValor() {
       throw new Error('Não foi possível calcular a distância.');
     }
 
-    const valorEstimado = calcularValorEstimado(distanciaKm, tipoServicoSelecionado);
+    const valorEstimado = calcularValorEstimado(distanciaKm);
     const linksRota = criarLinksRota(origemResolvida, destinoResolvido);
 
     simulacaoAtual = {
       cidadeCorrida: cidade,
-      tipoServico: normalizarTipoServico(tipoServicoSelecionado),
-      tipoServicoLabel: obterLabelServico(tipoServicoSelecionado),
       origemNome: origemResolvida.label,
       destinoNome: destinoResolvido.label,
       origemLat: origemResolvida.lat,
@@ -2109,22 +1664,20 @@ async function simularRotaEValor() {
       distanciaKm: distanciaKm,
       distanciaMetros: distanciaMetros,
       valorEstimado: valorEstimado,
-      tarifaMinimaAte1Km: configServico.tarifaMinimaAte1Km,
-      tarifaKmAdicional: configServico.tarifaKmAdicional,
       tipoCalculoDistancia: tipoCalculo,
       tipoCalculoTexto: tipoCalculoTexto,
       rotaGoogleMaps: linksRota.googleMaps,
       rotaOpenStreetMap: linksRota.openStreetMap
     };
 
-    atualizarSaidaSimulacao(distanciaKm, valorEstimado, tipoCalculoTexto, tipoServicoSelecionado);
+    atualizarSaidaSimulacao(distanciaKm, valorEstimado, tipoCalculoTexto);
 
     if (tipoCalculo === 'rota_osrm') {
       mapaStatusTexto.innerText = 'Rota calculada com sucesso em ' + cidade + '.';
-      mostrarMensagem('Simulação da corrida de ' + obterLabelServico(tipoServicoSelecionado).toLowerCase() + ' concluída. Agora preencha bairro, endereço, número e pagamento para confirmar.', '#00FF88');
+      mostrarMensagem('Simulação concluída. Agora preencha bairro, endereço, número e pagamento para confirmar.', '#00FF88');
     } else {
       mapaStatusTexto.innerText = 'Rota viária exata não disponível. Foi gerada uma estimativa aproximada.';
-      mostrarMensagem('Simulação aproximada da corrida de ' + obterLabelServico(tipoServicoSelecionado).toLowerCase() + ' concluída. Agora preencha bairro, endereço, número e pagamento para confirmar.', '#FFCC00');
+      mostrarMensagem('Simulação aproximada concluída. Agora preencha bairro, endereço, número e pagamento para confirmar.', '#FFCC00');
     }
 
     atualizarEstadoBotoes();
@@ -2268,7 +1821,6 @@ function criarCardCorrida(corrida, ativa) {
   const grid = document.createElement('div');
   grid.className = 'corrida-grid';
   grid.appendChild(criarBloco('Cidade', corrida.cidadeCorrida || corrida.passageiroCidade || '-'));
-  grid.appendChild(criarBloco('Serviço', corrida.tipoServicoLabel || obterLabelServico(corrida.tipoServico)));
   grid.appendChild(criarBloco('Onde estou', corrida.origem || '-'));
   grid.appendChild(criarBloco('Pra onde vou', corrida.destino || '-'));
   grid.appendChild(criarBloco('Bairro', corrida.bairroEmbarque || '-'));
@@ -2458,61 +2010,18 @@ async function buscarEExibirSugestoes(tipoCampo) {
     return;
   }
 
-  const sugestoesLocais = buscarLocaisDaBase(texto, cidadeContexto.cidade)
-    .slice(0, 8)
-    .map(function(ponto) {
-      return {
-        tipo: 'local',
-        label: ponto.nome,
-        secundaria: cidadeContexto.cidade,
-        ponto: ponto
-      };
-    });
-
-  if (tipoCampo === 'origem') {
-    ultimasSugestoesOrigem = sugestoesLocais;
-  } else {
-    ultimasSugestoesDestino = sugestoesLocais;
-  }
-
-  if (sugestoesLocais.length) {
-    renderizarSugestoes(container, sugestoesLocais, tipoCampo);
-  }
-
   try {
-    const sugestoesCombinadasBusca = await buscarSugestoesTravadas(texto, cidadeContexto);
-    const combinadas = [];
-    const usados = new Set();
-
-    sugestoesCombinadasBusca.forEach(function(item) {
-      const chave = normalizarTexto((item.label || '') + '|' + (item.secundaria || ''));
-      if (!usados.has(chave)) {
-        usados.add(chave);
-        combinadas.push(item);
-      }
-    });
-
-    sugestoesLocais.forEach(function(item) {
-      const chave = normalizarTexto((item.label || '') + '|' + (item.secundaria || ''));
-      if (!usados.has(chave)) {
-        usados.add(chave);
-        combinadas.push(item);
-      }
-    });
-
-    const sugestoesFinais = combinadas.slice(0, 8);
+    const sugestoes = await buscarSugestoesTravadas(texto, cidadeContexto);
 
     if (tipoCampo === 'origem') {
-      ultimasSugestoesOrigem = sugestoesFinais;
+      ultimasSugestoesOrigem = sugestoes;
     } else {
-      ultimasSugestoesDestino = sugestoesFinais;
+      ultimasSugestoesDestino = sugestoes;
     }
 
-    renderizarSugestoes(container, sugestoesFinais, tipoCampo);
+    renderizarSugestoes(container, sugestoes, tipoCampo);
   } catch (error) {
-    if (!sugestoesLocais.length) {
-      esconderSugestoes(container);
-    }
+    esconderSugestoes(container);
   }
 }
 
@@ -2596,14 +2105,6 @@ document.querySelectorAll('.atalho-tag').forEach(function(botao) {
   });
 });
 
-btnServicoCarro.addEventListener('click', function() {
-  selecionarTipoServico('carro');
-});
-
-btnServicoMoto.addEventListener('click', function() {
-  selecionarTipoServico('moto');
-});
-
 btnLocalizacaoAtual.addEventListener('click', async function() {
   await preencherOrigemComLocalizacaoAtual({ silencioso: false });
 });
@@ -2675,8 +2176,6 @@ formCorrida.addEventListener('submit', async function(e) {
       passageiroFotoURL: dadosUsuarioAtual.fotoURL || '',
 
       cidadeCorrida: simulacaoAtual.cidadeCorrida,
-      tipoServico: simulacaoAtual.tipoServico,
-      tipoServicoLabel: simulacaoAtual.tipoServicoLabel,
       origem: simulacaoAtual.origemNome,
       destino: simulacaoAtual.destinoNome,
 
@@ -2706,8 +2205,8 @@ formCorrida.addEventListener('submit', async function(e) {
       rotaGoogleMaps: simulacaoAtual.rotaGoogleMaps,
       rotaOpenStreetMap: simulacaoAtual.rotaOpenStreetMap,
 
-      tarifaMinimaAte1Km: simulacaoAtual.tarifaMinimaAte1Km,
-      tarifaKmAdicional: simulacaoAtual.tarifaKmAdicional,
+      tarifaMinimaAte1Km: TARIFA_MINIMA_ATE_1KM,
+      tarifaKmAdicional: TARIFA_KM_ADICIONAL,
 
       codigoEmbarque: codigoEmbarque,
       codigoValidado: false,
@@ -2763,7 +2262,7 @@ formCorrida.addEventListener('submit', async function(e) {
     ultimasSugestoesDestino = [];
     campoBuscaAtivo = 'origem';
     simulacaoAtual = null;
-    saidaStatusIntegracao.innerText = 'Aguardando simulação • ' + obterLabelServico(tipoServicoSelecionadoAtual);
+    saidaStatusIntegracao.innerText = 'Aguardando simulação';
     saidaDistancia.innerText = 'Aguardando simulação';
     saidaValor.innerText = 'Aguardando simulação';
 
@@ -2772,7 +2271,7 @@ formCorrida.addEventListener('submit', async function(e) {
     tentativaAutomaticaLocalizacao = false;
 
     await focarMapaNaCidade(dadosUsuarioAtual.cidade || '');
-    mostrarMensagem('Corrida de ' + obterLabelServico(tipoServicoSelecionadoAtual).toLowerCase() + ' solicitada com sucesso! Seu código de embarque foi gerado.', '#00FF88');
+    mostrarMensagem('Corrida solicitada com sucesso! Seu código de embarque foi gerado.', '#00FF88');
     atualizarEstadoBotoes();
   } catch (error) {
     mostrarMensagem('Erro ao solicitar corrida: ' + error.message, '#FF5555');
@@ -2781,8 +2280,6 @@ formCorrida.addEventListener('submit', async function(e) {
     atualizarEstadoBotoes();
   }
 });
-
-atualizarSeletorServicoUI();
 
 auth.onAuthStateChanged(async function(user) {
   if (!user) {
