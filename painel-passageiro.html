@@ -492,7 +492,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
     <div class="secao">
       <div class="secao-titulo">Solicitar corrida</div>
-      <div class="secao-subtitulo">Fluxo organizado para celular: primeiro você simula a corrida, depois preenche os dados finais e confirma.</div>
+      <div class="secao-subtitulo">Fluxo organizado para celular: primeiro você simula a corrida, depois preenche os dados finais e confirma. A busca do mapa agora fica mais livre, usando os pontos locais só como apoio.</div>
 
       <div id="aviso-bloqueio" class="aviso-bloqueio"></div>
 
@@ -525,7 +525,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
             <input type="text" id="origem" placeholder="Ex: prefe, prima, hospital, porto" autocomplete="off">
             <div id="sugestoes-origem" class="sugestoes-box"></div>
           </div>
-          <div class="campo-ajuda">Digite sua partida do jeito mais simples. Exemplo: prefe, prima, porto. Os principais pontos urbanos de Portel agora usam coordenadas próprias no app.</div>
+          <div class="campo-ajuda">Digite sua partida do jeito mais simples. Exemplo: prefe, prima, porto. A busca agora prioriza Portel e a região próxima, sem travar de forma dura.</div>
           <div class="acao-localizacao-box">
             <button type="button" id="btn-localizacao-atual" class="botao-localizacao">USAR MINHA LOCALIZAÇÃO ATUAL</button>
             <div id="status-localizacao-atual" class="status-localizacao">Você pode digitar sua partida normalmente. A localização atual é opcional.</div>
@@ -538,7 +538,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
             <input type="text" id="destino" placeholder="Ex: tuca, matriz, farmapinho, prefeitura" autocomplete="off">
             <div id="sugestoes-destino" class="sugestoes-box"></div>
           </div>
-          <div class="campo-ajuda">Digite o destino do jeito mais simples. Exemplo: tuca, matriz, farmapinho. Os principais pontos urbanos de Portel agora usam coordenadas próprias no app.</div>
+          <div class="campo-ajuda">Digite o destino do jeito mais simples. Exemplo: tuca, matriz, farmapinho. O sistema agora prioriza Portel e a região próxima, sem travar de forma dura.</div>
         </div>
 
         <div class="bloco-corrida">
@@ -687,33 +687,33 @@ const FAVORITOS_LOCAIS = {
 
 const PONTOS_LOCAIS = {
   Portel: [
-    { nome: "Prefeitura Municipal de Portel", queries: ["Prefeitura Municipal de Portel", "Prefeitura de Portel"], aliases: ["prefeitura", "prefeitura municipal", "prefe", "duque de caxias 803", "pm portel"], priority: 1, coords: { lat: -1.92935, lon: -50.82085 }, coordsAproximadas: true },
-    { nome: "Hospital Municipal de Portel", queries: ["Hospital Municipal de Portel", "Hospital municipal de Portel"], aliases: ["hospital", "hospital municipal", "hospital de portel"], priority: 1, coords: { lat: -1.93015, lon: -50.82155 }, coordsAproximadas: true },
-    { nome: "Porto de Portel", queries: ["Porto de Portel", "Porto Municipal de Portel"], aliases: ["porto", "porto municipal", "trapiche", "embarque", "cais"], priority: 1, coords: { lat: -1.92880, lon: -50.81995 }, coordsAproximadas: true },
-    { nome: "Praça da Saúde", queries: ["Praça da Saúde"], aliases: ["praca da saude", "praça da saúde"], priority: 1, coords: { lat: -1.92975, lon: -50.82110 }, coordsAproximadas: true },
-    { nome: "Praça da Matriz", queries: ["Praça da Matriz"], aliases: ["praca da matriz", "praça da matriz", "matriz"], priority: 1, coords: { lat: -1.92910, lon: -50.82035 }, coordsAproximadas: true },
-    { nome: "Passagem Primavera", queries: ["Passagem Primavera"], aliases: ["primavera", "prima", "passagem primavera"], priority: 1, coords: { lat: -1.93070, lon: -50.82190 }, coordsAproximadas: true },
-    { nome: "Farmapinho", queries: ["Farmapinho"], aliases: ["farmapinho", "farma pinho"], priority: 1, coords: { lat: -1.93105, lon: -50.82220 }, coordsAproximadas: true },
-    { nome: "ViaFarma", queries: ["ViaFarma", "Drogaria ViaFarma"], aliases: ["viafarma", "drogaria viafarma", "via farma"], priority: 1, coords: { lat: -1.92995, lon: -50.82055 }, coordsAproximadas: true },
-    { nome: "Praia da Tucano", queries: ["Praia da Tucano", "Praia do Tucano"], aliases: ["tucano", "tuca", "praia da tucano", "praia do tucano"], priority: 1, coords: { lat: -1.92845, lon: -50.81940 }, coordsAproximadas: true },
+    { nome: "Prefeitura Municipal de Portel", queries: ["Prefeitura Municipal de Portel", "Prefeitura de Portel"], aliases: ["prefeitura", "prefeitura municipal", "prefe", "duque de caxias 803", "pm portel"], priority: 1 },
+    { nome: "Hospital Municipal de Portel", queries: ["Hospital Municipal de Portel", "Hospital municipal de Portel"], aliases: ["hospital", "hospital municipal", "hospital de portel"], priority: 1 },
+    { nome: "Porto de Portel", queries: ["Porto de Portel", "Porto Municipal de Portel"], aliases: ["porto", "porto municipal", "trapiche", "embarque", "cais"], priority: 1 },
+    { nome: "Praça da Saúde", queries: ["Praça da Saúde"], aliases: ["praca da saude", "praça da saúde"], priority: 1 },
+    { nome: "Praça da Matriz", queries: ["Praça da Matriz"], aliases: ["praca da matriz", "praça da matriz", "matriz"], priority: 1 },
+    { nome: "Passagem Primavera", queries: ["Passagem Primavera"], aliases: ["primavera", "prima", "passagem primavera"], priority: 1 },
+    { nome: "Farmapinho", queries: ["Farmapinho"], aliases: ["farmapinho", "farma pinho"], priority: 1 },
+    { nome: "ViaFarma", queries: ["ViaFarma", "Drogaria ViaFarma"], aliases: ["viafarma", "drogaria viafarma", "via farma"], priority: 1 },
+    { nome: "Praia da Tucano", queries: ["Praia da Tucano", "Praia do Tucano"], aliases: ["tucano", "tuca", "praia da tucano", "praia do tucano"], priority: 1 },
     { nome: "Portelinha", queries: ["Portelinha"], aliases: ["portelinha"], priority: 1 },
     { nome: "Arena Prime Portel", queries: ["Arena Prime Portel"], aliases: ["arena prime", "arena prime portel"], priority: 1 },
-    { nome: "Orla de Portel", queries: ["Orla de Portel"], aliases: ["orla", "orla de portel"], priority: 1, coords: { lat: -1.92895, lon: -50.82005 }, coordsAproximadas: true },
-    { nome: "Caixa Econômica Federal", queries: ["Caixa Econômica Federal Portel", "Caixa Econômica Federal"], aliases: ["caixa", "cef", "caixa economica", "caixa econômica"], priority: 2, coords: { lat: -1.92955, lon: -50.82020 }, coordsAproximadas: true },
-    { nome: "Banco do Brasil - Portel", queries: ["Banco do Brasil Portel", "Banco do Brasil - Portel"], aliases: ["banco do brasil", "bb", "bb portel"], priority: 2, coords: { lat: -1.92945, lon: -50.82055 }, coordsAproximadas: true },
-    { nome: "Banco Bradesco - Agência 5746", queries: ["Banco Bradesco Portel", "Banco Bradesco - Agência 5746"], aliases: ["bradesco", "agencia 5746", "agência 5746"], priority: 2, coords: { lat: -1.92960, lon: -50.82075 }, coordsAproximadas: true },
-    { nome: "Lotérica Trevo da Sorte", queries: ["Lotérica Trevo da Sorte", "Lotérica Portel"], aliases: ["loterica", "lotérica", "trevo da sorte"], priority: 2, coords: { lat: -1.92940, lon: -50.82010 }, coordsAproximadas: true },
+    { nome: "Orla de Portel", queries: ["Orla de Portel"], aliases: ["orla", "orla de portel"], priority: 1 },
+    { nome: "Caixa Econômica Federal", queries: ["Caixa Econômica Federal Portel", "Caixa Econômica Federal"], aliases: ["caixa", "cef", "caixa economica", "caixa econômica"], priority: 2 },
+    { nome: "Banco do Brasil - Portel", queries: ["Banco do Brasil Portel", "Banco do Brasil - Portel"], aliases: ["banco do brasil", "bb", "bb portel"], priority: 2 },
+    { nome: "Banco Bradesco - Agência 5746", queries: ["Banco Bradesco Portel", "Banco Bradesco - Agência 5746"], aliases: ["bradesco", "agencia 5746", "agência 5746"], priority: 2 },
+    { nome: "Lotérica Trevo da Sorte", queries: ["Lotérica Trevo da Sorte", "Lotérica Portel"], aliases: ["loterica", "lotérica", "trevo da sorte"], priority: 2 },
     { nome: "Secretaria Municipal de Saúde", queries: ["Secretaria Municipal de Saúde Portel"], aliases: ["secretaria municipal de saude", "secretaria de saude", "saude"], priority: 2 },
     { nome: "SETRAS - Secretaria de Trabalho", queries: ["SETRAS Portel", "SETRAS - Secretaria de Trabalho"], aliases: ["setras", "secretaria de trabalho"], priority: 2 },
     { nome: "SECELT - Secretaria Municipal de Cultura", queries: ["SECELT Portel", "Secretaria Municipal de Cultura Portel"], aliases: ["secelt", "secretaria de cultura"], priority: 2 },
     { nome: "SEMA-PORTEL", queries: ["SEMA-PORTEL", "SEMA Portel"], aliases: ["sema", "sema portel"], priority: 2 },
     { nome: "SEMAP - Secretaria Municipal de Aquicultura", queries: ["SEMAP Portel", "Secretaria Municipal de Aquicultura Portel"], aliases: ["semap", "secretaria de aquicultura"], priority: 2 },
     { nome: "SEMED/PORTEL", queries: ["SEMED Portel", "SEMED/PORTEL"], aliases: ["semed", "semed portel", "secretaria de educacao", "secretaria de educação"], priority: 2 },
-    { nome: "AC Portel Correios", queries: ["AC Portel Correios", "Correios Portel"], aliases: ["correios", "ac portel correios"], priority: 2, coords: { lat: -1.92930, lon: -50.82105 }, coordsAproximadas: true },
-    { nome: "Cartório Único Ofício de Portel-PA", queries: ["Cartório Único Ofício de Portel-PA", "Cartório Portel"], aliases: ["cartorio", "cartório", "cartório único ofício"], priority: 2, coords: { lat: -1.92995, lon: -50.82130 }, coordsAproximadas: true },
+    { nome: "AC Portel Correios", queries: ["AC Portel Correios", "Correios Portel"], aliases: ["correios", "ac portel correios"], priority: 2 },
+    { nome: "Cartório Único Ofício de Portel-PA", queries: ["Cartório Único Ofício de Portel-PA", "Cartório Portel"], aliases: ["cartorio", "cartório", "cartório único ofício"], priority: 2 },
     { nome: "Cartório da 44ª Zona Eleitoral", queries: ["Cartório da 44ª Zona Eleitoral Portel"], aliases: ["zona eleitoral", "cartorio eleitoral", "cartório eleitoral"], priority: 2 },
-    { nome: "Fórum de Portel", queries: ["Fórum de Portel", "Poder Judiciário Fórum de Portel"], aliases: ["forum", "fórum", "poder judiciario", "poder judiciário"], priority: 2, coords: { lat: -1.92985, lon: -50.82140 }, coordsAproximadas: true },
-    { nome: "Mercadão Cidade Portel & Melgaço PA", queries: ["Mercadão Cidade Portel & Melgaço PA", "Mercadão Portel"], aliases: ["mercadao", "mercadão", "mercadão cidade"], priority: 2, coords: { lat: -1.92985, lon: -50.82095 }, coordsAproximadas: true },
+    { nome: "Fórum de Portel", queries: ["Fórum de Portel", "Poder Judiciário Fórum de Portel"], aliases: ["forum", "fórum", "poder judiciario", "poder judiciário"], priority: 2 },
+    { nome: "Mercadão Cidade Portel & Melgaço PA", queries: ["Mercadão Cidade Portel & Melgaço PA", "Mercadão Portel"], aliases: ["mercadao", "mercadão", "mercadão cidade"], priority: 2 },
     { nome: "SUPERMERCADO PIETRO", queries: ["SUPERMERCADO PIETRO"], aliases: ["pietro", "supermercado pietro"], priority: 2 },
     { nome: "Supermercado Friaves", queries: ["Supermercado Friaves"], aliases: ["friaves", "supermercado friaves"], priority: 2 },
     { nome: "Supermercado Erick", queries: ["Supermercado Erick"], aliases: ["erick", "supermercado erick"], priority: 2 },
@@ -1320,7 +1320,7 @@ async function preencherOrigemComLocalizacaoAtual(opcoes) {
       };
 
       statusLocalizacaoAtual.style.color = '#FFCC00';
-      statusLocalizacaoAtual.innerText = 'Sua localização foi aproximada para um ponto urbano conhecido de ' + cidadeContexto.cidade + '. Confira a partida antes de simular.';
+      statusLocalizacaoAtual.innerText = 'Sua localização foi aproximada para um ponto da região de ' + cidadeContexto.cidade + '. Confira a partida antes de simular.';
     }
 
     origemSelecionada = origemResolvida;
@@ -1342,7 +1342,7 @@ async function preencherOrigemComLocalizacaoAtual(opcoes) {
       if (localizacaoDentroDaCidade) {
         mostrarMensagem('Sua partida foi preenchida automaticamente. Agora escolha pra onde vai.', '#00FF88');
       } else {
-        mostrarMensagem('Sua localização foi aproximada para um ponto urbano de ' + cidadeContexto.cidade + '. Confira a partida e depois escolha pra onde vai.', '#FFCC00');
+        mostrarMensagem('Sua localização foi aproximada para um ponto da região de ' + cidadeContexto.cidade + '. Confira a partida e depois escolha pra onde vai.', '#FFCC00');
       }
     }
 
@@ -1510,8 +1510,8 @@ async function focarMapaNaCidade(cidade) {
     if (cidadeContexto && mapa) {
       mapa.setView([cidadeContexto.lat, cidadeContexto.lon], 13);
       saidaFocoMapa.innerText = cidadeContexto.cidade;
-      indicadorTravaCidade.innerText = 'Busca focada em ' + cidadeContexto.cidade + '. Pontos urbanos principais usam coordenadas próprias e os resultados de fora continuam descartados.';
-      mapaStatusTexto.innerText = 'Mapa focado em ' + cidadeContexto.cidade + '. Digite origem e destino para buscar automaticamente.';
+      indicadorTravaCidade.innerText = 'Busca priorizada em ' + cidadeContexto.cidade + '. O mapa pode trazer pontos da região próxima sem bloqueio duro.';
+      mapaStatusTexto.innerText = 'Mapa focado em ' + cidadeContexto.cidade + '. Digite origem e destino para buscar com prioridade local, mas sem travar de forma dura.';
       return;
     }
   } catch (error) {
@@ -1549,6 +1549,75 @@ function resultadoDentroDoRaio(item, cidadeCtx) {
   if (!cidadeCtx) return true;
   const km = haversineKm(cidadeCtx.lat, cidadeCtx.lon, Number(item.lat), Number(item.lon));
   return km <= RAIO_MAXIMO_CIDADE_KM;
+}
+
+function extrairCidadeResultado(item) {
+  const address = item.address || {};
+  return (
+    address.city ||
+    address.town ||
+    address.municipality ||
+    address.village ||
+    address.county ||
+    ''
+  );
+}
+
+function extrairRotuloResultado(item) {
+  const partes = String(item.display_name || '')
+    .split(',')
+    .map(function(parte) { return parte.trim(); })
+    .filter(Boolean);
+
+  return partes[0] || '';
+}
+
+function montarSecundariaResultado(item, cidadeCtx) {
+  const cidadeExtraida = extrairCidadeResultado(item);
+  if (cidadeExtraida) return cidadeExtraida;
+
+  const partes = String(item.display_name || '')
+    .split(',')
+    .map(function(parte) { return parte.trim(); })
+    .filter(Boolean);
+
+  if (partes.length >= 2) return partes[1];
+  return cidadeCtx ? cidadeCtx.cidade : '';
+}
+
+function pontuarResultadoMapa(item, texto, cidadeCtx, consultaComCidade) {
+  const textoNorm = normalizarTexto(texto);
+  const rotuloNorm = normalizarTexto(extrairRotuloResultado(item));
+  const displayNorm = normalizarTexto(item.display_name || '');
+  let score = 0;
+
+  if (rotuloNorm === textoNorm) score += 700;
+  else if (rotuloNorm.startsWith(textoNorm)) score += 520;
+  else if (rotuloNorm.includes(textoNorm)) score += 360;
+
+  if (resultadoPareceDaCidade(item, cidadeCtx ? cidadeCtx.cidade : '')) {
+    score += 420;
+  }
+
+  if (cidadeCtx) {
+    const cidadeNorm = normalizarTexto(cidadeCtx.cidade);
+    if (displayNorm.includes(cidadeNorm)) {
+      score += 120;
+    }
+
+    const km = haversineKm(cidadeCtx.lat, cidadeCtx.lon, Number(item.lat), Number(item.lon));
+    if (isFinite(km)) {
+      if (km <= 3) score += 240;
+      else if (km <= 10) score += 180;
+      else if (km <= 25) score += 130;
+      else if (km <= 50) score += 80;
+      else if (km <= 100) score += 25;
+      else score -= Math.min(180, Math.round(km));
+    }
+  }
+
+  if (consultaComCidade) score += 40;
+  return score;
 }
 
 function obterTermosDoPonto(ponto) {
@@ -1635,40 +1704,63 @@ async function buscarNominatimTravado(texto, cidadeCtx) {
     return cacheBusca.get(chave);
   }
 
-  const consulta = texto.trim() + ', ' + cidadeCtx.cidade + ', Pará, Brasil';
-  const dados = await geocodificarTexto(consulta);
+  const consultas = [
+    texto.trim() + ', ' + cidadeCtx.cidade + ', Pará, Brasil',
+    texto.trim() + ', Pará, Brasil'
+  ];
 
-  const resultados = (dados || [])
-    .filter(function(item) {
-      return resultadoPareceDaCidade(item, cidadeCtx.cidade) && resultadoDentroDoRaio(item, cidadeCtx);
-    })
-    .map(function(item) {
-      const partes = String(item.display_name || '')
-        .split(',')
-        .map(function(parte) { return parte.trim(); });
+  const resultadosBrutos = [];
+  const vistos = new Set();
 
+  for (let i = 0; i < consultas.length; i += 1) {
+    const dados = await geocodificarTexto(consultas[i]);
+
+    (dados || []).forEach(function(item) {
+      const chaveItem = normalizarTexto(item.display_name || '') + '|' + String(item.lat || '') + '|' + String(item.lon || '');
+      if (!vistos.has(chaveItem)) {
+        vistos.add(chaveItem);
+        resultadosBrutos.push({
+          item: item,
+          consultaComCidade: i === 0
+        });
+      }
+    });
+
+    if (resultadosBrutos.length >= 8) {
+      break;
+    }
+  }
+
+  const resultados = resultadosBrutos
+    .map(function(registro) {
+      const item = registro.item;
       return {
         tipo: 'remoto',
-        label: partes[0] || texto.trim(),
-        secundaria: cidadeCtx.cidade,
+        label: extrairRotuloResultado(item) || texto.trim(),
+        secundaria: montarSecundariaResultado(item, cidadeCtx),
         lat: Number(item.lat),
         lon: Number(item.lon),
-        displayName: item.display_name || texto.trim()
+        displayName: item.display_name || texto.trim(),
+        score: pontuarResultadoMapa(item, texto, cidadeCtx, registro.consultaComCidade)
+      };
+    })
+    .sort(function(a, b) {
+      return Number(b.score || 0) - Number(a.score || 0);
+    })
+    .slice(0, 8)
+    .map(function(item) {
+      return {
+        tipo: item.tipo,
+        label: item.label,
+        secundaria: item.secundaria,
+        lat: item.lat,
+        lon: item.lon,
+        displayName: item.displayName
       };
     });
 
-  const unicos = [];
-  const usados = new Set();
-  resultados.forEach(function(item) {
-    const chaveItem = normalizarTexto(item.displayName || item.label);
-    if (!usados.has(chaveItem)) {
-      usados.add(chaveItem);
-      unicos.push(item);
-    }
-  });
-
-  cacheBusca.set(chave, unicos.slice(0, 6));
-  return unicos.slice(0, 6);
+  cacheBusca.set(chave, resultados);
+  return resultados;
 }
 
 async function resolverPontoLocal(ponto, cidadeCtx) {
@@ -1677,18 +1769,6 @@ async function resolverPontoLocal(ponto, cidadeCtx) {
   const chave = 'local|' + gerarChaveBusca(cidadeCtx.cidade, ponto.nome);
   if (cacheResolucao.has(chave)) {
     return cacheResolucao.get(chave);
-  }
-
-  if (ponto.coords && isFinite(Number(ponto.coords.lat)) && isFinite(Number(ponto.coords.lon))) {
-    const resolvidoFixo = {
-      label: ponto.nome,
-      displayName: ponto.nome + ', ' + cidadeCtx.cidade,
-      lat: Number(ponto.coords.lat),
-      lon: Number(ponto.coords.lon),
-      fonte: ponto.coordsAproximadas ? 'coordenada_fixa_aproximada' : 'coordenada_fixa'
-    };
-    cacheResolucao.set(chave, resolvidoFixo);
-    return resolvidoFixo;
   }
 
   const termos = obterTermosDoPonto(ponto);
@@ -1728,7 +1808,7 @@ async function buscarSugestoesTravadas(texto, cidadeCtx) {
   const combinados = [];
   const usados = new Set();
 
-  locais.concat(remotos).forEach(function(item) {
+  remotos.concat(locais).forEach(function(item) {
     const chave = normalizarTexto(item.label + '|' + (item.secundaria || ''));
     if (!usados.has(chave)) {
       usados.add(chave);
@@ -1806,22 +1886,14 @@ async function selecionarSugestao(tipoCampo, item) {
 async function resolverTextoLivre(texto, tipoCampo) {
   if (!cidadeContexto) return null;
 
-  const locais = buscarLocaisDaBase(texto.trim(), cidadeContexto.cidade);
-  if (locais.length) {
-    const localResolvido = await resolverPontoLocal(locais[0], cidadeContexto);
-    if (localResolvido) {
-      return localResolvido;
-    }
-  }
-
   const sugestoes = await buscarSugestoesTravadas(texto.trim(), cidadeContexto);
   const primeira = sugestoes[0] || null;
 
   if (!primeira) {
     if (tipoCampo === 'origem') {
-      throw new Error('Não encontrei sua partida dentro de ' + cidadeContexto.cidade + '. Tente outro nome.');
+      throw new Error('Não encontrei sua partida em ' + cidadeContexto.cidade + ' ou na região próxima. Tente outro nome.');
     }
-    throw new Error('Não encontrei o destino dentro de ' + cidadeContexto.cidade + '. Tente outro nome.');
+    throw new Error('Não encontrei o destino em ' + cidadeContexto.cidade + ' ou na região próxima. Tente outro nome.');
   }
 
   if (primeira.tipo === 'local') {
@@ -2403,23 +2475,32 @@ async function buscarEExibirSugestoes(tipoCampo) {
     ultimasSugestoesDestino = sugestoesLocais;
   }
 
-  renderizarSugestoes(container, sugestoesLocais, tipoCampo);
+  if (sugestoesLocais.length) {
+    renderizarSugestoes(container, sugestoesLocais, tipoCampo);
+  }
 
   try {
-    const sugestoesRemotas = await buscarSugestoesTravadas(texto, cidadeContexto);
+    const sugestoesCombinadasBusca = await buscarSugestoesTravadas(texto, cidadeContexto);
     const combinadas = [];
     const usados = new Set();
 
-    sugestoesLocais.concat(sugestoesRemotas).forEach(function(item) {
+    sugestoesCombinadasBusca.forEach(function(item) {
       const chave = normalizarTexto((item.label || '') + '|' + (item.secundaria || ''));
-
       if (!usados.has(chave)) {
         usados.add(chave);
         combinadas.push(item);
       }
     });
 
-    const sugestoesFinais = combinadas.length ? combinadas.slice(0, 8) : sugestoesLocais;
+    sugestoesLocais.forEach(function(item) {
+      const chave = normalizarTexto((item.label || '') + '|' + (item.secundaria || ''));
+      if (!usados.has(chave)) {
+        usados.add(chave);
+        combinadas.push(item);
+      }
+    });
+
+    const sugestoesFinais = combinadas.slice(0, 8);
 
     if (tipoCampo === 'origem') {
       ultimasSugestoesOrigem = sugestoesFinais;
@@ -2431,8 +2512,6 @@ async function buscarEExibirSugestoes(tipoCampo) {
   } catch (error) {
     if (!sugestoesLocais.length) {
       esconderSugestoes(container);
-    } else {
-      renderizarSugestoes(container, sugestoesLocais, tipoCampo);
     }
   }
 }
