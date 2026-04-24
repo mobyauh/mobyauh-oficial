@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MOBYAUH - Painel do Passageiro</title>
+<title>MOBYAUH - Área do Passageiro</title>
 <link rel="icon" type="image/png" sizes="512x512" href="./assets/icon-mobyauh.png">
 <link rel="apple-touch-icon" href="./assets/icon-mobyauh.png">
 <meta name="theme-color" content="#FFCC00">
@@ -12,72 +12,107 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   min-height: 100vh;
-  background: radial-gradient(circle at top, rgba(255,204,0,0.08), transparent 30%), linear-gradient(135deg, #111, #1b1b1b 45%, #101010);
+  background:
+    radial-gradient(circle at top, rgba(255, 204, 0, 0.08), transparent 30%),
+    linear-gradient(135deg, #111111, #1b1b1b 45%, #101010);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #fff;
+  color: #ffffff;
   padding: 20px;
 }
-.page { width: 100%; max-width: 720px; margin: 0 auto; }
+.page { width: 100%; max-width: 760px; margin: 0 auto; }
 .container {
   width: 100%;
   background: #232323;
-  border: 1px solid rgba(255,255,255,0.05);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: 26px;
-  padding: 26px 20px;
-  box-shadow: 0 18px 50px rgba(0,0,0,0.50), inset 0 1px 0 rgba(255,255,255,0.03);
+  padding: 28px 22px;
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.50),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
-.painel-topo { text-align: center; margin-bottom: 20px; }
+.painel-topo { text-align: center; margin-bottom: 24px; }
 .logo-box {
-  width: 82px;
-  height: 82px;
-  border-radius: 22px;
+  width: 92px;
+  height: 92px;
+  border-radius: 24px;
   background: #FFCC00;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 10px;
+  margin: 0 auto 14px;
+  box-shadow:
+    0 14px 24px rgba(255, 204, 0, 0.18),
+    0 4px 10px rgba(0, 0, 0, 0.25);
   overflow: hidden;
-  box-shadow: 0 14px 24px rgba(255,204,0,0.18), 0 4px 10px rgba(0,0,0,0.25);
 }
-.logo-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.logo-name { color: #FFCC00; font-size: 1rem; font-weight: 800; letter-spacing: 2px; margin-bottom: 12px; }
-.foto-area { display: flex; justify-content: center; margin-bottom: 12px; }
+.logo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.logo-name {
+  color: #FFCC00;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+.foto-area { display: flex; justify-content: center; margin-bottom: 16px; }
 .foto-usuario {
-  width: 112px;
-  height: 112px;
-  border-radius: 20px;
+  width: 132px;
+  height: 132px;
+  border-radius: 22px;
   object-fit: cover;
   border: 3px solid #FFCC00;
-  background: #3a3a3a;
   box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+  background: #3a3a3a;
 }
 .sem-foto {
-  width: 112px;
-  height: 112px;
-  border-radius: 20px;
-  border: 2px dashed rgba(255,204,0,0.35);
+  width: 132px;
+  height: 132px;
+  border-radius: 22px;
+  border: 2px dashed rgba(255, 204, 0, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 10px;
   color: #d0d0d0;
-  font-size: .86rem;
+  font-size: 0.9rem;
   background: #3a3a3a;
 }
-.painel-titulo { color: #FFCC00; font-size: 1.55rem; font-weight: 900; text-transform: uppercase; margin-bottom: 4px; }
-.painel-subtitulo { color: #d8d8d8; font-size: .9rem; line-height: 1.5; }
-.grid-dados { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+.painel-titulo {
+  color: #FFCC00;
+  font-size: 1.7rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.painel-subtitulo {
+  color: #d8d8d8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.grid-dados {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 24px;
+}
 .linha-dado,
 .bloco-corrida,
 .card-corrida,
+.aviso,
 .bloco-motorista,
 .aviso-bloqueio,
 .mapa-box,
 .saida-mapa {
   background: #323232;
   border-radius: 14px;
-  padding: 13px;
+  padding: 14px;
   border: 1px solid rgba(255,255,255,0.04);
 }
 .linha-dado strong,
@@ -88,7 +123,7 @@ body {
 .saida-mapa strong {
   display: block;
   color: #FFCC00;
-  font-size: .82rem;
+  font-size: 0.88rem;
   margin-bottom: 6px;
 }
 .linha-dado span,
@@ -96,84 +131,213 @@ body {
 .bloco-motorista span,
 .aviso-bloqueio span,
 .saida-mapa span {
-  color: #fff;
+  color: #ffffff;
   word-break: break-word;
   line-height: 1.45;
 }
-.secao { margin-top: 24px; }
-.secao-titulo { color: #FFCC00; font-size: 1.12rem; font-weight: 900; text-transform: uppercase; text-align: center; margin-bottom: 5px; }
-.secao-subtitulo { color: #d8d8d8; text-align: center; line-height: 1.5; font-size: .88rem; margin-bottom: 14px; }
-.form-corrida { display: grid; gap: 12px; }
-.form-bloqueado { opacity: .55; pointer-events: none; }
+.aviso {
+  margin-top: 18px;
+  border-left: 4px solid #FFCC00;
+  color: #dcdcdc;
+  line-height: 1.6;
+  font-size: 0.94rem;
+}
+.aviso-bloqueio {
+  margin-bottom: 14px;
+  border-left: 4px solid #ff884d;
+  background: rgba(255, 136, 77, 0.12);
+  display: none;
+}
+.secao { margin-top: 26px; }
+.secao-titulo {
+  color: #FFCC00;
+  font-size: 1.18rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 6px;
+}
+.secao-subtitulo {
+  color: #d8d8d8;
+  text-align: center;
+  line-height: 1.5;
+  font-size: 0.92rem;
+  margin-bottom: 14px;
+}
+.form-corrida { display: grid; gap: 14px; }
+.form-bloqueado { opacity: 0.55; pointer-events: none; }
+
 textarea, select, input {
   width: 100%;
-  background: #252525;
+  background-color: #252525;
   border: 1px solid #4a4a4a;
   color: #fff;
   padding: 13px 14px;
   border-radius: 10px;
   font-size: 1rem;
   outline: none;
-  transition: border-color .2s ease, box-shadow .2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-textarea { min-height: 90px; resize: vertical; }
-textarea:focus, select:focus, input:focus { border-color: #FFCC00; box-shadow: 0 0 0 3px rgba(255,204,0,0.14); }
+textarea { min-height: 100px; resize: vertical; }
+textarea:focus, select:focus, input:focus {
+  border-color: #FFCC00;
+  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.15);
+}
+
 button {
   width: 100%;
-  padding: 14px;
+  padding: 15px;
   border-radius: 12px;
-  font-size: .96rem;
-  font-weight: 900;
+  font-size: 1rem;
+  font-weight: 800;
   cursor: pointer;
   border: none;
-  transition: transform .15s ease, opacity .2s ease;
+  transition: transform 0.15s ease, opacity 0.2s ease;
 }
-button:hover { transform: translateY(-1px); opacity: .97; }
-button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
-#btn-calcular { background: transparent; border: 2px solid #FFCC00; color: #FFCC00; }
-#btn-solicitar { background: #FFCC00; color: #1a1a1a; box-shadow: 0 10px 20px rgba(255,204,0,0.15); }
-.btn-vermelho { background: #d94a4a; color: #fff; }
-.botao-secundario { background: transparent; border: 2px solid #FFCC00; color: #FFCC00; margin-top: 18px; }
-.mensagem { text-align: center; min-height: 24px; margin-top: 12px; font-weight: 800; line-height: 1.4; }
-.aviso-bloqueio { margin-bottom: 12px; border-left: 4px solid #ff884d; background: rgba(255,136,77,0.12); display: none; }
-.lista-corridas { display: grid; gap: 12px; margin-top: 12px; }
-.card-corrida { display: grid; gap: 10px; }
+button:hover { transform: translateY(-1px); opacity: 0.97; }
+button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+#btn-calcular {
+  background: transparent;
+  border: 2px solid #FFCC00;
+  color: #FFCC00;
+}
+#btn-solicitar {
+  background: #FFCC00;
+  color: #1a1a1a;
+  box-shadow: 0 10px 20px rgba(255, 204, 0, 0.15);
+}
+.btn-vermelho { background: #d94a4a; color: #ffffff; }
+.botao-secundario {
+  background: transparent;
+  border: 2px solid #FFCC00;
+  color: #FFCC00;
+  margin-top: 18px;
+}
+
+.mensagem {
+  text-align: center;
+  min-height: 24px;
+  margin-top: 14px;
+  font-weight: 700;
+}
+.lista-corridas {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+.card-corrida { display: grid; gap: 12px; }
 .status-badge {
   display: inline-block;
   width: fit-content;
   padding: 7px 12px;
   border-radius: 999px;
-  font-size: .78rem;
-  font-weight: 900;
-  background: rgba(255,204,0,0.18);
+  font-size: 0.82rem;
+  font-weight: 800;
+  margin-top: 4px;
+  background: rgba(255, 204, 0, 0.18);
   color: #FFCC00;
 }
-.badge-aceita { background: rgba(0,255,136,.14); color: #00FF88; }
-.badge-azul { background: rgba(74,158,255,.18); color: #74b8ff; }
-.badge-laranja { background: rgba(255,136,77,.18); color: #ffb088; }
-.badge-roxa { background: rgba(180,120,255,.18); color: #d6b3ff; }
-.badge-finalizada { background: rgba(160,160,160,.18); color: #d6d6d6; }
-.badge-cancelada { background: rgba(217,74,74,.18); color: #ff9b9b; }
+.badge-aceita { background: rgba(0, 255, 136, 0.14); color: #00FF88; }
+.badge-azul { background: rgba(74, 158, 255, 0.18); color: #74b8ff; }
+.badge-laranja { background: rgba(255, 136, 77, 0.18); color: #ffb088; }
+.badge-roxa { background: rgba(180, 120, 255, 0.18); color: #d6b3ff; }
+.badge-finalizada { background: rgba(160, 160, 160, 0.18); color: #d6d6d6; }
+.badge-cancelada { background: rgba(217, 74, 74, 0.18); color: #ff9b9b; }
 .lista-vazia {
   background: #323232;
-  border: 1px dashed rgba(255,204,0,0.25);
+  border: 1px dashed rgba(255, 204, 0, 0.25);
   border-radius: 14px;
-  padding: 16px;
+  padding: 18px;
   text-align: center;
   color: #d8d8d8;
   line-height: 1.5;
 }
-.campo-ajuda { margin-top: 7px; color: #b8b8b8; font-size: .8rem; line-height: 1.45; }
-.badge-cidade { color: #FFCC00; font-weight: 900; }
-.mapa-box { background: linear-gradient(180deg, rgba(255,204,0,.04), rgba(255,204,0,.02)); border: 1px solid rgba(255,204,0,.14); }
-.mapa-topo { color: #FFCC00; font-size: 1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 8px; }
-.mapa-status { color: #d8d8d8; line-height: 1.45; font-size: .86rem; margin-bottom: 10px; }
-#mapa-real { width: 100%; height: 300px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,204,0,.18); }
-.leaflet-container { background: #1f1f1f; }
-.grid-endereco,
-.mapa-saida-grid,
+.motorista-topo { display: flex; align-items: center; gap: 12px; }
+.motorista-foto {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 2px solid #FFCC00;
+  background: #252525;
+  flex-shrink: 0;
+}
+.motorista-sem-foto {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  border: 2px dashed rgba(255, 204, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.72rem;
+  color: #d0d0d0;
+  background: #252525;
+  padding: 6px;
+  flex-shrink: 0;
+}
+.motorista-grid,
 .corrida-grid,
-.motorista-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mapa-saida-grid,
+.grid-endereco {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.campo-ajuda {
+  margin-top: 8px;
+  color: #b8b8b8;
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+.cidade-fixa {
+  font-size: 1rem;
+  color: #ffffff;
+  line-height: 1.4;
+}
+.cidades-mobyauh {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.tag-cidade {
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #FFCC00;
+  border: 1px solid rgba(255, 204, 0, 0.22);
+  background: rgba(255, 204, 0, 0.08);
+}
+.mapa-box {
+  background: linear-gradient(180deg, rgba(255, 204, 0, 0.04), rgba(255, 204, 0, 0.02));
+  border: 1px solid rgba(255, 204, 0, 0.14);
+}
+.mapa-topo {
+  color: #FFCC00;
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.mapa-status {
+  color: #d8d8d8;
+  line-height: 1.55;
+  font-size: 0.92rem;
+  margin-bottom: 12px;
+}
+#mapa-real {
+  width: 100%;
+  height: 320px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 204, 0, 0.18);
+}
+.leaflet-container { background: #1f1f1f; }
+
 .campo-busca-box { position: relative; }
 .sugestoes-box {
   display: none;
@@ -183,58 +347,100 @@ button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
   right: 0;
   top: calc(100% + 6px);
   background: #1f1f1f;
-  border: 1px solid rgba(255,204,0,.18);
+  border: 1px solid rgba(255, 204, 0, 0.18);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 18px 32px rgba(0,0,0,.35);
-  max-height: 260px;
+  box-shadow: 0 18px 32px rgba(0,0,0,0.35);
+  max-height: 280px;
   overflow-y: auto;
 }
 .sugestao-item {
   width: 100%;
   text-align: left;
   background: transparent;
-  color: #fff;
+  color: #ffffff;
   padding: 14px 16px;
   border: none;
-  border-bottom: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
   border-radius: 0;
-  font-size: .95rem;
-  font-weight: 700;
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 .sugestao-item:last-child { border-bottom: none; }
 .sugestao-item:hover,
-.sugestao-item.ativa { background: rgba(255,204,0,.10); }
-.sugestao-secundaria { display: block; margin-top: 4px; color: #cfcfcf; font-size: .8rem; font-weight: 500; line-height: 1.35; }
-.motorista-topo { display: flex; align-items: center; gap: 12px; }
-.motorista-foto { width: 62px; height: 62px; border-radius: 15px; object-fit: cover; border: 2px solid #FFCC00; background: #252525; flex-shrink: 0; }
-.motorista-sem-foto {
-  width: 62px;
-  height: 62px;
-  border-radius: 15px;
-  border: 2px dashed rgba(255,204,0,.35);
+.sugestao-item.ativa {
+  background: rgba(255, 204, 0, 0.10);
+}
+.sugestao-secundaria {
+  display: block;
+  margin-top: 4px;
+  color: #cfcfcf;
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.indicador-trava {
+  margin-top: 8px;
+  color: #cfcfcf;
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+.rotulo-opcional {
+  color: #bfbfbf;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-left: 6px;
+}
+.atalhos-busca {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: .7rem;
-  color: #d0d0d0;
-  background: #252525;
-  padding: 6px;
-  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.atalho-tag {
+  width: auto;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 204, 0, 0.20);
+  background: rgba(255, 204, 0, 0.08);
+  color: #FFCC00;
+  font-size: 0.82rem;
+  font-weight: 700;
+  box-shadow: none;
+}
+.atalho-tag:hover {
+  background: rgba(255, 204, 0, 0.14);
+}
+.acao-localizacao-box {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+.botao-localizacao {
+  background: transparent;
+  border: 2px solid #FFCC00;
+  color: #FFCC00;
+  box-shadow: none;
+}
+.status-localizacao {
+  color: #cfcfcf;
+  font-size: 0.84rem;
+  line-height: 1.5;
 }
 @media (max-width: 720px) {
-  body { padding: 12px; }
-  .container { padding: 22px 14px; }
-  #mapa-real { height: 260px; }
+  #mapa-real { height: 280px; }
   .grid-dados,
-  .grid-endereco,
-  .mapa-saida-grid,
+  .motorista-grid,
   .corrida-grid,
-  .motorista-grid { grid-template-columns: 1fr; }
-  .painel-titulo { font-size: 1.35rem; }
+  .mapa-saida-grid,
+  .grid-endereco {
+    grid-template-columns: 1fr;
+  }
+  .container { padding: 22px 16px; }
+  .painel-titulo { font-size: 1.45rem; }
   .foto-usuario,
-  .sem-foto { width: 104px; height: 104px; }
+  .sem-foto { width: 118px; height: 118px; }
+  .motorista-topo { align-items: flex-start; }
 }
 </style>
 </head>
@@ -248,71 +454,102 @@ button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
       <div class="logo-name">MOBYAUH</div>
       <div class="foto-area" id="foto-area"></div>
       <div class="painel-titulo">Painel do Passageiro</div>
-      <div class="painel-subtitulo">Solicite sua corrida de forma simples e acompanhe o andamento.</div>
+      <div class="painel-subtitulo">Área interna liberada para cadastro aprovado.</div>
     </div>
 
     <div class="grid-dados">
       <div class="linha-dado"><strong>Nome</strong><span id="dado-nome">Carregando...</span></div>
-      <div class="linha-dado"><strong>Cidade</strong><span id="dado-cidade">Carregando...</span></div>
-      <div class="linha-dado"><strong>Status</strong><span id="dado-status">Carregando...</span></div>
       <div class="linha-dado"><strong>E-mail</strong><span id="dado-email">Carregando...</span></div>
+      <div class="linha-dado"><strong>Cidade</strong><span id="dado-cidade">Carregando...</span></div>
+      <div class="linha-dado"><strong>Tipo</strong><span id="dado-tipo">Carregando...</span></div>
+      <div class="linha-dado" style="grid-column: 1 / -1;"><strong>Status</strong><span id="dado-status">Carregando...</span></div>
     </div>
+
+    <div class="aviso">Agora o passageiro recebe um código de embarque e informa esse código ao motorista no momento do embarque.</div>
 
     <div class="secao">
       <div class="secao-titulo">Solicitar corrida</div>
-      <div class="secao-subtitulo">Busca focada em <span id="cidade-busca-texto" class="badge-cidade">sua cidade</span>. Digite partida e destino, simule o valor e confirme.</div>
+      <div class="secao-subtitulo">Busca com cidade travada, atalhos locais e embarque mais detalhado para o motorista encontrar o passageiro.</div>
 
       <div id="aviso-bloqueio" class="aviso-bloqueio"></div>
 
       <form id="form-corrida" class="form-corrida">
         <div class="bloco-corrida">
-          <label for="tipo-corrida" class="campo-label">Tipo de corrida</label>
-          <select id="tipo-corrida" required>
-            <option value="carro" selected>Carro</option>
-            <option value="moto">Moto</option>
-          </select>
-          <div class="campo-ajuda" id="texto-tarifa">Até 1 km = R$ 16,00. Acima disso = R$ 0,50 por km adicional.</div>
+          <label class="campo-label">Cidade da corrida</label>
+          <div id="cidade-corrida-texto" class="cidade-fixa">Carregando...</div>
+          <div class="indicador-trava" id="indicador-trava-cidade">Busca livre pelo mapa...</div>
+          <div class="cidades-mobyauh">
+            <div class="tag-cidade">Portel</div>
+            <div class="tag-cidade">Breves</div>
+            <div class="tag-cidade">Melgaço</div>
+            <div class="tag-cidade">Bagre</div>
+            <div class="tag-cidade">Curralinho</div>
+          </div>
         </div>
 
         <div class="bloco-corrida">
-          <label for="origem" class="campo-label">Partida</label>
+          <label for="origem" class="campo-label">Digite sua partida</label>
           <div class="campo-busca-box">
-            <input type="text" id="origem" placeholder="Ex: Prefeitura, Passagem Primavera, Porto" autocomplete="off">
+            <input type="text" id="origem" placeholder="Ex: prefe, prima, hospital, porto" autocomplete="off">
             <div id="sugestoes-origem" class="sugestoes-box"></div>
           </div>
-          <div class="campo-ajuda">Digite e escolha uma sugestão. Se não escolher, o sistema tenta usar o primeiro resultado encontrado.</div>
+          <div class="campo-ajuda">Digite sua partida do jeito mais simples. Exemplo: rua, travessa, avenida, bairro ou ponto conhecido. A busca agora fica livre pelo mapa.</div>
+          <div class="acao-localizacao-box">
+            <button type="button" id="btn-localizacao-atual" class="botao-localizacao">USAR MINHA LOCALIZAÇÃO ATUAL</button>
+            <div id="status-localizacao-atual" class="status-localizacao">Você pode digitar sua partida normalmente. A localização atual é opcional.</div>
+          </div>
         </div>
 
         <div class="bloco-corrida">
-          <label for="destino" class="campo-label">Destino</label>
+          <label for="destino" class="campo-label">Digite pra onde vai</label>
           <div class="campo-busca-box">
-            <input type="text" id="destino" placeholder="Ex: Praça da Saúde, Hospital, Farmapinho" autocomplete="off">
+            <input type="text" id="destino" placeholder="Ex: tuca, matriz, farmapinho, prefeitura" autocomplete="off">
             <div id="sugestoes-destino" class="sugestoes-box"></div>
           </div>
-          <div class="campo-ajuda">A busca descarta resultados longe da cidade do cadastro.</div>
-        </div>
-
-        <button type="button" id="btn-calcular">SIMULAR ROTA E VALOR</button>
-
-        <div class="mapa-saida-grid">
-          <div class="saida-mapa"><strong>Distância estimada</strong><span id="saida-distancia">Aguardando simulação</span></div>
-          <div class="saida-mapa"><strong>Valor estimado</strong><span id="saida-valor">Aguardando simulação</span></div>
+          <div class="campo-ajuda">Digite o destino do jeito mais simples. Exemplo: rua, travessa, avenida, bairro ou ponto conhecido. A busca agora fica livre pelo mapa.</div>
         </div>
 
         <div class="bloco-corrida">
-          <label class="campo-label">Endereço de embarque</label>
-          <div class="grid-endereco">
-            <input type="text" id="bairro" placeholder="Bairro">
-            <input type="text" id="logradouro" placeholder="Rua / Travessa / Passagem">
-            <input type="text" id="numero" placeholder="Número da casa ou S/N">
-            <input type="text" id="referencia" placeholder="Ponto de referência">
+          <label class="campo-label">Atalhos locais de Portel</label>
+          <div class="atalhos-busca">
+            <button type="button" class="atalho-tag" data-atalho="prefe">prefe → Prefeitura</button>
+            <button type="button" class="atalho-tag" data-atalho="prima">prima → Primavera</button>
+            <button type="button" class="atalho-tag" data-atalho="tuca">tuca → Praia da Tucano</button>
+            <button type="button" class="atalho-tag" data-atalho="porto">porto → Porto de Portel</button>
+            <button type="button" class="atalho-tag" data-atalho="matriz">matriz → Praça da Matriz</button>
+            <button type="button" class="atalho-tag" data-atalho="pinho">pinho → Farmapinho</button>
           </div>
-          <div class="campo-ajuda">Esses dados não mexem no mapa. Eles ajudam o motorista a encontrar o passageiro.</div>
+          <div class="campo-ajuda">Clique em um atalho para preencher mais rápido o campo de partida ou de destino.</div>
+        </div>
+
+        <div class="bloco-corrida">
+          <label class="campo-label">Endereço de embarque do passageiro</label>
+          <div class="grid-endereco">
+            <div>
+              <input type="text" id="bairro" placeholder="Bairro">
+            </div>
+            <div>
+              <input type="text" id="logradouro" placeholder="Rua / Travessa / Passagem">
+            </div>
+            <div>
+              <input type="text" id="numero" placeholder="Número da casa">
+            </div>
+            <div>
+              <input type="text" id="complemento" placeholder="Complemento">
+            </div>
+          </div>
+          <div class="campo-ajuda">Esses dados vão para o motorista localizar melhor o embarque.</div>
+        </div>
+
+        <div class="bloco-corrida">
+          <label for="referencia" class="campo-label">Referência adicional <span class="rotulo-opcional">opcional</span></label>
+          <input type="text" id="referencia" placeholder="Ex: portão azul, perto da escola, ao lado da farmácia">
+          <div class="campo-ajuda">A referência não interfere mais na busca do mapa.</div>
         </div>
 
         <div class="bloco-corrida">
           <label for="pagamento" class="campo-label">Forma de pagamento</label>
-          <select id="pagamento" required>
+          <select id="pagamento">
             <option value="" selected disabled>Selecione</option>
             <option value="dinheiro">Dinheiro</option>
             <option value="pix">PIX</option>
@@ -322,7 +559,7 @@ button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
 
         <div class="bloco-corrida">
           <label for="observacoes" class="campo-label">Observações</label>
-          <textarea id="observacoes" placeholder="Ex: chamar no portão, levar 2 pessoas, bagagem"></textarea>
+          <textarea id="observacoes" placeholder="Ex: buscar 2 pessoas, bagagem, chamar no portão"></textarea>
         </div>
 
         <div class="mapa-box">
@@ -332,10 +569,13 @@ button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
         </div>
 
         <div class="mapa-saida-grid">
-          <div class="saida-mapa"><strong>Foco do mapa</strong><span id="saida-foco-mapa">Carregando...</span></div>
+          <div class="saida-mapa"><strong>Foco inicial do mapa</strong><span id="saida-foco-mapa">Carregando...</span></div>
           <div class="saida-mapa"><strong>Tipo de cálculo</strong><span id="saida-status-integracao">Aguardando simulação</span></div>
+          <div class="saida-mapa"><strong>Distância estimada</strong><span id="saida-distancia">Aguardando simulação</span></div>
+          <div class="saida-mapa"><strong>Valor estimado</strong><span id="saida-valor">Aguardando simulação</span></div>
         </div>
 
+        <button type="button" id="btn-calcular">SIMULAR ROTA E VALOR</button>
         <button type="submit" id="btn-solicitar" disabled>CONFIRMAR E SOLICITAR CORRIDA</button>
       </form>
 
@@ -362,6 +602,7 @@ button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
 const firebaseConfig = {
   apiKey: "AIzaSyDB1OvsClJ1enHm_tzYnje386fVvmnOq5M",
@@ -379,74 +620,17 @@ if (!firebase.apps.length) {
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-const CONFIG_SERVICOS = {
-  carro: { rotulo: 'Carro', tarifaMinimaAte1Km: 16.00, tarifaKmAdicional: 0.50 },
-  moto: { rotulo: 'Moto', tarifaMinimaAte1Km: 5.00, tarifaKmAdicional: 1.50 }
-};
+const TARIFA_MINIMA_ATE_1KM = 16.00;
+const TARIFA_KM_ADICIONAL = 0.50;
 const STATUS_ATIVOS_PASSAGEIRO = ['solicitada', 'aceita', 'a caminho', 'cheguei ao local', 'iniciada'];
 const STATUS_HISTORICO = ['finalizada', 'cancelada'];
 const MAPA_FALLBACK = { lat: -1.90, lng: -50.50, zoom: 8 };
+const RAIO_MAXIMO_CIDADE_KM = 35;
+const PONTOS_PENALIDADE_CANCELAMENTO = 1;
 
-const CONFIG_CIDADES = {
-  Portel: { lat: -1.93583, lon: -50.82080, zoom: 14, raioKm: 14 },
-  Breves: { lat: -1.68194, lon: -50.48028, zoom: 13, raioKm: 14 },
-  'Melgaço': { lat: -1.80389, lon: -50.71472, zoom: 13, raioKm: 14 },
-  Bagre: { lat: -1.90000, lon: -50.19861, zoom: 13, raioKm: 14 },
-  Curralinho: { lat: -1.81179, lon: -49.79520, zoom: 13, raioKm: 14 }
-};
+const FAVORITOS_LOCAIS = {};
 
-const PONTOS_LOCAIS = {
-  Portel: [
-    { nome: 'Prefeitura Municipal de Portel', aliases: ['prefeitura', 'prefe', 'duque de caxias', 'prefeitura de portel'] },
-    { nome: 'Hospital Municipal de Portel', aliases: ['hospital', 'hospital municipal', 'hospital de portel'] },
-    { nome: 'Porto de Portel', aliases: ['porto', 'trapiche', 'cais', 'porto de portel'] },
-    { nome: 'Praça da Saúde', aliases: ['praça da saúde', 'praca da saude', 'saúde', 'praca da saude', 'praça saúde'] },
-    { nome: 'Praça da Matriz', aliases: ['praça da matriz', 'praca da matriz', 'matriz', 'praça', 'praca'] },
-    { nome: 'Passagem Primavera', aliases: ['primavera', 'prima', 'passagem primavera'] },
-    { nome: 'Praia da Tucano', aliases: ['tucano', 'tuca', 'praia do tucano', 'praia da tucano'] },
-    { nome: 'Farmapinho', aliases: ['farmapinho', 'pinho', 'farma pinho'] },
-    { nome: 'Farma Corpo', aliases: ['farma corpo', 'farmacorpo'] },
-    { nome: 'ViaFarma', aliases: ['viafarma', 'via farma', 'drogaria viafarma'] },
-    { nome: 'Orla de Portel', aliases: ['orla', 'orla de portel'] },
-    { nome: 'Mercadão Cidade Portel', aliases: ['mercadão', 'mercadao', 'mercado', 'mercadão cidade'] },
-    { nome: 'Secretaria Municipal de Saúde', aliases: ['secretaria de saúde', 'secretaria de saude', 'secretaria municipal de saude'] },
-    { nome: 'SEMA-PORTEL', aliases: ['sema', 'sema portel'] },
-    { nome: 'SEMED Portel', aliases: ['semed', 'semed portel'] },
-    { nome: 'Portelinha', aliases: ['portelinha'] },
-    { nome: 'CRAS Castanheira', aliases: ['cras castanheira', 'castanheira', 'cras'] },
-    { nome: 'Campo de Futebol Jean Trindade', aliases: ['jean trindade', 'campo jean', 'campo de futebol'] },
-    { nome: 'Arena Center', aliases: ['arena center', 'arena'] },
-    { nome: 'Arena Prime Portel', aliases: ['arena prime', 'arena prime portel'] }
-  ],
-  Breves: [
-    { nome: 'Hospital Regional', aliases: ['hospital'] },
-    { nome: 'Prefeitura Municipal', aliases: ['prefeitura'] },
-    { nome: 'Mercado Municipal', aliases: ['mercado'] },
-    { nome: 'Porto de Breves', aliases: ['porto', 'trapiche'] },
-    { nome: 'Centro', aliases: ['centro'] }
-  ],
-  'Melgaço': [
-    { nome: 'Hospital Municipal', aliases: ['hospital'] },
-    { nome: 'Prefeitura Municipal', aliases: ['prefeitura'] },
-    { nome: 'Mercado Municipal', aliases: ['mercado'] },
-    { nome: 'Porto de Melgaço', aliases: ['porto', 'trapiche'] },
-    { nome: 'Centro', aliases: ['centro'] }
-  ],
-  Bagre: [
-    { nome: 'Hospital Municipal', aliases: ['hospital'] },
-    { nome: 'Prefeitura Municipal', aliases: ['prefeitura'] },
-    { nome: 'Mercado Municipal', aliases: ['mercado'] },
-    { nome: 'Porto de Bagre', aliases: ['porto', 'trapiche'] },
-    { nome: 'Centro', aliases: ['centro'] }
-  ],
-  Curralinho: [
-    { nome: 'Hospital Municipal', aliases: ['hospital'] },
-    { nome: 'Prefeitura Municipal', aliases: ['prefeitura'] },
-    { nome: 'Mercado Municipal', aliases: ['mercado'] },
-    { nome: 'Porto de Curralinho', aliases: ['porto', 'trapiche'] },
-    { nome: 'Centro', aliases: ['centro'] }
-  ]
-};
+const PONTOS_LOCAIS = {};
 
 const fotoArea = document.getElementById('foto-area');
 const mensagem = document.getElementById('mensagem');
@@ -457,19 +641,25 @@ const btnSolicitar = document.getElementById('btn-solicitar');
 const listaAtivas = document.getElementById('lista-ativas');
 const listaHistorico = document.getElementById('lista-historico');
 const avisoBloqueio = document.getElementById('aviso-bloqueio');
-const cidadeBuscaTexto = document.getElementById('cidade-busca-texto');
-const tipoCorridaInput = document.getElementById('tipo-corrida');
-const textoTarifa = document.getElementById('texto-tarifa');
+
+const cidadeCorridaTexto = document.getElementById('cidade-corrida-texto');
+const indicadorTravaCidade = document.getElementById('indicador-trava-cidade');
+
 const origemInput = document.getElementById('origem');
 const destinoInput = document.getElementById('destino');
 const bairroInput = document.getElementById('bairro');
 const logradouroInput = document.getElementById('logradouro');
 const numeroInput = document.getElementById('numero');
+const complementoInput = document.getElementById('complemento');
 const referenciaInput = document.getElementById('referencia');
 const pagamentoInput = document.getElementById('pagamento');
 const observacoesInput = document.getElementById('observacoes');
+
 const sugestoesOrigem = document.getElementById('sugestoes-origem');
 const sugestoesDestino = document.getElementById('sugestoes-destino');
+const btnLocalizacaoAtual = document.getElementById('btn-localizacao-atual');
+const statusLocalizacaoAtual = document.getElementById('status-localizacao-atual');
+
 const mapaStatusTexto = document.getElementById('mapa-status-texto');
 const saidaFocoMapa = document.getElementById('saida-foco-mapa');
 const saidaStatusIntegracao = document.getElementById('saida-status-integracao');
@@ -480,20 +670,28 @@ let usuarioAtual = null;
 let dadosUsuarioAtual = null;
 let unsubscribeCorridas = null;
 let passageiroTemCorridaAtiva = false;
+
 let mapa = null;
 let marcadorOrigem = null;
 let marcadorDestino = null;
 let camadaRota = null;
 let simulacaoAtual = null;
 let cidadeContexto = null;
+let ultimaConsultaNominatim = 0;
+let cacheCidade = {};
+let cacheBusca = new Map();
+let cacheResolucao = new Map();
+
 let origemSelecionada = null;
 let destinoSelecionado = null;
 let debounceOrigem = null;
 let debounceDestino = null;
+let sequenciaBuscaOrigem = 0;
+let sequenciaBuscaDestino = 0;
 let ultimasSugestoesOrigem = [];
 let ultimasSugestoesDestino = [];
-let ultimaConsultaNominatim = 0;
-let cacheBusca = new Map();
+let campoBuscaAtivo = 'origem';
+let tentativaAutomaticaLocalizacao = false;
 
 function mostrarMensagem(texto, cor) {
   mensagem.innerText = texto;
@@ -539,484 +737,26 @@ function formatarData(dataIso) {
 
 function formatarMoeda(valor) {
   if (valor === '' || valor === null || typeof valor === 'undefined') return '-';
-  return Number(valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  return Number(valor || 0).toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  });
 }
 
 function formatarDistancia(valorKm) {
   const numero = Number(valorKm || 0);
   if (!isFinite(numero) || numero <= 0) return '-';
-  return numero.toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 2 }) + ' km';
+  return numero.toLocaleString('pt-BR', {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 2
+  }) + ' km';
 }
 
-function obterConfigServico(tipo) {
-  return CONFIG_SERVICOS[tipo] || CONFIG_SERVICOS.carro;
-}
-
-function obterTextoTarifa(tipo) {
-  const config = obterConfigServico(tipo);
-  return 'Até 1 km = ' + formatarMoeda(config.tarifaMinimaAte1Km) + '. Acima disso = ' + formatarMoeda(config.tarifaKmAdicional) + ' por km adicional.';
-}
-
-function atualizarTextoTarifa() {
-  textoTarifa.innerText = obterTextoTarifa(tipoCorridaInput.value || 'carro');
-}
-
-function calcularValorEstimado(distanciaKm, tipoServico) {
+function calcularValorEstimado(distanciaKm) {
   const km = Number(distanciaKm);
-  const config = obterConfigServico(tipoServico);
   if (!isFinite(km) || km <= 0) return 0;
-  if (km <= 1) return config.tarifaMinimaAte1Km;
-  return Math.round((config.tarifaMinimaAte1Km + ((km - 1) * config.tarifaKmAdicional)) * 100) / 100;
-}
-
-function normalizarTexto(texto) {
-  return String(texto || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
-}
-
-function haversineKm(lat1, lon1, lat2, lon2) {
-  const toRad = function(valor) { return valor * Math.PI / 180; };
-  const R = 6371;
-  const dLat = toRad(lat2 - lat1);
-  const dLon = toRad(lon2 - lon1);
-  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c;
-}
-
-function esperar(ms) {
-  return new Promise(function(resolve) { setTimeout(resolve, ms); });
-}
-
-async function respeitarLimiteNominatim() {
-  const agora = Date.now();
-  const restante = 900 - (agora - ultimaConsultaNominatim);
-  if (restante > 0) await esperar(restante);
-  ultimaConsultaNominatim = Date.now();
-}
-
-function obterConfigCidade(cidade) {
-  return CONFIG_CIDADES[cidade] || null;
-}
-
-function criarViewbox(config) {
-  const deltaLat = 0.08;
-  const deltaLon = 0.08;
-  return {
-    west: config.lon - deltaLon,
-    east: config.lon + deltaLon,
-    south: config.lat - deltaLat,
-    north: config.lat + deltaLat
-  };
-}
-
-function obterPontosDaCidade(cidade) {
-  return PONTOS_LOCAIS[cidade] || [];
-}
-
-function encontrarPontosCompativeis(texto, cidade) {
-  const consulta = normalizarTexto(texto);
-  if (consulta.length < 2) return [];
-  const pontos = obterPontosDaCidade(cidade);
-  return pontos.filter(function(ponto) {
-    const termos = [ponto.nome].concat(ponto.aliases || []);
-    return termos.some(function(termo) {
-      const normalizado = normalizarTexto(termo);
-      return normalizado === consulta || normalizado.startsWith(consulta) || normalizado.includes(consulta) || consulta.includes(normalizado);
-    });
-  });
-}
-
-function montarTermosBusca(texto, cidade) {
-  const termos = [];
-  const textoLimpo = texto.trim();
-  if (textoLimpo) termos.push(textoLimpo);
-
-  const pontos = encontrarPontosCompativeis(texto, cidade);
-  pontos.forEach(function(ponto) {
-    if (!termos.includes(ponto.nome)) termos.unshift(ponto.nome);
-  });
-
-  return termos.slice(0, 5);
-}
-
-function itemDentroDaCidade(item, config) {
-  const lat = Number(item.lat);
-  const lon = Number(item.lon);
-  if (!isFinite(lat) || !isFinite(lon)) return false;
-  const distancia = haversineKm(config.lat, config.lon, lat, lon);
-  return distancia <= (config.raioKm || 14);
-}
-
-function converterResultadoNominatim(item, termo) {
-  const partes = String(item.display_name || '').split(',').map(function(parte) { return parte.trim(); });
-  return {
-    label: partes.slice(0, 2).join(' - ') || termo,
-    secundaria: partes.slice(2, 5).join(', '),
-    lat: Number(item.lat),
-    lon: Number(item.lon),
-    displayName: item.display_name || termo
-  };
-}
-
-async function consultarNominatim(termo, cidade, config, bounded) {
-  await respeitarLimiteNominatim();
-  const viewbox = criarViewbox(config);
-  let url = 'https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=8&countrycodes=br&q=' + encodeURIComponent(termo + ', ' + cidade + ', Pará, Brasil');
-
-  if (bounded) {
-    url += '&bounded=1&viewbox=' + viewbox.west + ',' + viewbox.north + ',' + viewbox.east + ',' + viewbox.south;
-  }
-
-  const resposta = await fetch(url, { headers: { 'Accept-Language': 'pt-BR,pt;q=0.9' } });
-  if (!resposta.ok) return [];
-  return await resposta.json();
-}
-
-async function buscarSugestoesTravadas(texto) {
-  if (!cidadeContexto || !texto.trim()) return [];
-  const cidade = cidadeContexto.cidade;
-  const config = cidadeContexto.config;
-  const termosBusca = montarTermosBusca(texto, cidade);
-  const chave = normalizarTexto(cidade + '|' + termosBusca.join('|'));
-
-  if (cacheBusca.has(chave)) {
-    return cacheBusca.get(chave);
-  }
-
-  const sugestoes = [];
-  const usados = new Set();
-
-  for (const termo of termosBusca) {
-    let dados = await consultarNominatim(termo, cidade, config, true);
-    let filtrados = dados.filter(function(item) { return itemDentroDaCidade(item, config); });
-
-    if (!filtrados.length) {
-      dados = await consultarNominatim(termo, cidade, config, false);
-      filtrados = dados.filter(function(item) { return itemDentroDaCidade(item, config); });
-    }
-
-    filtrados.forEach(function(item) {
-      const convertido = converterResultadoNominatim(item, termo);
-      const chaveItem = normalizarTexto(convertido.displayName);
-      if (!usados.has(chaveItem)) {
-        usados.add(chaveItem);
-        sugestoes.push(convertido);
-      }
-    });
-
-    if (sugestoes.length >= 5) break;
-  }
-
-  cacheBusca.set(chave, sugestoes.slice(0, 5));
-  return sugestoes.slice(0, 5);
-}
-
-function iniciarMapa() {
-  mapa = L.map('mapa-real', { zoomControl: true }).setView([MAPA_FALLBACK.lat, MAPA_FALLBACK.lng], MAPA_FALLBACK.zoom);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(mapa);
-  setTimeout(function() { mapa.invalidateSize(); }, 250);
-}
-
-function focarMapaNaCidade(cidade) {
-  const config = obterConfigCidade(cidade);
-  if (config && mapa) {
-    cidadeContexto = { cidade: cidade, config: config };
-    mapa.setView([config.lat, config.lon], config.zoom || 13);
-    saidaFocoMapa.innerText = cidade;
-    cidadeBuscaTexto.innerText = cidade;
-    mapaStatusTexto.innerText = 'Mapa focado em ' + cidade + '. Digite partida e destino para simular.';
-    return;
-  }
-
-  cidadeContexto = null;
-  if (mapa) mapa.setView([MAPA_FALLBACK.lat, MAPA_FALLBACK.lng], MAPA_FALLBACK.zoom);
-  saidaFocoMapa.innerText = cidade || 'Área do MOBYAUH';
-  cidadeBuscaTexto.innerText = cidade || 'sua cidade';
-  mapaStatusTexto.innerText = 'Não consegui travar a cidade no mapa. Verifique a cidade do cadastro.';
-}
-
-function limparCamadasMapa() {
-  if (marcadorOrigem) { mapa.removeLayer(marcadorOrigem); marcadorOrigem = null; }
-  if (marcadorDestino) { mapa.removeLayer(marcadorDestino); marcadorDestino = null; }
-  if (camadaRota) { mapa.removeLayer(camadaRota); camadaRota = null; }
-}
-
-function esconderSugestoes(container) {
-  container.style.display = 'none';
-  container.innerHTML = '';
-}
-
-function renderizarSugestoes(container, sugestoes, tipoCampo) {
-  container.innerHTML = '';
-
-  if (!sugestoes.length) {
-    esconderSugestoes(container);
-    return;
-  }
-
-  sugestoes.forEach(function(item, index) {
-    const botao = document.createElement('button');
-    botao.type = 'button';
-    botao.className = 'sugestao-item' + (index === 0 ? ' ativa' : '');
-    botao.innerHTML = item.label + (item.secundaria ? '<span class="sugestao-secundaria">' + item.secundaria + '</span>' : '');
-    botao.addEventListener('mousedown', function(event) { event.preventDefault(); });
-    botao.addEventListener('pointerdown', async function(event) {
-      event.preventDefault();
-      await selecionarSugestao(tipoCampo, item);
-    });
-    container.appendChild(botao);
-  });
-
-  container.style.display = 'block';
-}
-
-async function selecionarSugestao(tipoCampo, item) {
-  const resolvido = {
-    label: item.label,
-    displayName: item.displayName || item.label,
-    lat: item.lat,
-    lon: item.lon
-  };
-
-  if (tipoCampo === 'origem') {
-    origemSelecionada = resolvido;
-    origemInput.value = resolvido.label;
-    ultimasSugestoesOrigem = [];
-    esconderSugestoes(sugestoesOrigem);
-  } else {
-    destinoSelecionado = resolvido;
-    destinoInput.value = resolvido.label;
-    ultimasSugestoesDestino = [];
-    esconderSugestoes(sugestoesDestino);
-  }
-
-  if (simulacaoAtual) {
-    invalidarSimulacao();
-    mostrarMensagem('Origem ou destino alterado. Simule novamente.', '#FFCC00');
-  }
-}
-
-async function buscarEExibirSugestoes(tipoCampo) {
-  if (passageiroTemCorridaAtiva || !cidadeContexto) return;
-  const input = tipoCampo === 'origem' ? origemInput : destinoInput;
-  const container = tipoCampo === 'origem' ? sugestoesOrigem : sugestoesDestino;
-  const texto = input.value.trim();
-
-  if (texto.length < 2) {
-    esconderSugestoes(container);
-    if (tipoCampo === 'origem') ultimasSugestoesOrigem = [];
-    else ultimasSugestoesDestino = [];
-    return;
-  }
-
-  const sugestoes = await buscarSugestoesTravadas(texto);
-  if (tipoCampo === 'origem') ultimasSugestoesOrigem = sugestoes;
-  else ultimasSugestoesDestino = sugestoes;
-
-  if (sugestoes.length === 1 && normalizarTexto(texto).length >= 4) {
-    await selecionarSugestao(tipoCampo, sugestoes[0]);
-    return;
-  }
-
-  renderizarSugestoes(container, sugestoes, tipoCampo);
-}
-
-async function resolverTextoLivre(texto, tipoCampo) {
-  const sugestoes = await buscarSugestoesTravadas(texto);
-  const primeira = sugestoes[0] || null;
-  if (!primeira) {
-    const cidade = cidadeContexto ? cidadeContexto.cidade : 'sua cidade';
-    throw new Error('Não encontrei ' + (tipoCampo === 'origem' ? 'a partida' : 'o destino') + ' dentro de ' + cidade + '. Tente escrever o nome completo do local, por exemplo Praça da Matriz, Hospital Municipal ou Prefeitura.');
-  }
-  return {
-    label: primeira.label,
-    displayName: primeira.displayName,
-    lat: primeira.lat,
-    lon: primeira.lon
-  };
-}
-
-function adicionarMarcadores(origem, destino) {
-  marcadorOrigem = L.marker([origem.lat, origem.lon]).addTo(mapa).bindPopup('Partida');
-  marcadorDestino = L.marker([destino.lat, destino.lon]).addTo(mapa).bindPopup('Destino');
-}
-
-function desenharLinhaGeoJSON(geojson, cor) {
-  camadaRota = L.geoJSON(geojson, { style: { color: cor, weight: 5, opacity: 0.9 } }).addTo(mapa);
-  try { mapa.fitBounds(camadaRota.getBounds(), { padding: [30, 30] }); } catch (error) {}
-}
-
-async function obterRotaOSRM(origem, destino) {
-  const url = 'https://router.project-osrm.org/route/v1/driving/' + origem.lon + ',' + origem.lat + ';' + destino.lon + ',' + destino.lat + '?overview=full&geometries=geojson';
-  const resposta = await fetch(url);
-  if (!resposta.ok) return null;
-  const dados = await resposta.json();
-  if (dados.code !== 'Ok' || !dados.routes || !dados.routes.length) return null;
-  return dados.routes[0];
-}
-
-function criarLinksRota(origem, destino) {
-  return {
-    googleMaps: 'https://www.google.com/maps/dir/?api=1&origin=' + origem.lat + ',' + origem.lon + '&destination=' + destino.lat + ',' + destino.lon + '&travelmode=driving',
-    openStreetMap: 'https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=' + origem.lat + '%2C' + origem.lon + '%3B' + destino.lat + '%2C' + destino.lon
-  };
-}
-
-function atualizarSaidaSimulacao(distanciaKm, valor, tipoTexto) {
-  saidaStatusIntegracao.innerText = tipoTexto;
-  saidaDistancia.innerText = formatarDistancia(distanciaKm);
-  saidaValor.innerText = formatarMoeda(valor);
-}
-
-function invalidarSimulacao() {
-  simulacaoAtual = null;
-  saidaStatusIntegracao.innerText = 'Aguardando simulação';
-  saidaDistancia.innerText = 'Aguardando simulação';
-  saidaValor.innerText = 'Aguardando simulação';
-  atualizarEstadoBotoes();
-}
-
-function atualizarEstadoBotoes() {
-  if (passageiroTemCorridaAtiva) {
-    btnCalcular.disabled = true;
-    btnSolicitar.disabled = true;
-    return;
-  }
-  btnCalcular.disabled = false;
-  btnSolicitar.disabled = !simulacaoAtual;
-}
-
-async function simularRotaEValor() {
-  if (!usuarioAtual || !dadosUsuarioAtual) {
-    mostrarMensagem('Usuário não carregado. Reabra o painel.', '#FF5555');
-    return;
-  }
-
-  if (passageiroTemCorridaAtiva) {
-    mostrarMensagem('Você já possui uma corrida ativa. Aguarde finalizar ou cancelar.', '#FF884D');
-    return;
-  }
-
-  const cidade = (dadosUsuarioAtual.cidade || '').trim();
-  const origemTexto = origemInput.value.trim();
-  const destinoTexto = destinoInput.value.trim();
-  const tipoCorrida = tipoCorridaInput.value || 'carro';
-
-  if (!cidadeContexto) {
-    mostrarMensagem('Não consegui travar a busca na sua cidade. Reabra o painel.', '#FF5555');
-    return;
-  }
-
-  if (!origemTexto || !destinoTexto) {
-    mostrarMensagem('Preencha partida e destino para simular.', '#FF5555');
-    return;
-  }
-
-  btnCalcular.disabled = true;
-  btnCalcular.innerText = 'SIMULANDO...';
-  btnSolicitar.disabled = true;
-  mostrarMensagem('', '#ffffff');
-  limparCamadasMapa();
-  esconderSugestoes(sugestoesOrigem);
-  esconderSugestoes(sugestoesDestino);
-
-  try {
-    mapaStatusTexto.innerText = 'Buscando partida e destino em ' + cidade + '...';
-
-    const origemResolvida = origemSelecionada || await resolverTextoLivre(origemTexto, 'origem');
-    const destinoResolvido = destinoSelecionado || await resolverTextoLivre(destinoTexto, 'destino');
-
-    if (Math.abs(origemResolvida.lat - destinoResolvido.lat) < 0.000001 && Math.abs(origemResolvida.lon - destinoResolvido.lon) < 0.000001) {
-      throw new Error('Partida e destino ficaram iguais no mapa. Tente escrever de forma mais específica.');
-    }
-
-    origemSelecionada = origemResolvida;
-    destinoSelecionado = destinoResolvido;
-    origemInput.value = origemResolvida.label;
-    destinoInput.value = destinoResolvido.label;
-
-    adicionarMarcadores(origemResolvida, destinoResolvido);
-    mapaStatusTexto.innerText = 'Calculando rota e valor...';
-
-    let distanciaKm = 0;
-    let distanciaMetros = 0;
-    let tipoCalculo = 'rota_osrm';
-    let tipoCalculoTexto = 'Rota pelo mapa';
-
-    const rota = await obterRotaOSRM(origemResolvida, destinoResolvido);
-
-    if (rota && rota.distance) {
-      distanciaMetros = Number(rota.distance);
-      distanciaKm = Math.round((distanciaMetros / 1000) * 100) / 100;
-      desenharLinhaGeoJSON(rota.geometry, '#FFCC00');
-    } else {
-      distanciaKm = Math.round(haversineKm(origemResolvida.lat, origemResolvida.lon, destinoResolvido.lat, destinoResolvido.lon) * 100) / 100;
-      distanciaMetros = Math.round(distanciaKm * 1000);
-      tipoCalculo = 'linha_reta';
-      tipoCalculoTexto = 'Estimativa aproximada';
-      desenharLinhaGeoJSON({
-        type: 'Feature',
-        geometry: {
-          type: 'LineString',
-          coordinates: [[origemResolvida.lon, origemResolvida.lat], [destinoResolvido.lon, destinoResolvido.lat]]
-        },
-        properties: {}
-      }, '#74b8ff');
-    }
-
-    if (!distanciaKm || distanciaKm <= 0) {
-      throw new Error('Não foi possível calcular a distância.');
-    }
-
-    const valorEstimado = calcularValorEstimado(distanciaKm, tipoCorrida);
-    const linksRota = criarLinksRota(origemResolvida, destinoResolvido);
-
-    simulacaoAtual = {
-      cidadeCorrida: cidade,
-      tipoCorrida: tipoCorrida,
-      tipoVeiculoSolicitado: tipoCorrida,
-      tipoCorridaTexto: tipoCorrida === 'moto' ? 'Moto' : 'Carro',
-      origemNome: origemResolvida.label,
-      destinoNome: destinoResolvido.label,
-      origemLat: origemResolvida.lat,
-      origemLon: origemResolvida.lon,
-      destinoLat: destinoResolvido.lat,
-      destinoLon: destinoResolvido.lon,
-      origemEnderecoCalculado: origemResolvida.displayName,
-      destinoEnderecoCalculado: destinoResolvido.displayName,
-      distanciaKm: distanciaKm,
-      distanciaMetros: distanciaMetros,
-      valorEstimado: valorEstimado,
-      tarifaMinimaAte1Km: obterConfigServico(tipoCorrida).tarifaMinimaAte1Km,
-      tarifaKmAdicional: obterConfigServico(tipoCorrida).tarifaKmAdicional,
-      tipoCalculoDistancia: tipoCalculo,
-      tipoCalculoTexto: tipoCalculoTexto,
-      rotaGoogleMaps: linksRota.googleMaps,
-      rotaOpenStreetMap: linksRota.openStreetMap
-    };
-
-    atualizarSaidaSimulacao(distanciaKm, valorEstimado, tipoCalculoTexto);
-
-    if (tipoCalculo === 'rota_osrm') {
-      mapaStatusTexto.innerText = 'Rota calculada com sucesso.';
-      mostrarMensagem('Simulação concluída. Agora complete o endereço de embarque e confirme.', '#00FF88');
-    } else {
-      mapaStatusTexto.innerText = 'Rota viária exata não disponível. Foi gerada uma estimativa aproximada.';
-      mostrarMensagem('Simulação aproximada concluída. Agora complete o endereço de embarque e confirme.', '#FFCC00');
-    }
-
-    atualizarEstadoBotoes();
-  } catch (error) {
-    invalidarSimulacao();
-    mapaStatusTexto.innerText = 'Não foi possível concluir a simulação agora.';
-    mostrarMensagem('Erro ao simular rota: ' + error.message, '#FF5555');
-  } finally {
-    btnCalcular.innerText = 'SIMULAR ROTA E VALOR';
-    atualizarEstadoBotoes();
-  }
+  if (km <= 1) return TARIFA_MINIMA_ATE_1KM;
+  return Math.round((TARIFA_MINIMA_ATE_1KM + ((km - 1) * TARIFA_KM_ADICIONAL)) * 100) / 100;
 }
 
 function criarBadgeStatus(status) {
@@ -1062,13 +802,1190 @@ function criarBlocoMotorista(corrida) {
   bloco.appendChild(topo);
   bloco.appendChild(grid);
 
-  if (corrida.status === 'a caminho') bloco.appendChild(criarBloco('Situação atual', 'O motorista está a caminho do embarque.'));
-  if (corrida.status === 'cheguei ao local') bloco.appendChild(criarBloco('Situação atual', 'O motorista já chegou ao local de embarque.'));
-  if (corrida.status === 'iniciada') bloco.appendChild(criarBloco('Situação atual', 'A corrida foi iniciada.'));
-  if (corrida.status === 'finalizada') bloco.appendChild(criarBloco('Situação atual', 'Corrida finalizada com sucesso.'));
-  if (corrida.status === 'cancelada') bloco.appendChild(criarBloco('Situação atual', 'Corrida cancelada.'));
+  if (corrida.status === 'a caminho') {
+    bloco.appendChild(criarBloco('Situação atual', 'O motorista está a caminho do embarque.'));
+  }
+  if (corrida.status === 'cheguei ao local') {
+    bloco.appendChild(criarBloco('Situação atual', 'O motorista já chegou ao local de embarque.'));
+    bloco.appendChild(criarBloco('Chegada ao local', formatarData(corrida.dataChegueiLocal)));
+  }
+  if (corrida.status === 'iniciada') {
+    bloco.appendChild(criarBloco('Situação atual', 'A corrida foi iniciada e o passageiro já está em deslocamento.'));
+    bloco.appendChild(criarBloco('Chegada ao local', formatarData(corrida.dataChegueiLocal)));
+    bloco.appendChild(criarBloco('Código validado em', formatarData(corrida.dataValidacaoCodigo)));
+    bloco.appendChild(criarBloco('Data de início', formatarData(corrida.dataIniciada)));
+  }
+  if (corrida.status === 'finalizada') {
+    bloco.appendChild(criarBloco('Situação atual', 'Corrida finalizada com sucesso.'));
+    bloco.appendChild(criarBloco('Chegada ao local', formatarData(corrida.dataChegueiLocal)));
+    bloco.appendChild(criarBloco('Código validado em', formatarData(corrida.dataValidacaoCodigo)));
+    bloco.appendChild(criarBloco('Data de início', formatarData(corrida.dataIniciada)));
+    bloco.appendChild(criarBloco('Data da finalização', formatarData(corrida.dataFinalizacao)));
+  }
+  if (corrida.status === 'cancelada') {
+    bloco.appendChild(criarBloco('Situação atual', 'Corrida cancelada.'));
+    bloco.appendChild(criarBloco('Cancelada por', corrida.canceladaPorNome || corrida.canceladaPorTipo || '-'));
+    bloco.appendChild(criarBloco('Data do cancelamento', formatarData(corrida.dataCancelamento)));
+  }
 
   return bloco;
+}
+
+function iniciarMapa() {
+  mapa = L.map('mapa-real', { zoomControl: true }).setView([MAPA_FALLBACK.lat, MAPA_FALLBACK.lng], MAPA_FALLBACK.zoom);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(mapa);
+
+  setTimeout(function() {
+    mapa.invalidateSize();
+  }, 250);
+}
+
+function limparCamadasMapa() {
+  if (marcadorOrigem) {
+    mapa.removeLayer(marcadorOrigem);
+    marcadorOrigem = null;
+  }
+  if (marcadorDestino) {
+    mapa.removeLayer(marcadorDestino);
+    marcadorDestino = null;
+  }
+  if (camadaRota) {
+    mapa.removeLayer(camadaRota);
+    camadaRota = null;
+  }
+}
+
+function invalidarSimulacao() {
+  simulacaoAtual = null;
+  saidaStatusIntegracao.innerText = 'Aguardando simulação';
+  saidaDistancia.innerText = 'Aguardando simulação';
+  saidaValor.innerText = 'Aguardando simulação';
+  atualizarEstadoBotoes();
+}
+
+function atualizarEstadoBotoes() {
+  if (passageiroTemCorridaAtiva) {
+    btnCalcular.disabled = true;
+    btnSolicitar.disabled = true;
+    return;
+  }
+  btnCalcular.disabled = false;
+  btnSolicitar.disabled = !simulacaoAtual;
+}
+
+function esperar(ms) {
+  return new Promise(function(resolve) {
+    setTimeout(resolve, ms);
+  });
+}
+
+function obterPosicaoAtual(opcoes) {
+  return new Promise(function(resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject, opcoes);
+  });
+}
+
+async function reverseGeocodificarCoordenadas(lat, lon) {
+  await respeitarLimiteNominatim();
+
+  const url =
+    'https://nominatim.openstreetmap.org/reverse?format=jsonv2&addressdetails=1&lat=' +
+    encodeURIComponent(lat) +
+    '&lon=' +
+    encodeURIComponent(lon);
+
+  const resposta = await fetch(url, {
+    headers: { 'Accept-Language': 'pt-BR,pt;q=0.9' }
+  });
+
+  if (!resposta.ok) {
+    throw new Error('Falha ao consultar sua localização atual.');
+  }
+
+  return await resposta.json();
+}
+
+function montarRotuloLocalizacaoAtual(dadosReverse) {
+  const address = (dadosReverse && dadosReverse.address) || {};
+  const candidatos = [
+    address.road,
+    address.pedestrian,
+    address.neighbourhood,
+    address.suburb,
+    address.hamlet,
+    address.village,
+    address.town,
+    address.city
+  ].filter(Boolean);
+
+  if (candidatos.length) {
+    return candidatos[0];
+  }
+
+  const display = String((dadosReverse && dadosReverse.display_name) || '').split(',')[0].trim();
+  return display || 'Minha localização atual';
+}
+
+function localizacaoPareceDaCidade(lat, lon, dadosReverse) {
+  if (!cidadeContexto) return true;
+
+  const itemVirtual = {
+    display_name: (dadosReverse && dadosReverse.display_name) || '',
+    address: (dadosReverse && dadosReverse.address) || {},
+    lat: Number(lat),
+    lon: Number(lon)
+  };
+
+  return resultadoPareceDaCidade(itemVirtual, cidadeContexto.cidade) || resultadoDentroDoRaio(itemVirtual, cidadeContexto);
+}
+
+function obterPontosPrioritariosParaLocalizacao(cidade) {
+  return obterPontosDaCidade(cidade)
+    .filter(function(ponto) {
+      return Number(ponto.priority || 99) <= 2;
+    })
+    .sort(function(a, b) {
+      return Number(a.priority || 99) - Number(b.priority || 99);
+    })
+    .slice(0, 30);
+}
+
+async function encontrarPontoDaBaseMaisProximo(lat, lon) {
+  if (!cidadeContexto || !cidadeContexto.cidade) return null;
+
+  const pontos = obterPontosPrioritariosParaLocalizacao(cidadeContexto.cidade);
+  let melhor = null;
+
+  for (let i = 0; i < pontos.length; i += 1) {
+    const ponto = pontos[i];
+    const resolvido = await resolverPontoLocal(ponto, cidadeContexto);
+
+    if (!resolvido) continue;
+
+    const distanciaKm = haversineKm(lat, lon, resolvido.lat, resolvido.lon);
+
+    if (!melhor || distanciaKm < melhor.distanciaKm) {
+      melhor = {
+        label: ponto.nome,
+        displayName: resolvido.displayName || ponto.nome,
+        lat: resolvido.lat,
+        lon: resolvido.lon,
+        distanciaKm: distanciaKm
+      };
+    }
+  }
+
+  return melhor;
+}
+
+async function preencherOrigemComLocalizacaoAtual(opcoes) {
+  const config = opcoes || {};
+  const silencioso = !!config.silencioso;
+
+  if (passageiroTemCorridaAtiva) {
+    return;
+  }
+
+  if (!navigator.geolocation) {
+    statusLocalizacaoAtual.style.color = '#FF884D';
+    statusLocalizacaoAtual.innerText = 'Seu navegador não suporta localização automática.';
+    if (!silencioso) {
+      mostrarMensagem('Seu navegador não suporta localização automática.', '#FF884D');
+    }
+    return;
+  }
+
+  if (!window.isSecureContext && window.location.protocol !== 'file:') {
+    statusLocalizacaoAtual.style.color = '#FF884D';
+    statusLocalizacaoAtual.innerText = 'A localização automática precisa de conexão segura (HTTPS).';
+    if (!silencioso) {
+      mostrarMensagem('A localização automática precisa de conexão segura (HTTPS).', '#FF884D');
+    }
+    return;
+  }
+
+  btnLocalizacaoAtual.disabled = true;
+  btnLocalizacaoAtual.innerText = 'LOCALIZANDO...';
+  statusLocalizacaoAtual.style.color = '#FFCC00';
+  statusLocalizacaoAtual.innerText = 'Detectando sua localização atual...';
+
+  try {
+    const posicao = await obterPosicaoAtual({
+      enableHighAccuracy: true,
+      timeout: 12000,
+      maximumAge: 30000
+    });
+
+    const latitude = Number(posicao.coords.latitude);
+    const longitude = Number(posicao.coords.longitude);
+
+    let dadosReverse = null;
+    try {
+      dadosReverse = await reverseGeocodificarCoordenadas(latitude, longitude);
+    } catch (erroReverse) {
+      dadosReverse = null;
+    }
+
+    const label = montarRotuloLocalizacaoAtual(dadosReverse);
+    const displayName =
+      (dadosReverse && dadosReverse.display_name) ||
+      ('Minha localização atual (' + latitude.toFixed(6) + ', ' + longitude.toFixed(6) + ')');
+
+    origemSelecionada = {
+      tipo: 'remoto',
+      label: label,
+      displayName: displayName,
+      lat: latitude,
+      lon: longitude
+    };
+
+    origemInput.value = label;
+    campoBuscaAtivo = 'origem';
+    ultimasSugestoesOrigem = [];
+    esconderSugestoes(sugestoesOrigem);
+
+    if (simulacaoAtual) {
+      invalidarSimulacao();
+      if (!silencioso) {
+        mostrarMensagem('Sua partida foi atualizada pela localização atual. Simule novamente a rota e o valor.', '#FFCC00');
+      }
+    } else if (!silencioso) {
+      mostrarMensagem('Sua partida foi preenchida pela localização atual. Agora escolha pra onde vai.', '#00FF88');
+    }
+
+    if (mapa) {
+      mapa.setView([latitude, longitude], 16);
+    }
+
+    statusLocalizacaoAtual.style.color = '#00FF88';
+    statusLocalizacaoAtual.innerText = 'Partida preenchida automaticamente pela sua localização atual.';
+  } catch (error) {
+    let textoErro = 'Não foi possível detectar sua localização agora.';
+
+    if (error && error.code === 1) {
+      textoErro = 'Permissão de localização negada. Você pode digitar a partida manualmente ou tentar novamente.';
+    } else if (error && error.code === 2) {
+      textoErro = 'Sua localização não foi encontrada agora. Tente novamente.';
+    } else if (error && error.code === 3) {
+      textoErro = 'A localização demorou demais para responder. Tente novamente.';
+    } else if (error && error.message) {
+      textoErro = error.message;
+    }
+
+    statusLocalizacaoAtual.style.color = '#FF884D';
+    statusLocalizacaoAtual.innerText = textoErro;
+
+    if (!silencioso) {
+      mostrarMensagem(textoErro, '#FF884D');
+    }
+  } finally {
+    btnLocalizacaoAtual.disabled = passageiroTemCorridaAtiva;
+    btnLocalizacaoAtual.innerText = 'USAR MINHA LOCALIZAÇÃO ATUAL';
+  }
+}
+
+async function tentarPreencherOrigemAutomaticamente() {
+  if (tentativaAutomaticaLocalizacao) return;
+  tentativaAutomaticaLocalizacao = true;
+
+  if (passageiroTemCorridaAtiva) return;
+  if (origemInput.value.trim()) return;
+
+  await preencherOrigemComLocalizacaoAtual({ silencioso: true });
+}
+
+async function respeitarLimiteNominatim() {
+  const agora = Date.now();
+  const restante = 900 - (agora - ultimaConsultaNominatim);
+  if (restante > 0) {
+    await esperar(restante);
+  }
+  ultimaConsultaNominatim = Date.now();
+}
+
+function normalizarTexto(texto) {
+  return String(texto || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
+function obterPontosDaCidade(cidade) {
+  return PONTOS_LOCAIS[cidade] || [];
+}
+
+function obterFavoritosDaCidade(cidade) {
+  return FAVORITOS_LOCAIS[cidade] || [];
+}
+
+function encontrarFavorito(texto, cidade) {
+  return null;
+}
+
+function gerarChaveBusca(cidade, texto) {
+  return normalizarTexto(cidade) + '|' + normalizarTexto(texto);
+}
+
+function haversineKm(lat1, lon1, lat2, lon2) {
+  const toRad = function(valor) {
+    return valor * Math.PI / 180;
+  };
+  const R = 6371;
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+async function geocodificarTexto(consulta, opcoes) {
+  await respeitarLimiteNominatim();
+
+  const config = opcoes || {};
+  let url =
+    'https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=8&countrycodes=br&q=' +
+    encodeURIComponent(consulta);
+
+  if (config.viewbox) {
+    url += '&viewbox=' + encodeURIComponent(config.viewbox);
+  }
+
+  if (config.bounded) {
+    url += '&bounded=1';
+  }
+
+  const resposta = await fetch(url, {
+    headers: {
+      'Accept-Language': 'pt-BR,pt;q=0.9',
+      'Accept': 'application/json'
+    }
+  });
+
+  if (!resposta.ok) {
+    throw new Error('Falha ao consultar localização.');
+  }
+
+  return await resposta.json();
+}
+
+async function obterCentroCidade(cidade) {
+  if (!cidade) return null;
+
+  if (cacheCidade[cidade]) {
+    return cacheCidade[cidade];
+  }
+
+  const dados = await geocodificarTexto(cidade + ', Pará, Brasil');
+  const item = (dados || [])[0];
+
+  if (!item) return null;
+
+  const bbox = item.boundingbox || [];
+  cacheCidade[cidade] = {
+    cidade: cidade,
+    lat: Number(item.lat),
+    lon: Number(item.lon),
+    displayName: item.display_name || cidade,
+    bbox: {
+      south: Number(bbox[0] || Number(item.lat) - 0.08),
+      north: Number(bbox[1] || Number(item.lat) + 0.08),
+      west: Number(bbox[2] || Number(item.lon) - 0.08),
+      east: Number(bbox[3] || Number(item.lon) + 0.08)
+    }
+  };
+
+  return cacheCidade[cidade];
+}
+
+async function focarMapaNaCidade(cidade) {
+  try {
+    cidadeContexto = await obterCentroCidade(cidade);
+
+    if (cidadeContexto && mapa) {
+      mapa.setView([cidadeContexto.lat, cidadeContexto.lon], 13);
+      saidaFocoMapa.innerText = cidadeContexto.cidade;
+      indicadorTravaCidade.innerText = 'Busca livre pelo mapa. ' + cidadeContexto.cidade + ' continua apenas como referência inicial.';
+      mapaStatusTexto.innerText = 'Mapa focado inicialmente em ' + cidadeContexto.cidade + '. Digite origem e destino para buscar livremente.';
+      return;
+    }
+  } catch (error) {
+  }
+
+  if (mapa) {
+    mapa.setView([MAPA_FALLBACK.lat, MAPA_FALLBACK.lng], MAPA_FALLBACK.zoom);
+  }
+
+  cidadeContexto = null;
+  saidaFocoMapa.innerText = cidade || 'Área do MOBYAUH';
+  indicadorTravaCidade.innerText = 'Não foi possível travar a cidade com precisão. Mesmo assim o sistema vai tentar focar na cidade do cadastro.';
+  mapaStatusTexto.innerText = 'Mapa carregado com foco geral na região do MOBYAUH.';
+}
+
+function esconderSugestoes(container) {
+  container.style.display = 'none';
+  container.innerHTML = '';
+}
+
+function resultadoPareceDaCidade(item, cidade) {
+  const cidadeNorm = normalizarTexto(cidade);
+  const displayNorm = normalizarTexto(item.display_name || '');
+  const address = item.address || {};
+  const cidadeItem =
+    normalizarTexto(address.city || '') ||
+    normalizarTexto(address.town || '') ||
+    normalizarTexto(address.municipality || '') ||
+    normalizarTexto(address.village || '');
+
+  return displayNorm.includes(cidadeNorm) || cidadeItem === cidadeNorm;
+}
+
+function resultadoDentroDoRaio(item, cidadeCtx) {
+  if (!cidadeCtx) return true;
+  const km = haversineKm(cidadeCtx.lat, cidadeCtx.lon, Number(item.lat), Number(item.lon));
+  return km <= RAIO_MAXIMO_CIDADE_KM;
+}
+
+function obterTermosDoPonto(ponto) {
+  const termos = [];
+  (ponto.queries || []).forEach(function(item) { termos.push(item); });
+  termos.push(ponto.nome);
+  (ponto.aliases || []).forEach(function(item) { termos.push(item); });
+
+  const unicos = [];
+  const usados = new Set();
+  termos.forEach(function(item) {
+    const chave = normalizarTexto(item);
+    if (chave && !usados.has(chave)) {
+      usados.add(chave);
+      unicos.push(item);
+    }
+  });
+  return unicos;
+}
+
+function pontuarPontoLocal(texto, ponto) {
+  const consulta = normalizarTexto(texto);
+  const prioridadeBase = 200 - ((ponto.priority || 5) * 20);
+  let melhor = prioridadeBase;
+
+  const favorito = encontrarFavorito(consulta, cidadeContexto ? cidadeContexto.cidade : '');
+  if (favorito && normalizarTexto(favorito.nome) === normalizarTexto(ponto.nome)) {
+    melhor = Math.max(melhor, 1800 + prioridadeBase);
+  }
+
+  obterTermosDoPonto(ponto).forEach(function(item) {
+    const termo = normalizarTexto(item);
+    if (!termo) return;
+
+    if (termo === consulta) {
+      melhor = Math.max(melhor, 1000 + prioridadeBase);
+      return;
+    }
+    if (termo.startsWith(consulta)) {
+      melhor = Math.max(melhor, 800 + prioridadeBase - termo.length);
+      return;
+    }
+    if (termo.includes(consulta)) {
+      melhor = Math.max(melhor, 600 + prioridadeBase - termo.length);
+      return;
+    }
+
+    const palavras = consulta.split(' ').filter(Boolean);
+    if (palavras.length && palavras.every(function(palavra) { return termo.includes(palavra); })) {
+      melhor = Math.max(melhor, 500 + prioridadeBase - termo.length);
+    }
+  });
+
+  return melhor;
+}
+
+function buscarLocaisDaBase(texto, cidade) {
+  return [];
+}
+
+async function buscarNominatimTravado(texto, cidadeCtx) {
+  if (!cidadeCtx || !texto.trim()) return [];
+
+  const termo = texto.trim();
+  const chave = gerarChaveBusca(cidadeCtx.cidade, termo) + '|busca-v4';
+  if (cacheBusca.has(chave)) {
+    return cacheBusca.get(chave);
+  }
+
+  const consultas = [];
+
+  if (cidadeCtx.bbox) {
+    const viewbox = [
+      cidadeCtx.bbox.west,
+      cidadeCtx.bbox.north,
+      cidadeCtx.bbox.east,
+      cidadeCtx.bbox.south
+    ].join(',');
+
+    consultas.push({
+      q: termo,
+      viewbox: viewbox,
+      bounded: true,
+      prioridade: 0
+    });
+  }
+
+  consultas.push({
+    q: termo + ', ' + cidadeCtx.cidade + ', Pará, Brasil',
+    prioridade: 1
+  });
+
+  consultas.push({
+    q: termo + ', Pará, Brasil',
+    prioridade: 2
+  });
+
+  const brutos = [];
+  const vistos = new Set();
+
+  for (let i = 0; i < consultas.length; i += 1) {
+    const consulta = consultas[i];
+
+    try {
+      const dados = await geocodificarTexto(consulta.q, {
+        viewbox: consulta.viewbox || '',
+        bounded: !!consulta.bounded
+      });
+
+      (dados || []).forEach(function(item) {
+        const lat = Number(item.lat);
+        const lon = Number(item.lon);
+
+        if (!isFinite(lat) || !isFinite(lon)) return;
+
+        const chaveItem =
+          normalizarTexto(item.display_name || '') + '|' +
+          String(lat.toFixed(6)) + '|' +
+          String(lon.toFixed(6));
+
+        if (!vistos.has(chaveItem)) {
+          vistos.add(chaveItem);
+          brutos.push({
+            item: item,
+            prioridade: consulta.prioridade
+          });
+        }
+      });
+    } catch (error) {
+    }
+
+    if (brutos.length >= 8) {
+      break;
+    }
+  }
+
+  const termoNorm = normalizarTexto(termo);
+  const cidadeNorm = normalizarTexto(cidadeCtx.cidade);
+
+  const resultados = brutos
+    .map(function(registro) {
+      const item = registro.item;
+      const partes = String(item.display_name || '')
+        .split(',')
+        .map(function(parte) { return parte.trim(); })
+        .filter(Boolean);
+
+      const label = partes[0] || termo;
+      const secundaria = partes.slice(1, 4).join(', ') || cidadeCtx.cidade;
+      const displayNorm = normalizarTexto(item.display_name || '');
+      const labelNorm = normalizarTexto(label);
+      const lat = Number(item.lat);
+      const lon = Number(item.lon);
+
+      let score = 0;
+
+      if (labelNorm === termoNorm) score += 1000;
+      else if (labelNorm.startsWith(termoNorm)) score += 800;
+      else if (labelNorm.includes(termoNorm)) score += 650;
+
+      if (displayNorm.includes(termoNorm)) score += 240;
+      if (displayNorm.includes(cidadeNorm)) score += 300;
+
+      const km = haversineKm(cidadeCtx.lat, cidadeCtx.lon, lat, lon);
+      if (isFinite(km)) {
+        if (km <= 3) score += 300;
+        else if (km <= 8) score += 230;
+        else if (km <= 20) score += 150;
+        else if (km <= 60) score += 70;
+        else score -= Math.min(200, Math.round(km));
+      }
+
+      score += Math.max(0, 40 - (Number(registro.prioridade || 0) * 10));
+
+      return {
+        tipo: 'remoto',
+        label: label,
+        secundaria: secundaria,
+        lat: lat,
+        lon: lon,
+        displayName: item.display_name || termo,
+        score: score
+      };
+    })
+    .sort(function(a, b) {
+      return Number(b.score || 0) - Number(a.score || 0);
+    })
+    .slice(0, 8)
+    .map(function(item) {
+      return {
+        tipo: item.tipo,
+        label: item.label,
+        secundaria: item.secundaria,
+        lat: item.lat,
+        lon: item.lon,
+        displayName: item.displayName
+      };
+    });
+
+  cacheBusca.set(chave, resultados);
+  return resultados;
+}
+
+async function resolverPontoLocal(ponto, cidadeCtx) {
+  if (!cidadeCtx || !ponto) return null;
+
+  const chave = 'local|' + gerarChaveBusca(cidadeCtx.cidade, ponto.nome);
+  if (cacheResolucao.has(chave)) {
+    return cacheResolucao.get(chave);
+  }
+
+  const termos = obterTermosDoPonto(ponto);
+  for (let i = 0; i < termos.length; i += 1) {
+    const resultados = await buscarNominatimTravado(termos[i], cidadeCtx);
+    if (resultados.length) {
+      const escolhido = {
+        label: ponto.nome,
+        displayName: resultados[0].displayName || ponto.nome,
+        lat: resultados[0].lat,
+        lon: resultados[0].lon
+      };
+      cacheResolucao.set(chave, escolhido);
+      return escolhido;
+    }
+  }
+
+  cacheResolucao.set(chave, null);
+  return null;
+}
+
+async function buscarSugestoesTravadas(texto, cidadeCtx) {
+  if (!cidadeCtx || !texto.trim()) return [];
+
+  const remotos = await buscarNominatimTravado(texto, cidadeCtx);
+
+  const locais = buscarLocaisDaBase(texto, cidadeCtx.cidade)
+    .slice(0, 4)
+    .map(function(ponto) {
+      return {
+        tipo: 'local',
+        label: ponto.nome,
+        secundaria: cidadeCtx.cidade,
+        ponto: ponto
+      };
+    });
+
+  const combinados = [];
+  const usados = new Set();
+
+  remotos.concat(locais).forEach(function(item) {
+    const chave = normalizarTexto((item.label || '') + '|' + (item.secundaria || ''));
+
+    if (!usados.has(chave)) {
+      usados.add(chave);
+      combinados.push(item);
+    }
+  });
+
+  return combinados.slice(0, 8);
+}
+
+function renderizarSugestoes(container, sugestoes, tipoCampo) {
+  container.innerHTML = '';
+
+  if (!sugestoes.length) {
+    esconderSugestoes(container);
+    return;
+  }
+
+  sugestoes.forEach(function(item, index) {
+    const botao = document.createElement('button');
+    botao.type = 'button';
+    botao.className = 'sugestao-item' + (index === 0 ? ' ativa' : '');
+    botao.innerHTML = item.label + (item.secundaria ? '<span class="sugestao-secundaria">' + item.secundaria + '</span>' : '');
+    botao.addEventListener('mousedown', function(event) {
+      event.preventDefault();
+    });
+    botao.addEventListener('click', function(event) {
+      event.preventDefault();
+      selecionarSugestao(tipoCampo, item);
+    });
+    container.appendChild(botao);
+  });
+
+  container.style.display = 'block';
+}
+
+async function selecionarSugestao(tipoCampo, item) {
+  let resolvido = null;
+
+  if (item.tipo === 'local') {
+    resolvido = {
+      tipo: 'local',
+      label: item.label,
+      displayName: item.label,
+      ponto: item.ponto
+    };
+  } else {
+    resolvido = {
+      tipo: 'remoto',
+      label: item.label,
+      displayName: item.displayName || item.label,
+      lat: item.lat,
+      lon: item.lon
+    };
+  }
+
+  if (tipoCampo === 'origem') {
+    origemSelecionada = resolvido;
+    origemInput.value = resolvido.label;
+    ultimasSugestoesOrigem = [];
+    esconderSugestoes(sugestoesOrigem);
+  } else {
+    destinoSelecionado = resolvido;
+    destinoInput.value = resolvido.label;
+    ultimasSugestoesDestino = [];
+    esconderSugestoes(sugestoesDestino);
+  }
+
+  if (simulacaoAtual) {
+    invalidarSimulacao();
+    mostrarMensagem('Os dados foram alterados. Simule novamente a rota e o valor.', '#FFCC00');
+  }
+}
+
+function escolherMelhorSugestao(lista, textoLivre) {
+  if (!Array.isArray(lista) || !lista.length) return null;
+
+  const termo = normalizarTexto(textoLivre);
+  let melhor = lista[0];
+  let melhorScore = -1;
+
+  lista.forEach(function(item) {
+    const label = normalizarTexto(item.label || '');
+    const display = normalizarTexto(item.displayName || '');
+    const secundaria = normalizarTexto(item.secundaria || '');
+    let score = 0;
+
+    if (label === termo) score += 1000;
+    else if (label.startsWith(termo)) score += 800;
+    else if (label.includes(termo)) score += 650;
+
+    if (display.includes(termo)) score += 260;
+    if (secundaria.includes(termo)) score += 80;
+    if (item.tipo === 'remoto') score += 40;
+
+    if (score > melhorScore) {
+      melhorScore = score;
+      melhor = item;
+    }
+  });
+
+  return melhor;
+}
+
+async function resolverTextoLivre(texto, tipoCampo) {
+  if (!cidadeContexto) return null;
+
+  const textoLimpo = texto.trim();
+  const sugestoesAtuais = tipoCampo === 'origem' ? ultimasSugestoesOrigem : ultimasSugestoesDestino;
+  let primeira = escolherMelhorSugestao(sugestoesAtuais, textoLimpo);
+
+  if (!primeira) {
+    const sugestoes = await buscarSugestoesTravadas(textoLimpo, cidadeContexto);
+    primeira = escolherMelhorSugestao(sugestoes, textoLimpo) || sugestoes[0] || null;
+  }
+
+  if (!primeira) {
+    if (tipoCampo === 'origem') {
+      throw new Error('Não encontrei sua partida. Tente digitar mais completo ou escolha uma sugestão da lista.');
+    }
+    throw new Error('Não encontrei o destino. Tente digitar mais completo ou escolha uma sugestão da lista.');
+  }
+
+  if (primeira.tipo === 'local') {
+    const ponto = await resolverPontoLocal(primeira.ponto, cidadeContexto);
+    if (ponto) return ponto;
+  }
+
+  return {
+    label: primeira.label,
+    displayName: primeira.displayName,
+    lat: primeira.lat,
+    lon: primeira.lon
+  };
+}
+
+async function materializarSelecao(selecao, textoLivre, tipoCampo) {
+  if (!selecao) {
+    return await resolverTextoLivre(textoLivre, tipoCampo);
+  }
+
+  if (selecao.tipo === 'local' && selecao.ponto) {
+    const resolvido = await resolverPontoLocal(selecao.ponto, cidadeContexto);
+    if (!resolvido) {
+      if (tipoCampo === 'origem') {
+        throw new Error('Não consegui localizar onde você está. Tente outro local da lista.');
+      }
+      throw new Error('Não consegui localizar pra onde você vai. Tente outro local da lista.');
+    }
+    return resolvido;
+  }
+
+  return selecao;
+}
+
+function adicionarMarcadores(origem, destino) {
+  marcadorOrigem = L.marker([origem.lat, origem.lon]).addTo(mapa).bindPopup('Origem');
+  marcadorDestino = L.marker([destino.lat, destino.lon]).addTo(mapa).bindPopup('Destino');
+}
+
+function desenharLinhaGeoJSON(geojson, cor) {
+  camadaRota = L.geoJSON(geojson, {
+    style: {
+      color: cor,
+      weight: 5,
+      opacity: 0.9
+    }
+  }).addTo(mapa);
+
+  try {
+    mapa.fitBounds(camadaRota.getBounds(), { padding: [30, 30] });
+  } catch (error) {
+  }
+}
+
+async function obterRotaOSRM(origem, destino) {
+  const url =
+    'https://router.project-osrm.org/route/v1/driving/' +
+    origem.lon + ',' + origem.lat + ';' +
+    destino.lon + ',' + destino.lat +
+    '?overview=full&geometries=geojson';
+
+  const resposta = await fetch(url);
+  if (!resposta.ok) return null;
+
+  const dados = await resposta.json();
+  if (dados.code !== 'Ok' || !dados.routes || !dados.routes.length) return null;
+
+  return dados.routes[0];
+}
+
+function atualizarSaidaSimulacao(distanciaKm, valor, tipoTexto) {
+  saidaStatusIntegracao.innerText = tipoTexto;
+  saidaDistancia.innerText = formatarDistancia(distanciaKm);
+  saidaValor.innerText = formatarMoeda(valor);
+}
+
+function criarLinksRota(origem, destino) {
+  const googleMaps =
+    'https://www.google.com/maps/dir/?api=1&origin=' +
+    origem.lat + ',' + origem.lon +
+    '&destination=' + destino.lat + ',' + destino.lon +
+    '&travelmode=driving';
+
+  const openStreetMap =
+    'https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=' +
+    origem.lat + '%2C' + origem.lon + '%3B' + destino.lat + '%2C' + destino.lon;
+
+  return {
+    googleMaps,
+    openStreetMap
+  };
+}
+
+async function simularRotaEValor() {
+  if (!usuarioAtual || !dadosUsuarioAtual) {
+    mostrarMensagem('Usuário não carregado. Reabra o painel.', '#FF5555');
+    return;
+  }
+
+  if (passageiroTemCorridaAtiva) {
+    mostrarMensagem('Você já possui uma corrida ativa. Aguarde finalizar ou cancelar.', '#FF884D');
+    return;
+  }
+
+  const cidade = (dadosUsuarioAtual.cidade || '').trim();
+  const origemTexto = origemInput.value.trim();
+  const destinoTexto = destinoInput.value.trim();
+
+  if (!cidade) {
+    mostrarMensagem('Cidade do passageiro não encontrada.', '#FF5555');
+    return;
+  }
+
+  if (!origemTexto || !destinoTexto) {
+    mostrarMensagem('Para simular, preencha onde você está e pra onde você vai.', '#FF5555');
+    return;
+  }
+
+  btnCalcular.disabled = true;
+  btnCalcular.innerText = 'SIMULANDO...';
+  btnSolicitar.disabled = true;
+  mostrarMensagem('', '#ffffff');
+  limparCamadasMapa();
+  esconderSugestoes(sugestoesOrigem);
+  esconderSugestoes(sugestoesDestino);
+
+  try {
+    mapaStatusTexto.innerText = 'Buscando origem e destino automaticamente em ' + cidade + '...';
+
+    const origemResolvida = await materializarSelecao(origemSelecionada, origemTexto, 'origem');
+    const destinoResolvido = await materializarSelecao(destinoSelecionado, destinoTexto, 'destino');
+
+    if (!origemResolvida || !destinoResolvido) {
+      throw new Error('Não foi possível localizar origem e destino.');
+    }
+
+    if (
+      Math.abs(origemResolvida.lat - destinoResolvido.lat) < 0.000001 &&
+      Math.abs(origemResolvida.lon - destinoResolvido.lon) < 0.000001
+    ) {
+      throw new Error('Origem e destino ficaram iguais no mapa. Tente escrever de forma mais específica.');
+    }
+
+    origemSelecionada = origemResolvida;
+    destinoSelecionado = destinoResolvido;
+    origemInput.value = origemResolvida.label;
+    destinoInput.value = destinoResolvido.label;
+
+    adicionarMarcadores(origemResolvida, destinoResolvido);
+
+    mapaStatusTexto.innerText = 'Calculando rota e valor da corrida...';
+
+    let distanciaKm = 0;
+    let distanciaMetros = 0;
+    let tipoCalculo = 'rota_osrm';
+    let tipoCalculoTexto = 'Rota pelo mapa';
+    let geojsonLinha = null;
+
+    const rota = await obterRotaOSRM(origemResolvida, destinoResolvido);
+
+    if (rota && rota.distance) {
+      distanciaMetros = Number(rota.distance);
+      distanciaKm = Math.round((distanciaMetros / 1000) * 100) / 100;
+      geojsonLinha = rota.geometry;
+      desenharLinhaGeoJSON(geojsonLinha, '#FFCC00');
+    } else {
+      distanciaKm = Math.round(haversineKm(
+        origemResolvida.lat,
+        origemResolvida.lon,
+        destinoResolvido.lat,
+        destinoResolvido.lon
+      ) * 100) / 100;
+      distanciaMetros = Math.round(distanciaKm * 1000);
+      tipoCalculo = 'linha_reta';
+      tipoCalculoTexto = 'Estimativa aproximada';
+
+      geojsonLinha = {
+        type: 'Feature',
+        geometry: {
+          type: 'LineString',
+          coordinates: [
+            [origemResolvida.lon, origemResolvida.lat],
+            [destinoResolvido.lon, destinoResolvido.lat]
+          ]
+        },
+        properties: {}
+      };
+
+      desenharLinhaGeoJSON(geojsonLinha, '#74b8ff');
+    }
+
+    if (!distanciaKm || distanciaKm <= 0) {
+      throw new Error('Não foi possível calcular a distância.');
+    }
+
+    const valorEstimado = calcularValorEstimado(distanciaKm);
+    const linksRota = criarLinksRota(origemResolvida, destinoResolvido);
+
+    simulacaoAtual = {
+      cidadeCorrida: cidade,
+      origemNome: origemTexto,
+      destinoNome: destinoTexto,
+      origemMapaNome: origemResolvida.label,
+      destinoMapaNome: destinoResolvido.label,
+      origemLat: origemResolvida.lat,
+      origemLon: origemResolvida.lon,
+      destinoLat: destinoResolvido.lat,
+      destinoLon: destinoResolvido.lon,
+      origemEnderecoCalculado: origemResolvida.displayName,
+      destinoEnderecoCalculado: destinoResolvido.displayName,
+      distanciaKm: distanciaKm,
+      distanciaMetros: distanciaMetros,
+      valorEstimado: valorEstimado,
+      tipoCalculoDistancia: tipoCalculo,
+      tipoCalculoTexto: tipoCalculoTexto,
+      rotaGoogleMaps: linksRota.googleMaps,
+      rotaOpenStreetMap: linksRota.openStreetMap
+    };
+
+    atualizarSaidaSimulacao(distanciaKm, valorEstimado, tipoCalculoTexto);
+
+    if (tipoCalculo === 'rota_osrm') {
+      mapaStatusTexto.innerText = 'Rota calculada com sucesso em ' + cidade + '.';
+      mostrarMensagem('Simulação concluída. Agora preencha bairro, endereço, número e pagamento para confirmar.', '#00FF88');
+    } else {
+      mapaStatusTexto.innerText = 'Rota viária exata não disponível. Foi gerada uma estimativa aproximada.';
+      mostrarMensagem('Simulação aproximada concluída. Agora preencha bairro, endereço, número e pagamento para confirmar.', '#FFCC00');
+    }
+
+    atualizarEstadoBotoes();
+  } catch (error) {
+    invalidarSimulacao();
+    mapaStatusTexto.innerText = 'Não foi possível concluir a simulação agora.';
+    mostrarMensagem('Erro ao simular rota: ' + error.message, '#FF5555');
+  } finally {
+    btnCalcular.innerText = 'SIMULAR ROTA E VALOR';
+    atualizarEstadoBotoes();
+  }
+}
+
+
+function calcularConsequenciasCancelamento(corrida) {
+  const status = String(corrida && corrida.status || '');
+  const temPenalidade = ['a caminho', 'cheguei ao local'].includes(status);
+  const geraDivida = status === 'cheguei ao local';
+  const pontos = temPenalidade ? PONTOS_PENALIDADE_CANCELAMENTO : 0;
+  const valorDivida = geraDivida ? Number(corrida && corrida.valorEstimado || 0) : 0;
+
+  let resumo = 'Cancelamento livre até o status ACEITA.';
+  if (status === 'a caminho') {
+    resumo = 'Cancelamento após ACEITA: perde 1 ponto.';
+  }
+  if (status === 'cheguei ao local') {
+    resumo = 'Cancelamento após chegada ao local: perde 1 ponto e gera dívida.';
+  }
+
+  return {
+    pontos: pontos,
+    valorDivida: valorDivida,
+    temPenalidade: temPenalidade,
+    geraDivida: geraDivida,
+    resumo: resumo
+  };
+}
+
+async function aplicarPenalidadeNoUsuario(uid, pontos, valorDivida) {
+  if (!uid) return;
+
+  const atualizacao = {
+    ultimaPenalidadeCancelamentoEm: new Date().toISOString()
+  };
+
+  if (pontos > 0) {
+    atualizacao.pontosPerdidosCancelamento = firebase.firestore.FieldValue.increment(pontos);
+    atualizacao.cancelamentosPenalizados = firebase.firestore.FieldValue.increment(1);
+  }
+
+  if (valorDivida > 0) {
+    atualizacao.valorDividaPendente = firebase.firestore.FieldValue.increment(valorDivida);
+    atualizacao.quantidadeDividasGeradas = firebase.firestore.FieldValue.increment(1);
+  }
+
+  await db.collection('usuarios').doc(uid).set(atualizacao, { merge: true });
+}
+
+function montarMensagemConfirmacaoCancelamento(corrida, consequencias) {
+  if (!consequencias.temPenalidade) {
+    return 'Deseja cancelar esta corrida?';
+  }
+
+  if (consequencias.geraDivida) {
+    return 'Deseja cancelar esta corrida?\n\nAtenção: como o motorista já chegou ao local, você perderá 1 ponto e ficará com uma dívida de ' + formatarMoeda(consequencias.valorDivida) + '.';
+  }
+
+  return 'Deseja cancelar esta corrida?\n\nAtenção: este cancelamento acontece depois do status ACEITA. Você perderá 1 ponto.';
+}
+
+async function cancelarCorridaPassageiro(corrida) {
+  if (!corrida || !corrida.id) return;
+
+  const consequencias = calcularConsequenciasCancelamento(corrida);
+  const confirmar = confirm(montarMensagemConfirmacaoCancelamento(corrida, consequencias));
+  if (!confirmar) return;
+
+  try {
+    const agora = new Date();
+
+    await db.collection('corridas').doc(corrida.id).update({
+      status: 'cancelada',
+      canceladaPorTipo: 'passageiro',
+      canceladaPorNome: dadosUsuarioAtual.nome || 'Passageiro',
+      dataCancelamento: agora.toISOString(),
+      dataCancelamentoMs: agora.getTime(),
+      ultimaAtualizacao: agora.toISOString(),
+      ultimaAtualizacaoMs: agora.getTime(),
+      cancelamentoComPenalidade: consequencias.temPenalidade,
+      pontosPenalidade: consequencias.pontos,
+      valorDividaGerada: consequencias.valorDivida,
+      dividaGerada: consequencias.geraDivida,
+      dividaResponsavelTipo: consequencias.geraDivida ? 'passageiro' : '',
+      dividaResponsavelNome: consequencias.geraDivida ? (dadosUsuarioAtual.nome || 'Passageiro') : '',
+      dividaResponsavelUid: consequencias.geraDivida ? (usuarioAtual.uid || '') : '',
+      penalidadeResumo: consequencias.resumo
+    });
+
+    await aplicarPenalidadeNoUsuario(usuarioAtual.uid, consequencias.pontos, consequencias.valorDivida);
+
+    if (consequencias.geraDivida) {
+      mostrarMensagem('Corrida cancelada. Foi registrada perda de 1 ponto e dívida de ' + formatarMoeda(consequencias.valorDivida) + '.', '#FFB366');
+    } else if (consequencias.temPenalidade) {
+      mostrarMensagem('Corrida cancelada. Foi registrada perda de 1 ponto.', '#FFB366');
+    } else {
+      mostrarMensagem('Corrida cancelada com sucesso.', '#FFB366');
+    }
+  } catch (error) {
+    mostrarMensagem('Erro ao cancelar corrida: ' + error.message, '#FF5555');
+  }
+}
+
+
+function criarBlocoConsequenciasCancelamento(corrida) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'bloco-corrida';
+
+  const partes = [];
+  partes.push('Cancelada por: ' + (corrida.canceladaPorNome || corrida.canceladaPorTipo || '-'));
+
+  if (Number(corrida.pontosPenalidade || 0) > 0) {
+    partes.push('Perda de pontos: ' + Number(corrida.pontosPenalidade));
+  }
+
+  if (Number(corrida.valorDividaGerada || 0) > 0) {
+    partes.push('Dívida gerada: ' + formatarMoeda(corrida.valorDividaGerada));
+  }
+
+  if (corrida.penalidadeResumo) {
+    partes.push(corrida.penalidadeResumo);
+  }
+
+  wrapper.innerHTML = '<strong>Consequências do cancelamento</strong><span>' + partes.join(' | ') + '</span>';
+  return wrapper;
 }
 
 function criarCardCorrida(corrida, ativa) {
@@ -1077,18 +1994,19 @@ function criarCardCorrida(corrida, ativa) {
 
   const grid = document.createElement('div');
   grid.className = 'corrida-grid';
-  grid.appendChild(criarBloco('Tipo', corrida.tipoCorridaTexto || corrida.tipoVeiculoSolicitado || corrida.tipoCorrida || '-'));
   grid.appendChild(criarBloco('Cidade', corrida.cidadeCorrida || corrida.passageiroCidade || '-'));
-  grid.appendChild(criarBloco('Partida', corrida.origem || '-'));
-  grid.appendChild(criarBloco('Destino', corrida.destino || '-'));
+  grid.appendChild(criarBloco('Onde estou', corrida.origem || '-'));
+  grid.appendChild(criarBloco('Pra onde vou', corrida.destino || '-'));
   grid.appendChild(criarBloco('Bairro', corrida.bairroEmbarque || '-'));
   grid.appendChild(criarBloco('Endereço', corrida.logradouroEmbarque || '-'));
   grid.appendChild(criarBloco('Número', corrida.numeroEmbarque || '-'));
+  grid.appendChild(criarBloco('Complemento', corrida.complementoEmbarque || '-'));
   grid.appendChild(criarBloco('Referência', corrida.referencia || '-'));
   grid.appendChild(criarBloco('Pagamento', corrida.pagamento || '-'));
-  grid.appendChild(criarBloco('Distância', formatarDistancia(corrida.distanciaKm)));
-  grid.appendChild(criarBloco('Valor', formatarMoeda(corrida.valorEstimado)));
-  grid.appendChild(criarBloco('Solicitada em', formatarData(corrida.dataCriacao)));
+  grid.appendChild(criarBloco('Tipo de cálculo', corrida.tipoCalculoTexto || '-'));
+  grid.appendChild(criarBloco('Distância estimada', formatarDistancia(corrida.distanciaKm)));
+  grid.appendChild(criarBloco('Valor estimado', formatarMoeda(corrida.valorEstimado)));
+  grid.appendChild(criarBloco('Data da solicitação', formatarData(corrida.dataCriacao)));
 
   card.appendChild(grid);
   card.appendChild(criarBloco('Observações', corrida.observacoes || '-'));
@@ -1098,8 +2016,20 @@ function criarCardCorrida(corrida, ativa) {
     card.appendChild(criarBloco('Código de embarque', corrida.codigoEmbarque));
   }
 
+  if (ativa && ['solicitada', 'aceita', 'a caminho'].includes(corrida.status)) {
+    card.appendChild(criarBloco('Orientação', 'Guarde este código. Informe ao motorista somente no momento do embarque.'));
+  }
+
+  if (ativa && corrida.status === 'cheguei ao local') {
+    card.appendChild(criarBloco('Orientação', 'O motorista já chegou. Informe agora o código de embarque para ele validar e iniciar a corrida.'));
+  }
+
   if (corrida.motoristaUid || corrida.status === 'cancelada' || corrida.status === 'finalizada') {
     card.appendChild(criarBlocoMotorista(corrida));
+  }
+
+  if (corrida.status === 'cancelada') {
+    card.appendChild(criarBlocoConsequenciasCancelamento(corrida));
   }
 
   if (ativa && ['solicitada', 'aceita', 'a caminho', 'cheguei ao local'].includes(corrida.status)) {
@@ -1107,7 +2037,9 @@ function criarCardCorrida(corrida, ativa) {
     btnCancelar.type = 'button';
     btnCancelar.className = 'btn-vermelho';
     btnCancelar.textContent = 'CANCELAR CORRIDA';
-    btnCancelar.addEventListener('click', function() { cancelarCorridaPassageiro(corrida.id); });
+    btnCancelar.addEventListener('click', function() {
+      cancelarCorridaPassageiro(corrida);
+    });
     card.appendChild(btnCancelar);
   }
 
@@ -1116,6 +2048,7 @@ function criarCardCorrida(corrida, ativa) {
 
 function renderizarLista(listaElemento, corridas, mensagemVazia, ativa) {
   listaElemento.innerHTML = '';
+
   if (!corridas.length) {
     const vazio = document.createElement('div');
     vazio.className = 'lista-vazia';
@@ -1123,73 +2056,86 @@ function renderizarLista(listaElemento, corridas, mensagemVazia, ativa) {
     listaElemento.appendChild(vazio);
     return;
   }
-  corridas.forEach(function(corrida) { listaElemento.appendChild(criarCardCorrida(corrida, ativa)); });
+
+  corridas.forEach(function(corrida) {
+    listaElemento.appendChild(criarCardCorrida(corrida, ativa));
+  });
 }
 
 function atualizarBloqueioNovaCorrida(corridasAtivas) {
   const corridaAtiva = corridasAtivas[0];
   passageiroTemCorridaAtiva = !!corridaAtiva;
+
   const campos = formCorrida.querySelectorAll('input, select, textarea, button');
 
   if (corridaAtiva) {
     formCorrida.classList.add('form-bloqueado');
-    campos.forEach(function(campo) { campo.disabled = true; });
+    campos.forEach(function(campo) {
+      campo.disabled = true;
+    });
+
+    btnLocalizacaoAtual.disabled = true;
+
     avisoBloqueio.style.display = 'block';
-    avisoBloqueio.innerHTML = '<strong>Nova corrida bloqueada</strong><span>Você já possui uma corrida em andamento com status <b>' + (corridaAtiva.status || '-').toUpperCase() + '</b>.</span>';
+    avisoBloqueio.innerHTML =
+      '<strong>Nova corrida bloqueada</strong>' +
+      '<span>Você já possui uma corrida em andamento com status <b>' +
+      (corridaAtiva.status || '-').toUpperCase() +
+      '</b>. Aguarde finalizar, cancelar ou concluir esta corrida.</span>';
     return;
   }
 
   formCorrida.classList.remove('form-bloqueado');
-  campos.forEach(function(campo) { campo.disabled = false; });
+  campos.forEach(function(campo) {
+    campo.disabled = false;
+  });
+
   avisoBloqueio.style.display = 'none';
   avisoBloqueio.innerHTML = '';
+  btnLocalizacaoAtual.disabled = false;
   atualizarEstadoBotoes();
 }
 
 function iniciarListenerCorridas(uid) {
   if (unsubscribeCorridas) unsubscribeCorridas();
 
-  unsubscribeCorridas = db.collection('corridas').where('passageiroUid', '==', uid).onSnapshot(function(snapshot) {
-    const corridas = [];
-    snapshot.forEach(function(doc) { corridas.push({ id: doc.id, ...doc.data() }); });
-    corridas.sort(function(a, b) { return (b.dataCriacaoMs || 0) - (a.dataCriacaoMs || 0); });
+  unsubscribeCorridas = db.collection('corridas')
+    .where('passageiroUid', '==', uid)
+    .onSnapshot(function(snapshot) {
+      const corridas = [];
 
-    const corridasAtivas = corridas.filter(function(corrida) { return STATUS_ATIVOS_PASSAGEIRO.includes(corrida.status); });
-    const historico = corridas.filter(function(corrida) { return STATUS_HISTORICO.includes(corrida.status); });
+      snapshot.forEach(function(doc) {
+        corridas.push({
+          id: doc.id,
+          ...doc.data()
+        });
+      });
 
-    renderizarLista(listaAtivas, corridasAtivas, 'Nenhuma corrida ativa no momento.', true);
-    renderizarLista(listaHistorico, historico, 'Nenhuma corrida no histórico ainda.', false);
-    atualizarBloqueioNovaCorrida(corridasAtivas);
-  }, function(error) {
-    listaAtivas.innerHTML = '<div class="lista-vazia">Erro ao carregar corridas: ' + error.message + '</div>';
-    listaHistorico.innerHTML = '<div class="lista-vazia">Erro ao carregar corridas: ' + error.message + '</div>';
-  });
-}
+      corridas.sort(function(a, b) {
+        return (b.dataCriacaoMs || 0) - (a.dataCriacaoMs || 0);
+      });
 
-async function cancelarCorridaPassageiro(corridaId) {
-  const confirmar = confirm('Deseja cancelar esta corrida?');
-  if (!confirmar) return;
+      const corridasAtivas = corridas.filter(function(corrida) {
+        return STATUS_ATIVOS_PASSAGEIRO.includes(corrida.status);
+      });
 
-  try {
-    const agora = new Date();
-    await db.collection('corridas').doc(corridaId).update({
-      status: 'cancelada',
-      canceladaPorTipo: 'passageiro',
-      canceladaPorNome: dadosUsuarioAtual.nome || 'Passageiro',
-      dataCancelamento: agora.toISOString(),
-      dataCancelamentoMs: agora.getTime(),
-      ultimaAtualizacao: agora.toISOString(),
-      ultimaAtualizacaoMs: agora.getTime()
+      const historico = corridas.filter(function(corrida) {
+        return STATUS_HISTORICO.includes(corrida.status);
+      });
+
+      renderizarLista(listaAtivas, corridasAtivas, 'Nenhuma corrida ativa no momento.', true);
+      renderizarLista(listaHistorico, historico, 'Nenhuma corrida no histórico ainda.', false);
+      atualizarBloqueioNovaCorrida(corridasAtivas);
+    }, function(error) {
+      listaAtivas.innerHTML = '<div class="lista-vazia">Erro ao carregar corridas: ' + error.message + '</div>';
+      listaHistorico.innerHTML = '<div class="lista-vazia">Erro ao carregar corridas: ' + error.message + '</div>';
     });
-    mostrarMensagem('Corrida cancelada com sucesso.', '#FFB366');
-  } catch (error) {
-    mostrarMensagem('Erro ao cancelar corrida: ' + error.message, '#FF5555');
-  }
 }
 
 async function carregarPainel(user) {
   try {
     const doc = await db.collection('usuarios').doc(user.uid).get();
+
     if (!doc.exists) {
       await auth.signOut();
       window.location.href = './login.html';
@@ -1197,6 +2143,7 @@ async function carregarPainel(user) {
     }
 
     const dados = doc.data();
+
     if (dados.tipo !== 'passageiro' || dados.status !== 'aprovado') {
       await auth.signOut();
       window.location.href = './login.html';
@@ -1210,9 +2157,12 @@ async function carregarPainel(user) {
     document.getElementById('dado-nome').innerText = dados.nome || '-';
     document.getElementById('dado-email').innerText = dados.email || '-';
     document.getElementById('dado-cidade').innerText = dados.cidade || '-';
+    document.getElementById('dado-tipo').innerText = dados.tipo || '-';
     document.getElementById('dado-status').innerText = dados.status || '-';
+    cidadeCorridaTexto.innerText = dados.cidade || '-';
+    saidaFocoMapa.innerText = dados.cidade || '-';
 
-    focarMapaNaCidade(dados.cidade || '');
+    await focarMapaNaCidade(dados.cidade || '');
     iniciarListenerCorridas(user.uid);
     atualizarEstadoBotoes();
   } catch (error) {
@@ -1220,24 +2170,77 @@ async function carregarPainel(user) {
   }
 }
 
+async function buscarEExibirSugestoes(tipoCampo) {
+  if (passageiroTemCorridaAtiva || !cidadeContexto) return;
+
+  const input = tipoCampo === 'origem' ? origemInput : destinoInput;
+  const container = tipoCampo === 'origem' ? sugestoesOrigem : sugestoesDestino;
+  const texto = input.value.trim();
+
+  if (texto.length < 2) {
+    esconderSugestoes(container);
+    if (tipoCampo === 'origem') ultimasSugestoesOrigem = [];
+    else ultimasSugestoesDestino = [];
+    return;
+  }
+
+  const sequenciaAtual = tipoCampo === 'origem'
+    ? ++sequenciaBuscaOrigem
+    : ++sequenciaBuscaDestino;
+
+  try {
+    const sugestoes = await buscarSugestoesTravadas(texto, cidadeContexto);
+
+    const aindaEhAtual = tipoCampo === 'origem'
+      ? sequenciaAtual === sequenciaBuscaOrigem && origemInput.value.trim() === texto
+      : sequenciaAtual === sequenciaBuscaDestino && destinoInput.value.trim() === texto;
+
+    if (!aindaEhAtual) return;
+
+    if (tipoCampo === 'origem') {
+      ultimasSugestoesOrigem = sugestoes;
+    } else {
+      ultimasSugestoesDestino = sugestoes;
+    }
+
+    renderizarSugestoes(container, sugestoes, tipoCampo);
+  } catch (error) {
+    esconderSugestoes(container);
+  }
+}
+
+origemInput.addEventListener('focus', function() {
+  campoBuscaAtivo = 'origem';
+});
+
+destinoInput.addEventListener('focus', function() {
+  campoBuscaAtivo = 'destino';
+});
+
 origemInput.addEventListener('input', function() {
   origemSelecionada = null;
+  campoBuscaAtivo = 'origem';
   if (simulacaoAtual) {
     invalidarSimulacao();
-    mostrarMensagem('Partida alterada. Simule novamente.', '#FFCC00');
+    mostrarMensagem('Origem alterada. Simule novamente a rota e o valor.', '#FFCC00');
   }
   clearTimeout(debounceOrigem);
-  debounceOrigem = setTimeout(function() { buscarEExibirSugestoes('origem'); }, 350);
+  debounceOrigem = setTimeout(function() {
+    buscarEExibirSugestoes('origem');
+  }, 300);
 });
 
 destinoInput.addEventListener('input', function() {
   destinoSelecionado = null;
+  campoBuscaAtivo = 'destino';
   if (simulacaoAtual) {
     invalidarSimulacao();
-    mostrarMensagem('Destino alterado. Simule novamente.', '#FFCC00');
+    mostrarMensagem('Destino alterado. Simule novamente a rota e o valor.', '#FFCC00');
   }
   clearTimeout(debounceDestino);
-  debounceDestino = setTimeout(function() { buscarEExibirSugestoes('destino'); }, 350);
+  debounceDestino = setTimeout(function() {
+    buscarEExibirSugestoes('destino');
+  }, 300);
 });
 
 origemInput.addEventListener('keydown', async function(event) {
@@ -1254,12 +2257,14 @@ destinoInput.addEventListener('keydown', async function(event) {
   }
 });
 
-tipoCorridaInput.addEventListener('change', function() {
-  atualizarTextoTarifa();
-  if (simulacaoAtual) {
-    invalidarSimulacao();
-    mostrarMensagem('Tipo de corrida alterado. Simule novamente.', '#FFCC00');
-  }
+document.querySelectorAll('.atalho-tag').forEach(function(botao) {
+  botao.addEventListener('click', function() {
+    aplicarAtalho(botao.dataset.atalho || '');
+  });
+});
+
+btnLocalizacaoAtual.addEventListener('click', async function() {
+  await preencherOrigemComLocalizacaoAtual({ silencioso: false });
 });
 
 document.addEventListener('click', function(evento) {
@@ -1287,24 +2292,28 @@ formCorrida.addEventListener('submit', async function(e) {
   }
 
   if (!simulacaoAtual) {
-    mostrarMensagem('Simule a rota e o valor antes de confirmar.', '#FFCC00');
+    mostrarMensagem('Simule primeiro a rota e o valor antes de confirmar a corrida.', '#FFCC00');
     return;
   }
 
   const bairro = bairroInput.value.trim();
   const logradouro = logradouroInput.value.trim();
   const numero = numeroInput.value.trim();
+  const complemento = complementoInput.value.trim();
   const referencia = referenciaInput.value.trim();
   const pagamento = pagamentoInput.value;
   const observacoes = observacoesInput.value.trim();
 
   if (!bairro || !logradouro || !numero || !pagamento) {
-    mostrarMensagem('Preencha bairro, rua/passagem, número da casa ou S/N e pagamento.', '#FF5555');
+    mostrarMensagem('Antes de confirmar, preencha bairro, endereço, número e forma de pagamento.', '#FF5555');
     return;
   }
 
-  if (origemInput.value.trim() !== simulacaoAtual.origemNome || destinoInput.value.trim() !== simulacaoAtual.destinoNome) {
-    mostrarMensagem('Partida ou destino mudaram depois da simulação. Simule novamente.', '#FFCC00');
+  if (
+    origemInput.value.trim() !== simulacaoAtual.origemNome ||
+    destinoInput.value.trim() !== simulacaoAtual.destinoNome
+  ) {
+    mostrarMensagem('Origem ou destino mudaram depois da simulação. Simule novamente antes de confirmar.', '#FFCC00');
     invalidarSimulacao();
     return;
   }
@@ -1325,16 +2334,15 @@ formCorrida.addEventListener('submit', async function(e) {
       passageiroFotoURL: dadosUsuarioAtual.fotoURL || '',
 
       cidadeCorrida: simulacaoAtual.cidadeCorrida,
-      tipoCorrida: simulacaoAtual.tipoCorrida,
-      tipoVeiculoSolicitado: simulacaoAtual.tipoVeiculoSolicitado,
-      tipoCorridaTexto: simulacaoAtual.tipoCorridaTexto,
-
       origem: simulacaoAtual.origemNome,
       destino: simulacaoAtual.destinoNome,
+
       bairroEmbarque: bairro,
       logradouroEmbarque: logradouro,
       numeroEmbarque: numero,
-      referencia: referencia || '-',
+      complementoEmbarque: complemento,
+      referencia: referencia,
+
       pagamento: pagamento,
       observacoes: observacoes,
 
@@ -1351,11 +2359,12 @@ formCorrida.addEventListener('submit', async function(e) {
       valorEstimadoTexto: formatarMoeda(simulacaoAtual.valorEstimado),
       tipoCalculoDistancia: simulacaoAtual.tipoCalculoDistancia,
       tipoCalculoTexto: simulacaoAtual.tipoCalculoTexto,
+
       rotaGoogleMaps: simulacaoAtual.rotaGoogleMaps,
       rotaOpenStreetMap: simulacaoAtual.rotaOpenStreetMap,
 
-      tarifaMinimaAte1Km: obterConfigServico(simulacaoAtual.tipoCorrida).tarifaMinimaAte1Km,
-      tarifaKmAdicional: obterConfigServico(simulacaoAtual.tipoCorrida).tarifaKmAdicional,
+      tarifaMinimaAte1Km: TARIFA_MINIMA_ATE_1KM,
+      tarifaKmAdicional: TARIFA_KM_ADICIONAL,
 
       codigoEmbarque: codigoEmbarque,
       codigoValidado: false,
@@ -1363,6 +2372,7 @@ formCorrida.addEventListener('submit', async function(e) {
       dataValidacaoCodigoMs: 0,
 
       status: 'solicitada',
+
       motoristaUid: '',
       motoristaNome: '',
       motoristaCidade: '',
@@ -1374,6 +2384,15 @@ formCorrida.addEventListener('submit', async function(e) {
       canceladaPorNome: '',
       dataCancelamento: '',
       dataCancelamentoMs: 0,
+
+      cancelamentoComPenalidade: false,
+      pontosPenalidade: 0,
+      valorDividaGerada: 0,
+      dividaGerada: false,
+      dividaResponsavelTipo: '',
+      dividaResponsavelNome: '',
+      dividaResponsavelUid: '',
+      penalidadeResumo: '',
 
       dataCriacao: agora.toISOString(),
       dataCriacaoMs: agora.getTime(),
@@ -1399,14 +2418,18 @@ formCorrida.addEventListener('submit', async function(e) {
     destinoSelecionado = null;
     ultimasSugestoesOrigem = [];
     ultimasSugestoesDestino = [];
+    campoBuscaAtivo = 'origem';
     simulacaoAtual = null;
     saidaStatusIntegracao.innerText = 'Aguardando simulação';
     saidaDistancia.innerText = 'Aguardando simulação';
     saidaValor.innerText = 'Aguardando simulação';
-    tipoCorridaInput.value = 'carro';
-    focarMapaNaCidade(dadosUsuarioAtual.cidade || '');
 
-    mostrarMensagem('Corrida solicitada com sucesso! Código de embarque gerado.', '#00FF88');
+    statusLocalizacaoAtual.style.color = '#cfcfcf';
+    statusLocalizacaoAtual.innerText = 'Você pode digitar sua partida normalmente. A localização atual é opcional.';
+    tentativaAutomaticaLocalizacao = false;
+
+    await focarMapaNaCidade(dadosUsuarioAtual.cidade || '');
+    mostrarMensagem('Corrida solicitada com sucesso! Seu código de embarque foi gerado.', '#00FF88');
     atualizarEstadoBotoes();
   } catch (error) {
     mostrarMensagem('Erro ao solicitar corrida: ' + error.message, '#FF5555');
@@ -1423,7 +2446,10 @@ auth.onAuthStateChanged(async function(user) {
     return;
   }
 
-  if (!mapa) iniciarMapa();
+  if (!mapa) {
+    iniciarMapa();
+  }
+
   await carregarPainel(user);
 });
 
