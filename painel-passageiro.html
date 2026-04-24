@@ -271,7 +271,7 @@ button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
             <option value="carro" selected>Carro</option>
             <option value="moto">Moto</option>
           </select>
-          <div class="campo-ajuda" id="texto-tarifa">Até 1 km = R$ 16,00. Acima disso = R$ 2,50 por km adicional.</div>
+          <div class="campo-ajuda" id="texto-tarifa">Até 1 km = R$ 16,00. Acima disso = R$ 0,50 por km adicional.</div>
         </div>
 
         <div class="bloco-corrida">
@@ -377,8 +377,8 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 const CONFIG_SERVICOS = {
-  carro: { rotulo: 'Carro', tarifaMinimaAte1Km: 16.00, tarifaKmAdicional: 2.50 },
-  moto: { rotulo: 'Moto', tarifaMinimaAte1Km: 5.00, tarifaKmAdicional: 2.50 }
+  carro: { rotulo: 'Carro', tarifaMinimaAte1Km: 16.00, tarifaKmAdicional: 0.50 },
+  moto: { rotulo: 'Moto', tarifaMinimaAte1Km: 5.00, tarifaKmAdicional: 1.50 }
 };
 const STATUS_ATIVOS_PASSAGEIRO = ['solicitada', 'aceita', 'a caminho', 'cheguei ao local', 'iniciada'];
 const STATUS_HISTORICO = ['finalizada', 'cancelada'];
