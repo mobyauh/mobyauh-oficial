@@ -294,6 +294,11 @@ button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
 
         <button type="button" id="btn-calcular">SIMULAR ROTA E VALOR</button>
 
+        <div class="resultado-simulacao-grid">
+          <div class="saida-mapa"><strong>Distância estimada</strong><span id="saida-distancia">Aguardando simulação</span></div>
+          <div class="saida-mapa"><strong>Valor estimado</strong><span id="saida-valor">Aguardando simulação</span></div>
+        </div>
+
         <div class="bloco-corrida">
           <label class="campo-label">Endereço de embarque</label>
           <div class="grid-endereco">
@@ -329,8 +334,6 @@ button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
         <div class="mapa-saida-grid">
           <div class="saida-mapa"><strong>Foco do mapa</strong><span id="saida-foco-mapa">Carregando...</span></div>
           <div class="saida-mapa"><strong>Tipo de cálculo</strong><span id="saida-status-integracao">Aguardando simulação</span></div>
-          <div class="saida-mapa"><strong>Distância estimada</strong><span id="saida-distancia">Aguardando simulação</span></div>
-          <div class="saida-mapa"><strong>Valor estimado</strong><span id="saida-valor">Aguardando simulação</span></div>
         </div>
 
         <button type="submit" id="btn-solicitar" disabled>CONFIRMAR E SOLICITAR CORRIDA</button>
