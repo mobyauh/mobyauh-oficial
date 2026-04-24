@@ -379,6 +379,8 @@ if (!firebase.apps.length) {
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+const GOOGLE_MAPS_KEY = "AIzaSyBlAsjTz4iC-w-nu6IzbKfTJEpyvKsCUCU";
+
 const CONFIG_SERVICOS = {
   carro: { rotulo: 'Carro', tarifaMinimaAte1Km: 16.00, tarifaKmAdicional: 0.50 },
   moto: { rotulo: 'Moto', tarifaMinimaAte1Km: 5.00, tarifaKmAdicional: 1.50 }
@@ -496,6 +498,10 @@ let ultimasSugestoesOrigem = [];
 let ultimasSugestoesDestino = [];
 let ultimaConsultaNominatim = 0;
 let cacheBusca = new Map();
+let googlePlacesPromise = null;
+let googlePlacesBibliotecaPromise = null;
+let googlePlacesSessionToken = null;
+let googlePlacesServiceLegacy = null;
 
 function mostrarMensagem(texto, cor) {
   mensagem.innerText = texto;
@@ -660,135 +666,342 @@ function converterResultadoNominatim(item, termo) {
   };
 }
 
-async function consultarNominatim(termo, cidade, config, bounded, usarCidadeNoTexto) {
+
+function carregarGooglePlaces() {
+  if (window.google && window.google.maps && window.google.maps.importLibrary) {
+    return Promise.resolve(window.google);
+  }
+
+  if (googlePlacesPromise) return googlePlacesPromise;
+
+  googlePlacesPromise = new Promise(function(resolve, reject) {
+    const callbackName = 'mobyauhGooglePlacesReady_' + Date.now();
+
+    window[callbackName] = function() {
+      delete window[callbackName];
+      resolve(window.google);
+    };
+
+    const script = document.createElement('script');
+    script.src =
+      'https://maps.googleapis.com/maps/api/js?key=' +
+      encodeURIComponent(GOOGLE_MAPS_KEY) +
+      '&libraries=places&language=pt-BR&region=BR&v=weekly&callback=' +
+      callbackName;
+    script.async = true;
+    script.defer = true;
+    script.onerror = function() {
+      delete window[callbackName];
+      reject(new Error('Não foi possível carregar a busca do Google Places.'));
+    };
+
+    document.head.appendChild(script);
+  });
+
+  return googlePlacesPromise;
+}
+
+async function obterBibliotecaPlaces() {
+  await carregarGooglePlaces();
+
+  if (!googlePlacesBibliotecaPromise) {
+    googlePlacesBibliotecaPromise = google.maps.importLibrary('places');
+  }
+
+  return await googlePlacesBibliotecaPromise;
+}
+
+function reiniciarTokenPlaces() {
+  googlePlacesSessionToken = null;
+}
+
+function textoFormatavelGoogle(valor) {
+  if (!valor) return '';
+  if (typeof valor === 'string') return valor;
+  if (typeof valor.text === 'string') return valor.text;
+  if (typeof valor.toString === 'function') return valor.toString();
+  return '';
+}
+
+function latLngParaNumerosGoogle(location) {
+  if (!location) return null;
+
+  const lat = typeof location.lat === 'function' ? location.lat() : Number(location.lat);
+  const lng = typeof location.lng === 'function' ? location.lng() : Number(location.lng);
+
+  if (!isFinite(lat) || !isFinite(lng)) return null;
+
+  return { lat: lat, lon: lng };
+}
+
+function criarBoundsGoogle(config, multiplicador) {
+  const fator = multiplicador || 1;
+  const deltaLat = 0.08 * fator;
+  const deltaLon = 0.08 * fator;
+
+  return {
+    west: config.lon - deltaLon,
+    east: config.lon + deltaLon,
+    south: config.lat - deltaLat,
+    north: config.lat + deltaLat
+  };
+}
+
+function converterSugestaoGoogleNova(sugestao) {
+  const prediction = sugestao && sugestao.placePrediction;
+  if (!prediction) return null;
+
+  const mainText = textoFormatavelGoogle(prediction.mainText);
+  const secondaryText = textoFormatavelGoogle(prediction.secondaryText);
+  const text = textoFormatavelGoogle(prediction.text);
+
+  return {
+    tipo: 'google_novo',
+    label: mainText || text || 'Local encontrado',
+    secundaria: secondaryText || '',
+    displayName: text || [mainText, secondaryText].filter(Boolean).join(', '),
+    placePrediction: prediction,
+    placeId: prediction.placeId || ''
+  };
+}
+
+function obterPlacesServiceLegacy() {
+  if (googlePlacesServiceLegacy) return googlePlacesServiceLegacy;
+
+  const div = document.createElement('div');
+  googlePlacesServiceLegacy = new google.maps.places.PlacesService(div);
+  return googlePlacesServiceLegacy;
+}
+
+async function buscarSugestoesGoogleLegacy(texto, cidadeContextoAtual) {
+  await carregarGooglePlaces();
+
+  if (!google.maps.places || !google.maps.places.AutocompleteService) {
+    return [];
+  }
+
+  const service = new google.maps.places.AutocompleteService();
+  const config = cidadeContextoAtual.config;
+  const bounds = criarBoundsGoogle(config, 1.4);
+
+  const request = {
+    input: texto,
+    componentRestrictions: { country: 'br' },
+    bounds: new google.maps.LatLngBounds(
+      new google.maps.LatLng(bounds.south, bounds.west),
+      new google.maps.LatLng(bounds.north, bounds.east)
+    ),
+    location: new google.maps.LatLng(config.lat, config.lon),
+    radius: Math.max(6000, Number(config.raioKm || 14) * 1000),
+    language: 'pt-BR'
+  };
+
+  return await new Promise(function(resolve) {
+    service.getPlacePredictions(request, function(predictions, status) {
+      if (status !== google.maps.places.PlacesServiceStatus.OK || !predictions) {
+        resolve([]);
+        return;
+      }
+
+      resolve(predictions.slice(0, 8).map(function(prediction) {
+        const principal = prediction.structured_formatting && prediction.structured_formatting.main_text;
+        const secundaria = prediction.structured_formatting && prediction.structured_formatting.secondary_text;
+
+        return {
+          tipo: 'google_legacy',
+          label: principal || prediction.description || texto,
+          secundaria: secundaria || '',
+          displayName: prediction.description || texto,
+          placeId: prediction.place_id || ''
+        };
+      }));
+    });
+  });
+}
+
+async function buscarSugestoesGooglePlaces(texto) {
+  if (!cidadeContexto || !texto.trim()) return [];
+
+  const termo = texto.trim();
+  const chave = normalizarTexto('google|' + cidadeContexto.cidade + '|' + termo);
+  if (cacheBusca.has(chave)) {
+    return cacheBusca.get(chave);
+  }
+
+  const sugestoes = [];
+  const usados = new Set();
+
+  try {
+    const biblioteca = await obterBibliotecaPlaces();
+    const AutocompleteSuggestion = biblioteca.AutocompleteSuggestion || (google.maps.places && google.maps.places.AutocompleteSuggestion);
+    const AutocompleteSessionToken = biblioteca.AutocompleteSessionToken || (google.maps.places && google.maps.places.AutocompleteSessionToken);
+
+    if (AutocompleteSuggestion && AutocompleteSuggestion.fetchAutocompleteSuggestions) {
+      if (!googlePlacesSessionToken && AutocompleteSessionToken) {
+        googlePlacesSessionToken = new AutocompleteSessionToken();
+      }
+
+      const config = cidadeContexto.config;
+      const bounds1 = criarBoundsGoogle(config, 1);
+      const bounds2 = criarBoundsGoogle(config, 2);
+
+      const requests = [
+        {
+          input: termo,
+          includedRegionCodes: ['br'],
+          language: 'pt-BR',
+          region: 'br',
+          origin: { lat: config.lat, lng: config.lon },
+          locationRestriction: bounds1,
+          sessionToken: googlePlacesSessionToken
+        },
+        {
+          input: termo,
+          includedRegionCodes: ['br'],
+          language: 'pt-BR',
+          region: 'br',
+          origin: { lat: config.lat, lng: config.lon },
+          locationRestriction: bounds2,
+          sessionToken: googlePlacesSessionToken
+        },
+        {
+          input: termo + ', ' + cidadeContexto.cidade + ', Pará',
+          includedRegionCodes: ['br'],
+          language: 'pt-BR',
+          region: 'br',
+          origin: { lat: config.lat, lng: config.lon },
+          sessionToken: googlePlacesSessionToken
+        }
+      ];
+
+      for (const request of requests) {
+        const resposta = await AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
+        (resposta.suggestions || []).forEach(function(sugestao) {
+          const convertido = converterSugestaoGoogleNova(sugestao);
+          if (!convertido) return;
+
+          const chaveItem = normalizarTexto((convertido.placeId || '') + '|' + convertido.displayName);
+          if (!usados.has(chaveItem)) {
+            usados.add(chaveItem);
+            sugestoes.push(convertido);
+          }
+        });
+
+        if (sugestoes.length >= 8) break;
+      }
+    }
+  } catch (error) {
+    console.warn('Google Places novo falhou, tentando modo compatível:', error);
+  }
+
+  if (sugestoes.length < 4) {
+    try {
+      const legacy = await buscarSugestoesGoogleLegacy(termo, cidadeContexto);
+      legacy.forEach(function(item) {
+        const chaveItem = normalizarTexto((item.placeId || '') + '|' + item.displayName);
+        if (!usados.has(chaveItem)) {
+          usados.add(chaveItem);
+          sugestoes.push(item);
+        }
+      });
+    } catch (error) {
+      console.warn('Google Places legacy falhou:', error);
+    }
+  }
+
+  const finais = sugestoes.slice(0, 8);
+  cacheBusca.set(chave, finais);
+  return finais;
+}
+
+async function resolverSugestaoGoogle(item) {
+  await carregarGooglePlaces();
+
+  if (item.tipo === 'google_novo' && item.placePrediction) {
+    const place = item.placePrediction.toPlace();
+    await place.fetchFields({
+      fields: ['displayName', 'formattedAddress', 'location']
+    });
+
+    const coords = latLngParaNumerosGoogle(place.location);
+    if (!coords) {
+      throw new Error('O Google não retornou coordenadas para este local.');
+    }
+
+    const nome = textoFormatavelGoogle(place.displayName) || item.label;
+    const endereco = place.formattedAddress || item.displayName || nome;
+
+    reiniciarTokenPlaces();
+
+    return {
+      label: nome,
+      displayName: endereco,
+      lat: coords.lat,
+      lon: coords.lon
+    };
+  }
+
+  if (item.tipo === 'google_legacy' && item.placeId) {
+    const service = obterPlacesServiceLegacy();
+
+    const detalhes = await new Promise(function(resolve, reject) {
+      service.getDetails({
+        placeId: item.placeId,
+        fields: ['name', 'formatted_address', 'geometry', 'place_id']
+      }, function(place, status) {
+        if (status !== google.maps.places.PlacesServiceStatus.OK || !place) {
+          reject(new Error('Não consegui obter detalhes do local escolhido.'));
+          return;
+        }
+        resolve(place);
+      });
+    });
+
+    const location = detalhes.geometry && detalhes.geometry.location;
+    const coords = latLngParaNumerosGoogle(location);
+    if (!coords) {
+      throw new Error('O Google não retornou coordenadas para este local.');
+    }
+
+    reiniciarTokenPlaces();
+
+    return {
+      label: detalhes.name || item.label,
+      displayName: detalhes.formatted_address || item.displayName || item.label,
+      lat: coords.lat,
+      lon: coords.lon
+    };
+  }
+
+  if (isFinite(Number(item.lat)) && isFinite(Number(item.lon))) {
+    return {
+      label: item.label,
+      displayName: item.displayName || item.label,
+      lat: Number(item.lat),
+      lon: Number(item.lon)
+    };
+  }
+
+  throw new Error('Não consegui resolver este local.');
+}
+
+
+async function consultarNominatim(termo, cidade, config, bounded) {
   await respeitarLimiteNominatim();
-
   const viewbox = criarViewbox(config);
-  const consulta = usarCidadeNoTexto === false
-    ? termo
-    : termo + ', ' + cidade + ', Pará, Brasil';
-
-  let url =
-    'https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=8&countrycodes=br&q=' +
-    encodeURIComponent(consulta);
+  let url = 'https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=8&countrycodes=br&q=' + encodeURIComponent(termo + ', ' + cidade + ', Pará, Brasil');
 
   if (bounded) {
     url += '&bounded=1&viewbox=' + viewbox.west + ',' + viewbox.north + ',' + viewbox.east + ',' + viewbox.south;
   }
 
-  const resposta = await fetch(url, {
-    headers: {
-      'Accept-Language': 'pt-BR,pt;q=0.9',
-      'Accept': 'application/json'
-    }
-  });
-
+  const resposta = await fetch(url, { headers: { 'Accept-Language': 'pt-BR,pt;q=0.9' } });
   if (!resposta.ok) return [];
   return await resposta.json();
 }
 
-function pontuarSugestao(item, termoOriginal, config, cidade) {
-  const convertido = converterResultadoNominatim(item, termoOriginal);
-  const termo = normalizarTexto(termoOriginal);
-  const label = normalizarTexto(convertido.label);
-  const display = normalizarTexto(convertido.displayName);
-  const cidadeNormalizada = normalizarTexto(cidade);
-
-  let score = 0;
-
-  if (label === termo) score += 1000;
-  else if (label.startsWith(termo)) score += 800;
-  else if (label.includes(termo)) score += 600;
-
-  if (display.includes(termo)) score += 250;
-  if (display.includes(cidadeNormalizada)) score += 260;
-
-  const distancia = haversineKm(config.lat, config.lon, convertido.lat, convertido.lon);
-  if (isFinite(distancia)) {
-    if (distancia <= 3) score += 280;
-    else if (distancia <= 8) score += 220;
-    else if (distancia <= 14) score += 150;
-    else score -= Math.min(200, Math.round(distancia));
-  }
-
-  return score;
-}
-
 async function buscarSugestoesTravadas(texto) {
-  if (!cidadeContexto || !texto.trim()) return [];
-
-  const cidade = cidadeContexto.cidade;
-  const config = cidadeContexto.config;
-  const textoLimpo = texto.trim();
-  const termosBusca = montarTermosBusca(textoLimpo, cidade);
-  const chave = normalizarTexto(cidade + '|' + textoLimpo + '|' + termosBusca.join('|') + '|sem-autotroca-v2');
-
-  if (cacheBusca.has(chave)) {
-    return cacheBusca.get(chave);
-  }
-
-  const candidatos = [];
-  const usados = new Set();
-
-  async function adicionarResultados(termo, bounded, usarCidadeNoTexto) {
-    const dados = await consultarNominatim(termo, cidade, config, bounded, usarCidadeNoTexto);
-    (dados || []).forEach(function(item) {
-      if (!itemDentroDaCidade(item, config)) return;
-
-      const convertido = converterResultadoNominatim(item, termo);
-      const chaveItem =
-        normalizarTexto(convertido.displayName) + '|' +
-        Number(convertido.lat).toFixed(6) + '|' +
-        Number(convertido.lon).toFixed(6);
-
-      if (!usados.has(chaveItem)) {
-        usados.add(chaveItem);
-        convertido.score = pontuarSugestao(item, textoLimpo, config, cidade);
-        candidatos.push(convertido);
-      }
-    });
-  }
-
-  // Primeiro tenta o texto puro dentro da área da cidade.
-  // Isso ajuda ruas, travessas, avenidas e passagens que já existem no mapa.
-  await adicionarResultados(textoLimpo, true, false);
-
-  // Depois tenta o texto com cidade/estado.
-  if (candidatos.length < 5) {
-    await adicionarResultados(textoLimpo, true, true);
-  }
-
-  // Depois tenta os termos locais compatíveis, mas sem preencher campo sozinho.
-  for (const termo of termosBusca) {
-    if (candidatos.length >= 8) break;
-    await adicionarResultados(termo, true, true);
-  }
-
-  // Último apoio: consulta sem bounded, mas ainda filtrando por distância da cidade.
-  if (candidatos.length < 3) {
-    for (const termo of termosBusca) {
-      if (candidatos.length >= 8) break;
-      await adicionarResultados(termo, false, true);
-    }
-  }
-
-  const sugestoes = candidatos
-    .sort(function(a, b) {
-      return Number(b.score || 0) - Number(a.score || 0);
-    })
-    .slice(0, 8)
-    .map(function(item) {
-      return {
-        label: item.label,
-        secundaria: item.secundaria,
-        lat: item.lat,
-        lon: item.lon,
-        displayName: item.displayName
-      };
-    });
-
-  cacheBusca.set(chave, sugestoes);
-  return sugestoes;
+  return await buscarSugestoesGooglePlaces(texto);
 }
 
 function iniciarMapa() {
@@ -841,12 +1054,24 @@ function renderizarSugestoes(container, sugestoes, tipoCampo) {
     const botao = document.createElement('button');
     botao.type = 'button';
     botao.className = 'sugestao-item' + (index === 0 ? ' ativa' : '');
-    botao.innerHTML = item.label + (item.secundaria ? '<span class="sugestao-secundaria">' + item.secundaria + '</span>' : '');
+
+    const titulo = document.createElement('span');
+    titulo.textContent = item.label || 'Local encontrado';
+    botao.appendChild(titulo);
+
+    if (item.secundaria) {
+      const secundaria = document.createElement('span');
+      secundaria.className = 'sugestao-secundaria';
+      secundaria.textContent = item.secundaria;
+      botao.appendChild(secundaria);
+    }
+
     botao.addEventListener('mousedown', function(event) { event.preventDefault(); });
     botao.addEventListener('pointerdown', async function(event) {
       event.preventDefault();
       await selecionarSugestao(tipoCampo, item);
     });
+
     container.appendChild(botao);
   });
 
@@ -854,28 +1079,27 @@ function renderizarSugestoes(container, sugestoes, tipoCampo) {
 }
 
 async function selecionarSugestao(tipoCampo, item) {
-  const resolvido = {
-    label: item.label,
-    displayName: item.displayName || item.label,
-    lat: item.lat,
-    lon: item.lon
-  };
+  try {
+    const resolvido = await resolverSugestaoGoogle(item);
 
-  if (tipoCampo === 'origem') {
-    origemSelecionada = resolvido;
-    origemInput.value = resolvido.label;
-    ultimasSugestoesOrigem = [];
-    esconderSugestoes(sugestoesOrigem);
-  } else {
-    destinoSelecionado = resolvido;
-    destinoInput.value = resolvido.label;
-    ultimasSugestoesDestino = [];
-    esconderSugestoes(sugestoesDestino);
-  }
+    if (tipoCampo === 'origem') {
+      origemSelecionada = resolvido;
+      origemInput.value = resolvido.label;
+      ultimasSugestoesOrigem = [];
+      esconderSugestoes(sugestoesOrigem);
+    } else {
+      destinoSelecionado = resolvido;
+      destinoInput.value = resolvido.label;
+      ultimasSugestoesDestino = [];
+      esconderSugestoes(sugestoesDestino);
+    }
 
-  if (simulacaoAtual) {
-    invalidarSimulacao();
-    mostrarMensagem('Origem ou destino alterado. Simule novamente.', '#FFCC00');
+    if (simulacaoAtual) {
+      invalidarSimulacao();
+      mostrarMensagem('Origem ou destino alterado. Simule novamente.', '#FFCC00');
+    }
+  } catch (error) {
+    mostrarMensagem('Não consegui selecionar este local: ' + error.message, '#FF5555');
   }
 }
 
@@ -911,6 +1135,7 @@ async function buscarEExibirSugestoes(tipoCampo) {
 
     renderizarSugestoes(container, sugestoes, tipoCampo);
   } catch (error) {
+    console.warn('Erro ao buscar sugestões:', error);
     esconderSugestoes(container);
   }
 }
@@ -958,12 +1183,7 @@ async function resolverTextoLivre(texto, tipoCampo) {
     throw new Error('Não encontrei ' + (tipoCampo === 'origem' ? 'a partida' : 'o destino') + ' dentro de ' + cidade + '. Tente escrever o nome mais completo ou escolha uma sugestão da lista.');
   }
 
-  return {
-    label: escolhida.label,
-    displayName: escolhida.displayName,
-    lat: escolhida.lat,
-    lon: escolhida.lon
-  };
+  return await resolverSugestaoGoogle(escolhida);
 }
 
 function adicionarMarcadores(origem, destino) {
@@ -1524,6 +1744,7 @@ formCorrida.addEventListener('submit', async function(e) {
     destinoSelecionado = null;
     ultimasSugestoesOrigem = [];
     ultimasSugestoesDestino = [];
+    reiniciarTokenPlaces();
     simulacaoAtual = null;
     saidaStatusIntegracao.innerText = 'Aguardando simulação';
     saidaDistancia.innerText = 'Aguardando simulação';
