@@ -376,8 +376,10 @@ if (!firebase.apps.length) {
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-const TARIFA_MINIMA_ATE_1KM = 16.00;
-const TARIFA_KM_ADICIONAL = 2.50;
+const CONFIG_SERVICOS = {
+  carro: { rotulo: 'Carro', tarifaMinimaAte1Km: 16.00, tarifaKmAdicional: 2.50 },
+  moto: { rotulo: 'Moto', tarifaMinimaAte1Km: 5.00, tarifaKmAdicional: 2.50 }
+};
 const STATUS_ATIVOS_PASSAGEIRO = ['solicitada', 'aceita', 'a caminho', 'cheguei ao local', 'iniciada'];
 const STATUS_HISTORICO = ['finalizada', 'cancelada'];
 const MAPA_FALLBACK = { lat: -1.90, lng: -50.50, zoom: 8 };
@@ -392,26 +394,26 @@ const CONFIG_CIDADES = {
 
 const PONTOS_LOCAIS = {
   Portel: [
-    { nome: 'Prefeitura Municipal de Portel', aliases: ['prefeitura', 'prefe', 'duque de caxias'] },
-    { nome: 'Hospital Municipal de Portel', aliases: ['hospital', 'hospital municipal'] },
-    { nome: 'Porto de Portel', aliases: ['porto', 'trapiche', 'cais'] },
-    { nome: 'Praça da Saúde', aliases: ['praça da saúde', 'praca da saude', 'saúde'] },
-    { nome: 'Praça da Matriz', aliases: ['praça da matriz', 'praca da matriz', 'matriz'] },
-    { nome: 'Passagem Primavera', aliases: ['primavera', 'prima'] },
-    { nome: 'Praia da Tucano', aliases: ['tucano', 'tuca', 'praia do tucano'] },
-    { nome: 'Farmapinho', aliases: ['farmapinho', 'pinho'] },
-    { nome: 'Farma Corpo', aliases: ['farma corpo'] },
-    { nome: 'ViaFarma', aliases: ['viafarma', 'via farma'] },
-    { nome: 'Orla de Portel', aliases: ['orla'] },
-    { nome: 'Mercadão Cidade Portel', aliases: ['mercadão', 'mercadao', 'mercado'] },
-    { nome: 'Secretaria Municipal de Saúde', aliases: ['secretaria de saúde', 'secretaria de saude'] },
-    { nome: 'SEMA-PORTEL', aliases: ['sema'] },
-    { nome: 'SEMED Portel', aliases: ['semed'] },
+    { nome: 'Prefeitura Municipal de Portel', aliases: ['prefeitura', 'prefe', 'duque de caxias', 'prefeitura de portel'] },
+    { nome: 'Hospital Municipal de Portel', aliases: ['hospital', 'hospital municipal', 'hospital de portel'] },
+    { nome: 'Porto de Portel', aliases: ['porto', 'trapiche', 'cais', 'porto de portel'] },
+    { nome: 'Praça da Saúde', aliases: ['praça da saúde', 'praca da saude', 'saúde', 'praca da saude', 'praça saúde'] },
+    { nome: 'Praça da Matriz', aliases: ['praça da matriz', 'praca da matriz', 'matriz', 'praça', 'praca'] },
+    { nome: 'Passagem Primavera', aliases: ['primavera', 'prima', 'passagem primavera'] },
+    { nome: 'Praia da Tucano', aliases: ['tucano', 'tuca', 'praia do tucano', 'praia da tucano'] },
+    { nome: 'Farmapinho', aliases: ['farmapinho', 'pinho', 'farma pinho'] },
+    { nome: 'Farma Corpo', aliases: ['farma corpo', 'farmacorpo'] },
+    { nome: 'ViaFarma', aliases: ['viafarma', 'via farma', 'drogaria viafarma'] },
+    { nome: 'Orla de Portel', aliases: ['orla', 'orla de portel'] },
+    { nome: 'Mercadão Cidade Portel', aliases: ['mercadão', 'mercadao', 'mercado', 'mercadão cidade'] },
+    { nome: 'Secretaria Municipal de Saúde', aliases: ['secretaria de saúde', 'secretaria de saude', 'secretaria municipal de saude'] },
+    { nome: 'SEMA-PORTEL', aliases: ['sema', 'sema portel'] },
+    { nome: 'SEMED Portel', aliases: ['semed', 'semed portel'] },
     { nome: 'Portelinha', aliases: ['portelinha'] },
-    { nome: 'CRAS Castanheira', aliases: ['cras castanheira', 'castanheira'] },
-    { nome: 'Campo de Futebol Jean Trindade', aliases: ['jean trindade', 'campo jean'] },
-    { nome: 'Arena Center', aliases: ['arena center'] },
-    { nome: 'Arena Prime Portel', aliases: ['arena prime'] }
+    { nome: 'CRAS Castanheira', aliases: ['cras castanheira', 'castanheira', 'cras'] },
+    { nome: 'Campo de Futebol Jean Trindade', aliases: ['jean trindade', 'campo jean', 'campo de futebol'] },
+    { nome: 'Arena Center', aliases: ['arena center', 'arena'] },
+    { nome: 'Arena Prime Portel', aliases: ['arena prime', 'arena prime portel'] }
   ],
   Breves: [
     { nome: 'Hospital Regional', aliases: ['hospital'] },
@@ -543,11 +545,25 @@ function formatarDistancia(valorKm) {
   return numero.toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 2 }) + ' km';
 }
 
-function calcularValorEstimado(distanciaKm) {
+function obterConfigServico(tipo) {
+  return CONFIG_SERVICOS[tipo] || CONFIG_SERVICOS.carro;
+}
+
+function obterTextoTarifa(tipo) {
+  const config = obterConfigServico(tipo);
+  return 'Até 1 km = ' + formatarMoeda(config.tarifaMinimaAte1Km) + '. Acima disso = ' + formatarMoeda(config.tarifaKmAdicional) + ' por km adicional.';
+}
+
+function atualizarTextoTarifa() {
+  textoTarifa.innerText = obterTextoTarifa(tipoCorridaInput.value || 'carro');
+}
+
+function calcularValorEstimado(distanciaKm, tipoServico) {
   const km = Number(distanciaKm);
+  const config = obterConfigServico(tipoServico);
   if (!isFinite(km) || km <= 0) return 0;
-  if (km <= 1) return TARIFA_MINIMA_ATE_1KM;
-  return Math.round((TARIFA_MINIMA_ATE_1KM + ((km - 1) * TARIFA_KM_ADICIONAL)) * 100) / 100;
+  if (km <= 1) return config.tarifaMinimaAte1Km;
+  return Math.round((config.tarifaMinimaAte1Km + ((km - 1) * config.tarifaKmAdicional)) * 100) / 100;
 }
 
 function normalizarTexto(texto) {
@@ -594,22 +610,30 @@ function obterPontosDaCidade(cidade) {
   return PONTOS_LOCAIS[cidade] || [];
 }
 
-function encontrarAtalhoLocal(texto, cidade) {
+function encontrarPontosCompativeis(texto, cidade) {
   const consulta = normalizarTexto(texto);
-  if (consulta.length < 2) return null;
+  if (consulta.length < 2) return [];
   const pontos = obterPontosDaCidade(cidade);
-  return pontos.find(function(ponto) {
+  return pontos.filter(function(ponto) {
     const termos = [ponto.nome].concat(ponto.aliases || []);
     return termos.some(function(termo) {
       const normalizado = normalizarTexto(termo);
-      return normalizado.startsWith(consulta) || normalizado.includes(consulta);
+      return normalizado === consulta || normalizado.startsWith(consulta) || normalizado.includes(consulta) || consulta.includes(normalizado);
     });
-  }) || null;
+  });
 }
 
-function montarTermoBusca(texto, cidade) {
-  const atalho = encontrarAtalhoLocal(texto, cidade);
-  return atalho ? atalho.nome : texto.trim();
+function montarTermosBusca(texto, cidade) {
+  const termos = [];
+  const textoLimpo = texto.trim();
+  if (textoLimpo) termos.push(textoLimpo);
+
+  const pontos = encontrarPontosCompativeis(texto, cidade);
+  pontos.forEach(function(ponto) {
+    if (!termos.includes(ponto.nome)) termos.unshift(ponto.nome);
+  });
+
+  return termos.slice(0, 5);
 }
 
 function itemDentroDaCidade(item, config) {
@@ -649,31 +673,36 @@ async function buscarSugestoesTravadas(texto) {
   if (!cidadeContexto || !texto.trim()) return [];
   const cidade = cidadeContexto.cidade;
   const config = cidadeContexto.config;
-  const termo = montarTermoBusca(texto, cidade);
-  const chave = normalizarTexto(cidade + '|' + termo);
+  const termosBusca = montarTermosBusca(texto, cidade);
+  const chave = normalizarTexto(cidade + '|' + termosBusca.join('|'));
 
   if (cacheBusca.has(chave)) {
     return cacheBusca.get(chave);
   }
 
-  let dados = await consultarNominatim(termo, cidade, config, true);
-  let filtrados = dados.filter(function(item) { return itemDentroDaCidade(item, config); });
-
-  if (!filtrados.length) {
-    dados = await consultarNominatim(termo, cidade, config, false);
-    filtrados = dados.filter(function(item) { return itemDentroDaCidade(item, config); });
-  }
-
   const sugestoes = [];
   const usados = new Set();
-  filtrados.forEach(function(item) {
-    const convertido = converterResultadoNominatim(item, termo);
-    const chaveItem = normalizarTexto(convertido.displayName);
-    if (!usados.has(chaveItem)) {
-      usados.add(chaveItem);
-      sugestoes.push(convertido);
+
+  for (const termo of termosBusca) {
+    let dados = await consultarNominatim(termo, cidade, config, true);
+    let filtrados = dados.filter(function(item) { return itemDentroDaCidade(item, config); });
+
+    if (!filtrados.length) {
+      dados = await consultarNominatim(termo, cidade, config, false);
+      filtrados = dados.filter(function(item) { return itemDentroDaCidade(item, config); });
     }
-  });
+
+    filtrados.forEach(function(item) {
+      const convertido = converterResultadoNominatim(item, termo);
+      const chaveItem = normalizarTexto(convertido.displayName);
+      if (!usados.has(chaveItem)) {
+        usados.add(chaveItem);
+        sugestoes.push(convertido);
+      }
+    });
+
+    if (sugestoes.length >= 5) break;
+  }
 
   cacheBusca.set(chave, sugestoes.slice(0, 5));
   return sugestoes.slice(0, 5);
@@ -783,6 +812,12 @@ async function buscarEExibirSugestoes(tipoCampo) {
   const sugestoes = await buscarSugestoesTravadas(texto);
   if (tipoCampo === 'origem') ultimasSugestoesOrigem = sugestoes;
   else ultimasSugestoesDestino = sugestoes;
+
+  if (sugestoes.length === 1 && normalizarTexto(texto).length >= 4) {
+    await selecionarSugestao(tipoCampo, sugestoes[0]);
+    return;
+  }
+
   renderizarSugestoes(container, sugestoes, tipoCampo);
 }
 
@@ -791,7 +826,7 @@ async function resolverTextoLivre(texto, tipoCampo) {
   const primeira = sugestoes[0] || null;
   if (!primeira) {
     const cidade = cidadeContexto ? cidadeContexto.cidade : 'sua cidade';
-    throw new Error('Não encontrei ' + (tipoCampo === 'origem' ? 'a partida' : 'o destino') + ' dentro de ' + cidade + '. Tente escrever outro nome mais conhecido.');
+    throw new Error('Não encontrei ' + (tipoCampo === 'origem' ? 'a partida' : 'o destino') + ' dentro de ' + cidade + '. Tente escrever o nome completo do local, por exemplo Praça da Matriz, Hospital Municipal ou Prefeitura.');
   }
   return {
     label: primeira.label,
@@ -933,7 +968,7 @@ async function simularRotaEValor() {
       throw new Error('Não foi possível calcular a distância.');
     }
 
-    const valorEstimado = calcularValorEstimado(distanciaKm);
+    const valorEstimado = calcularValorEstimado(distanciaKm, tipoCorrida);
     const linksRota = criarLinksRota(origemResolvida, destinoResolvido);
 
     simulacaoAtual = {
@@ -952,6 +987,8 @@ async function simularRotaEValor() {
       distanciaKm: distanciaKm,
       distanciaMetros: distanciaMetros,
       valorEstimado: valorEstimado,
+      tarifaMinimaAte1Km: obterConfigServico(tipoCorrida).tarifaMinimaAte1Km,
+      tarifaKmAdicional: obterConfigServico(tipoCorrida).tarifaKmAdicional,
       tipoCalculoDistancia: tipoCalculo,
       tipoCalculoTexto: tipoCalculoTexto,
       rotaGoogleMaps: linksRota.googleMaps,
@@ -1215,7 +1252,7 @@ destinoInput.addEventListener('keydown', async function(event) {
 });
 
 tipoCorridaInput.addEventListener('change', function() {
-  textoTarifa.innerText = 'Até 1 km = R$ 16,00. Acima disso = R$ 2,50 por km adicional.';
+  atualizarTextoTarifa();
   if (simulacaoAtual) {
     invalidarSimulacao();
     mostrarMensagem('Tipo de corrida alterado. Simule novamente.', '#FFCC00');
@@ -1258,8 +1295,8 @@ formCorrida.addEventListener('submit', async function(e) {
   const pagamento = pagamentoInput.value;
   const observacoes = observacoesInput.value.trim();
 
-  if (!bairro || !logradouro || !numero || !referencia || !pagamento) {
-    mostrarMensagem('Preencha bairro, rua/passagem, número, ponto de referência e pagamento.', '#FF5555');
+  if (!bairro || !logradouro || !numero || !pagamento) {
+    mostrarMensagem('Preencha bairro, rua/passagem, número da casa ou S/N e pagamento.', '#FF5555');
     return;
   }
 
@@ -1294,7 +1331,7 @@ formCorrida.addEventListener('submit', async function(e) {
       bairroEmbarque: bairro,
       logradouroEmbarque: logradouro,
       numeroEmbarque: numero,
-      referencia: referencia,
+      referencia: referencia || '-',
       pagamento: pagamento,
       observacoes: observacoes,
 
@@ -1314,8 +1351,8 @@ formCorrida.addEventListener('submit', async function(e) {
       rotaGoogleMaps: simulacaoAtual.rotaGoogleMaps,
       rotaOpenStreetMap: simulacaoAtual.rotaOpenStreetMap,
 
-      tarifaMinimaAte1Km: TARIFA_MINIMA_ATE_1KM,
-      tarifaKmAdicional: TARIFA_KM_ADICIONAL,
+      tarifaMinimaAte1Km: obterConfigServico(simulacaoAtual.tipoCorrida).tarifaMinimaAte1Km,
+      tarifaKmAdicional: obterConfigServico(simulacaoAtual.tipoCorrida).tarifaKmAdicional,
 
       codigoEmbarque: codigoEmbarque,
       codigoValidado: false,
