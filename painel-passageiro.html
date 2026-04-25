@@ -271,7 +271,7 @@ button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
             <option value="carro" selected>Carro</option>
             <option value="moto">Moto</option>
           </select>
-          <div class="campo-ajuda" id="texto-tarifa">Até 1 km = R$ 16,00. Acima disso = R$ 0,50 por km adicional.</div>
+          <div class="campo-ajuda" id="texto-tarifa">Até 2 km = R$ 20,00. Acima disso = R$ 3,00 por km adicional.</div>
         </div>
 
         <div class="bloco-corrida">
@@ -382,8 +382,8 @@ const db = firebase.firestore();
 const GOOGLE_MAPS_KEY = "AIzaSyBlAsjTz4iC-w-nu6IzbKfTJEpyvKsCUCU";
 
 const CONFIG_SERVICOS = {
-  carro: { rotulo: 'Carro', tarifaMinimaAte1Km: 16.00, tarifaKmAdicional: 0.50 },
-  moto: { rotulo: 'Moto', tarifaMinimaAte1Km: 5.00, tarifaKmAdicional: 1.50 }
+  carro: { rotulo: 'Carro', kmBase: 2, tarifaBase: 20.00, tarifaMinimaAte1Km: 20.00, tarifaKmAdicional: 3.00 },
+  moto: { rotulo: 'Moto', kmBase: 2, tarifaBase: 5.00, tarifaMinimaAte1Km: 5.00, tarifaKmAdicional: 3.00 }
 };
 const STATUS_ATIVOS_PASSAGEIRO = ['solicitada', 'aceita', 'a caminho', 'cheguei ao local', 'iniciada'];
 const STATUS_HISTORICO = ['finalizada', 'cancelada'];
@@ -562,7 +562,9 @@ function obterConfigServico(tipo) {
 
 function obterTextoTarifa(tipo) {
   const config = obterConfigServico(tipo);
-  return 'Até 1 km = ' + formatarMoeda(config.tarifaMinimaAte1Km) + '. Acima disso = ' + formatarMoeda(config.tarifaKmAdicional) + ' por km adicional.';
+  const kmBase = Number(config.kmBase || 2);
+  const tarifaBase = Number(config.tarifaBase || config.tarifaMinimaAte1Km || 0);
+  return 'Até ' + kmBase + ' km = ' + formatarMoeda(tarifaBase) + '. Acima disso = ' + formatarMoeda(config.tarifaKmAdicional) + ' por km adicional.';
 }
 
 function atualizarTextoTarifa() {
@@ -572,9 +574,14 @@ function atualizarTextoTarifa() {
 function calcularValorEstimado(distanciaKm, tipoServico) {
   const km = Number(distanciaKm);
   const config = obterConfigServico(tipoServico);
+  const kmBase = Number(config.kmBase || 2);
+  const tarifaBase = Number(config.tarifaBase || config.tarifaMinimaAte1Km || 0);
+  const tarifaKmAdicional = Number(config.tarifaKmAdicional || 0);
+
   if (!isFinite(km) || km <= 0) return 0;
-  if (km <= 1) return config.tarifaMinimaAte1Km;
-  return Math.round((config.tarifaMinimaAte1Km + ((km - 1) * config.tarifaKmAdicional)) * 100) / 100;
+  if (km <= kmBase) return tarifaBase;
+
+  return Math.round((tarifaBase + ((km - kmBase) * tarifaKmAdicional)) * 100) / 100;
 }
 
 function normalizarTexto(texto) {
