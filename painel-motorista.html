@@ -756,6 +756,58 @@ function formatarDistancia(valor) {
   }) + ' km';
 }
 
+function formatarCoordenadaMapa(valor) {
+  const numero = Number(valor);
+  return isFinite(numero) ? String(numero) : '';
+}
+
+function criarLinkRotaMotorista(corrida) {
+  if (!corrida) return '';
+
+  if (corrida.rotaGoogleMaps) {
+    return corrida.rotaGoogleMaps;
+  }
+
+  const origemLat = formatarCoordenadaMapa(corrida.origemLat);
+  const origemLon = formatarCoordenadaMapa(corrida.origemLon);
+  const destinoLat = formatarCoordenadaMapa(corrida.destinoLat);
+  const destinoLon = formatarCoordenadaMapa(corrida.destinoLon);
+
+  if (origemLat && origemLon && destinoLat && destinoLon) {
+    return (
+      'https://www.google.com/maps/dir/?api=1' +
+      '&origin=' + encodeURIComponent(origemLat + ',' + origemLon) +
+      '&destination=' + encodeURIComponent(destinoLat + ',' + destinoLon) +
+      '&travelmode=driving'
+    );
+  }
+
+  if (corrida.rotaOpenStreetMap) {
+    return corrida.rotaOpenStreetMap;
+  }
+
+  return '';
+}
+
+function criarBotaoAbrirMapa(corrida) {
+  const linkRota = criarLinkRotaMotorista(corrida);
+
+  if (!linkRota) {
+    return null;
+  }
+
+  const botao = document.createElement('button');
+  botao.type = 'button';
+  botao.className = 'btn-azul';
+  botao.textContent = 'ABRIR ROTA NO MAPA';
+  botao.addEventListener('click', function() {
+    window.open(linkRota, '_blank', 'noopener,noreferrer');
+  });
+
+  return botao;
+}
+
+
 function obterCidadeCorrida(corrida) {
   return corrida.cidadeCorrida || corrida.passageiroCidade || '-';
 }
@@ -1012,9 +1064,16 @@ function criarCardDisponivel(corrida) {
     });
   }
 
+  const btnAbrirMapa = criarBotaoAbrirMapa(corrida);
+
   card.appendChild(topo);
   card.appendChild(grid);
   card.appendChild(obs);
+
+  if (btnAbrirMapa) {
+    card.appendChild(btnAbrirMapa);
+  }
+
   card.appendChild(btnAceitar);
 
   return card;
@@ -1056,9 +1115,15 @@ function criarCardAtiva(corrida) {
 
   const obs = criarTexto('Observações', corrida.observacoes || '-');
 
+  const btnAbrirMapa = criarBotaoAbrirMapa(corrida);
+
   card.appendChild(topo);
   card.appendChild(grid);
   card.appendChild(obs);
+
+  if (btnAbrirMapa) {
+    card.appendChild(btnAbrirMapa);
+  }
 
   if (corrida.status === 'aceita') {
     const btnACaminho = document.createElement('button');
